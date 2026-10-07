@@ -42,10 +42,19 @@ for (const pg of PAGES) {
     const z = parseFloat(getComputedStyle(de).getPropertyValue('--z')) || 1
     const texts = [...document.querySelectorAll('.t')].filter((el) => !el.parentElement.closest('.t'))
     // caja real del texto (no la del elemento)
+    // caja del texto visible (ignora el texto oculto para lectores de pantalla)
     const box = (el) => {
-      const rg = document.createRange()
-      rg.selectNodeContents(el)
-      return rg.getBoundingClientRect()
+      const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT)
+      let l = Infinity, t = Infinity, r = -Infinity, b = -Infinity
+      for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+        if (n.parentElement.closest('.sr-only') || !n.textContent.trim()) continue
+        const rg = document.createRange()
+        rg.selectNodeContents(n)
+        for (const q of rg.getClientRects()) {
+          l = Math.min(l, q.left); t = Math.min(t, q.top); r = Math.max(r, q.right); b = Math.max(b, q.bottom)
+        }
+      }
+      return l === Infinity ? el.getBoundingClientRect() : { left: l, top: t, right: r, bottom: b, width: r - l, height: b - t }
     }
     // caja aproximada de los glifos: quita el espacio de ascendente/descendente
     // de la fuente para no contar como choque el interlineado apretado del XD
@@ -54,7 +63,7 @@ for (const pg of PAGES) {
       const f = parseFloat(getComputedStyle(el).fontSize) * z
       return { left: r.left, right: r.right, top: r.top + 0.3 * f, bottom: r.bottom - 0.25 * f }
     }
-    const label = (el) => el.textContent.trim().replace(/\s+/g, ' ').slice(0, 40)
+    const label = (el) => [...el.childNodes].filter((n) => !(n.classList?.contains('sr-only'))).map((n) => n.textContent).join('').trim().replace(/\s+/g, ' ').slice(0, 40)
     for (const el of texts) {
       const fs = parseFloat(getComputedStyle(el).fontSize) * z
       if (fs < out.minFont) out.minFont = +fs.toFixed(1)

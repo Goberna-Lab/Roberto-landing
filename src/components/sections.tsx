@@ -1,4 +1,5 @@
 import toTopArrow from '../assets/icons/to-top-arrow.svg?raw'
+import { TW } from './typewriter'
 import { asset } from '../asset'
 import { Btn, HLine, Masked, MiniLink, Txt } from './ui'
 import './sections.css'
@@ -25,9 +26,9 @@ export function ToTop({ x, y, filled }: { x: number; y: number; filled?: boolean
 export function FinalCta({ filledTop }: { filledTop?: boolean }) {
   return (
     <section id="contacto" className="sec final-cta" style={{ height: 900 }}>
-      <div className="bg" style={{ inset: 0, backgroundImage: `url(${asset('fondo-medalla.webp')})` }} />
-      <Txt x={997} y={274} f="p" w={700} s={60} lh={70} up c="var(--cream)" width={723} as="h2">
-        Encuentra una pieza para reconocer lo construido.
+      <div className="bg px-bg" style={{ inset: 0, backgroundImage: `url(${asset('fondo-medalla.webp')})` }} />
+      <Txt x={997} y={274} f="p" w={700} s={60} lh={70} up c="var(--cream)" width={723} as="h2" className="tw-title">
+        <TW text="Encuentra una pieza para reconocer lo construido." />
       </Txt>
       <Btn x={996} y={555} variant="solid" href="mailto:informes@goberna.pe?subject=Solicitud%20de%20informaci%C3%B3n%20%E2%80%94%20Colecci%C3%B3n%20Goberna" />
       <Btn x={1370} y={555} variant="outline" href="#contacto" />
@@ -73,8 +74,9 @@ export function OtherPieces({ height, titleY, titleSize }: { height: number; tit
   const top = titleY + 78
   return (
     <section className="sec" style={{ height, background: '#fff' }}>
-      <Txt x={200} y={titleY} f="p" w={500} s={titleSize} lh={71} as="h2">
-        Otras piezas de <span className="it gold">colección</span>
+      <Txt x={200} y={titleY} f="p" w={500} s={titleSize} lh={71} as="h2" className="tw-title">
+        <TW text="Otras piezas de " />
+        <span className="it gold"><TW text="colección" /></span>
       </Txt>
       {OTHERS.map((o, i) => {
         const c = CARD_X[i]

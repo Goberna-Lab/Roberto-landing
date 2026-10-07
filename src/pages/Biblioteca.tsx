@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { TW } from '../components/typewriter'
 import { asset } from '../asset'
 import prevSvg from '../assets/icons/carousel-prev.svg?raw'
 import nextSvg from '../assets/icons/carousel-next.svg?raw'
@@ -58,18 +59,19 @@ export function Biblioteca() {
     <main>
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="sec" style={{ height: 798 }}>
-        <div className="bg" style={{ left: 213, top: 0, width: 1707, height: 800, backgroundImage: `url(${asset('banner-libros.webp')})` }} />
-        <div className="bg" style={{ left: 0, top: 0, width: 1707, height: 800, backgroundImage: `url(${asset('banner-libros.webp')})` }} />
-        <Txt x={1720} y={390} f="p" w={500} s={72} lh={80} up align="r" c="var(--ivory)" as="h1">
-          {'Ideas que amplían\nla mirada'}
+        <div className="bg px-bg" style={{ left: 213, top: 0, width: 1707, height: 800, backgroundImage: `url(${asset('banner-libros.webp')})` }} />
+        <div className="bg px-bg" style={{ left: 0, top: 0, width: 1707, height: 800, backgroundImage: `url(${asset('banner-libros.webp')})` }} />
+        <Txt x={1720} y={390} f="p" w={500} s={72} lh={80} up align="r" c="var(--ivory)" as="h1" className="tw-title">
+          <TW text={'Ideas que amplían\nla mirada'} />
         </Txt>
       </section>
 
       {/* ── 6 títulos ────────────────────────────────────────── */}
       <section className="sec" style={{ height: 1240, background: 'var(--ivory)' }}>
         <Txt x={200} y={119} w={600} s={18} lh={22} ls={140} up c="var(--navy)">Biblioteca Goberna</Txt>
-        <Txt x={200} y={265} f="p" w={500} s={64} lh={71} c="var(--navy)" as="h2">
-          <span className="it gold">{'6 Títulos.\n'}</span>Distintas perspectivas
+        <Txt x={200} y={265} f="p" w={500} s={64} lh={71} c="var(--navy)" as="h2" className="tw-title">
+          <span className="it gold"><TW text={'6 Títulos.\n'} /></span>
+          <TW text="Distintas perspectivas" />
         </Txt>
         <Txt x={1206} y={213} s={17} lh={32} ls={32} c="var(--ink)" width={514}>
           Cada publicación aborda, desde una mirada rigurosa y práctica, los desafíos contemporáneos del poder, la
@@ -100,10 +102,11 @@ export function Biblioteca() {
 
       {/* ── Construye tu biblioteca (packs) ──────────────────── */}
       <section id="ediciones" className="sec packs" style={{ height: 1062 }}>
-        <div className="bg" style={{ left: 0, top: 0, width: 1920, height: 1200, backgroundImage: `url(${asset('fondo-azul.webp')})` }} />
+        <div className="bg px-bg" style={{ left: 0, top: 0, width: 1920, height: 1200, backgroundImage: `url(${asset('fondo-azul.webp')})` }} />
         <img className="abs" src={asset('capitolio.webp')} alt="" loading="lazy" style={{ left: 0, top: 445, width: 673, height: 607, opacity: 0.915 }} />
-        <Txt x={200} y={169} f="p" w={500} s={64} lh={71} c="var(--cream)" as="h2">
-          <span className="it">Construye</span>{' tu\nBiblioteca Goberna'}
+        <Txt x={200} y={169} f="p" w={500} s={64} lh={71} c="var(--cream)" as="h2" className="tw-title">
+          <span className="it"><TW text="Construye" /></span>
+          <TW text={' tu\nBiblioteca Goberna'} />
         </Txt>
         <Txt x={200} y={296} s={18} lh={32} ls={32} c="var(--cream)" width={514}>
           Elige una publicación o combina títulos para ampliar tu recorrido de lectura.

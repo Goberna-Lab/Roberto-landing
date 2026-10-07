@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Header } from './components/Header'
+import { useTypewriter } from './components/useTypewriter'
+import { useParallax } from './components/useParallax'
 import { Home } from './pages/Home'
 import { Medallas } from './pages/Medallas'
 import { Biblioteca } from './pages/Biblioteca'
@@ -64,8 +66,14 @@ function App() {
 
   const selected = route.page === 'medallas' && route.section ? Number(route.section) || undefined : undefined
 
+  // Títulos con efecto máquina de escribir al entrar en pantalla
+  const pageRef = useRef<HTMLDivElement>(null)
+  useTypewriter(pageRef, [route.page])
+  // Fondos de los banners con parallax (se mueven más lento que la página)
+  useParallax(pageRef, [route.page])
+
   return (
-    <div className="page">
+    <div ref={pageRef} className="page">
       <Header opacity={route.page === 'inicio' ? 0.95 : 0.8} active={route.page === 'inicio' ? undefined : `#/${route.page}`} />
       {route.page === 'medallas' ? <Medallas selected={selected} /> : route.page === 'biblioteca' ? <Biblioteca /> : <Home />}
     </div>

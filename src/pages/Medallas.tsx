@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useRef } from 'react'
+import { TW } from '../components/typewriter'
 import { asset } from '../asset'
 import icoMaterial from '../assets/icons/ico-material.svg?raw'
 import icoAcabado from '../assets/icons/ico-acabado.svg?raw'
@@ -133,17 +134,18 @@ export function Medallas({ selected }: { selected?: number }) {
     <main>
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="sec" style={{ height: 800 }}>
-        <div className="bg" style={{ left: 0, top: 0, width: 1920, height: 900, backgroundImage: `url(${asset('banner-medallas.webp')})` }} />
-        <Txt x={1720} y={450} f="p" w={500} s={72} lh={80} up align="r" c="var(--ivory)" as="h1">
-          {'Medallas, placas y\nreconocimientos\nde cristal'}
+        <div className="bg px-bg" style={{ left: 0, top: 0, width: 1920, height: 900, backgroundImage: `url(${asset('banner-medallas.webp')})` }} />
+        <Txt x={1720} y={450} f="p" w={500} s={72} lh={80} up align="r" c="var(--ivory)" as="h1" className="tw-title">
+          <TW text={'Medallas, placas y\nreconocimientos\nde cristal'} />
         </Txt>
       </section>
 
       {/* ── Categoría ────────────────────────────────────────── */}
       <section className="sec" style={{ height: 1037, background: 'var(--ivory)' }}>
         <Txt x={200} y={117} w={600} s={18} lh={22} ls={140} up c="var(--navy)">Categoría - Medallas</Txt>
-        <Txt x={200} y={263} f="p" w={500} s={64} lh={71} c="var(--navy)" as="h2">
-          <span className="it gold">Reconocer</span>{' es dar \nvalor a lo construido.'}
+        <Txt x={200} y={263} f="p" w={500} s={64} lh={71} c="var(--navy)" as="h2" className="tw-title">
+          <span className="it gold"><TW text="Reconocer" /></span>
+          <TW text={' es dar \nvalor a lo construido.'} />
         </Txt>
         <Masked mask={[200, 407, 719, 473]} img={[200, 407, 1009, 473]} src={asset('fondo-medalla.webp')} alt="Medalla Goberna en estuche" />
         <Txt x={200} y={919} s={16} lh={19} ls={140} up c="var(--navy)">Trayectoria · Mérito · Distinción</Txt>
@@ -167,8 +169,9 @@ export function Medallas({ selected }: { selected?: number }) {
       <section ref={grid} className="sec medal-grid" style={{ background: 'var(--ivory)' }}>
         <div className="bg" style={{ left: 0, top: 0, width: 1920, height: 675, backgroundImage: `url(${asset('fondo-textura.webp')})`, opacity: 0.65 }} />
         <div className="medal-grid__head">
-          <Txt x={638} y={169} f="p" w={500} s={64} lh={71} c="var(--navy)" as="h2">
-            Colección de <span className="it gold">medallas</span>
+          <Txt x={638} y={169} f="p" w={500} s={64} lh={71} c="var(--navy)" as="h2" className="tw-title">
+            <TW text="Colección de " />
+            <span className="it gold"><TW text="medallas" /></span>
           </Txt>
           <HLine x={941} y={206.5} w={40} c="var(--line)" />
         </div>

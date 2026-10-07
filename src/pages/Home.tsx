@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { TW } from '../components/typewriter'
 import { asset } from '../asset'
 import { CtaLink, Txt } from '../components/ui'
 import { FinalCta } from '../components/sections'
@@ -29,13 +30,13 @@ function Universe({
   const color = dark ? 'var(--navy)' : 'var(--cream)'
   return (
     <section id={id} className={`sec universe ${cover ? 'has-cover' : ''}`} style={{ height: 900 }}>
-      <div className="bg universe__bg" style={{ inset: 0, backgroundImage: `url(${img})` }} />
+      <div className="bg universe__bg px-bg" style={{ inset: 0, backgroundImage: `url(${img})` }} />
       {cover && <a href={href} className="universe__cover" aria-label={title.replace('\n', ' ')} />}
       {children}
       <Txt
-        x={titleX} y={titleY} f="p" w={700} s={tight ? 87 : 100} lh={103} ls={tight ? -10 : 0} c={color} as="h2"
+        x={titleX} y={titleY} f="p" w={700} s={tight ? 87 : 100} lh={103} ls={tight ? -10 : 0} c={color} as="h2" className="tw-title"
       >
-        {title}
+        <TW text={title} />
       </Txt>
       <Txt x={subX} y={subY} s={22} lh={40} ls={32} c={color}>{sub}</Txt>
       <CtaLink x={linkX} y={linkY} href={href} dark={dark} />
@@ -48,7 +49,7 @@ export function Home() {
     <main>
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="sec" style={{ height: 1080 }}>
-        <div className="bg" style={{ left: 0, top: 0, width: 1920, height: 1200, backgroundImage: `url(${asset('fondo-azul.webp')})` }} />
+        <div className="bg px-bg" style={{ left: 0, top: 0, width: 1920, height: 1200, backgroundImage: `url(${asset('fondo-azul.webp')})` }} />
         <img className="abs" src={asset('hero-piezas.webp')} alt="Medalla y trofeo de cristal Goberna" width={943} height={943} style={{ left: 839, top: 137 }} />
         <Txt x={200} y={289} w={500} s={32} lh={39} ls={140} up c="var(--gold)">Colección institucional · 2026</Txt>
         <Txt x={200} y={432} f="p" w={700} s={89} lh={90} ls={-30} c="var(--cream)" as="h1">
@@ -96,8 +97,8 @@ export function Home() {
       {/* ── Materia & oficio ─────────────────────────────────── */}
       <section id="materia" className="sec" style={{ height: 1806, background: 'var(--ivory)' }}>
         <Txt x={200} y={187} w={600} s={18} lh={22} ls={140} up c="var(--navy)">Materia &amp; oficio</Txt>
-        <Txt x={689} y={272} f="p" w={700} s={84} lh={85} up c="var(--navy)" as="h2">
-          {'El valor también está\nen los detalles.'}
+        <Txt x={689} y={272} f="p" w={700} s={84} lh={85} up c="var(--navy)" as="h2" className="tw-title">
+          <TW text={'El valor también está\nen los detalles.'} />
         </Txt>
         <img
           className="abs" src={asset('materia.webp')} alt="Detalles de acabados: metal, cristal, cinta y estuche"
