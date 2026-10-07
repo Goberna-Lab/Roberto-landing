@@ -8,7 +8,7 @@ import './Home.css'
 
 /** Banner de colección 1920×900 con título grande a la derecha. */
 function Universe({
-  id, img, title, titleX, titleY, sub, subX, subY, linkX, linkY, href, dark, tight, cover, pxDrift, children,
+  id, img, title, titleX, titleY, sub, subX, subY, linkX, linkY, href, dark, tight, cover, still, children,
 }: {
   id: string
   img: string
@@ -25,14 +25,14 @@ function Universe({
   tight?: boolean
   /** todo el banner es clicable (lleva a `href`) */
   cover?: boolean
-  /** recorrido del parallax del fondo (menor = menos zoom) */
-  pxDrift?: number
+  /** sin parallax: el fondo queda exacto al XD (sin zoom) */
+  still?: boolean
   children?: ReactNode
 }) {
   const color = dark ? 'var(--navy)' : 'var(--cream)'
   return (
     <section id={id} className={`sec universe ${cover ? 'has-cover' : ''}`} style={{ height: 900 }}>
-      <div className="bg universe__bg px-bg" data-px-drift={pxDrift} style={{ inset: 0, backgroundImage: `url(${img})` }} />
+      <div className={`bg universe__bg ${still ? '' : 'px-bg'}`} style={{ inset: 0, backgroundImage: `url(${img})` }} />
       {cover && <a href={href} className="universe__cover" aria-label={title.replace('\n', ' ')} />}
       {children}
       <Txt
@@ -90,7 +90,7 @@ export function Home() {
         linkX={1063} linkY={599} href="#/medallas"
       />
       <Universe
-        id="libros" img={asset('banner-libros.webp')} pxDrift={18}
+        id="libros" img={asset('banner-libros.webp')} still
         title={'BIBLIOTECA\nDEL PODER'} titleX={1082} titleY={293}
         sub="Libros, packs y ediciones premium" subX={1088} subY={437}
         linkX={1088} linkY={531} href="#/biblioteca" cover
