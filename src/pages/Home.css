@@ -25,3 +25,25 @@
 .universe.has-cover:hover .cta-link__arrow {
   translate: 16px 0;
 }
+
+/* Hero: 1080 px en el XD. Si la ventana es más baja (laptop 1366×620 → 872 px
+   de diseño), el hero toma el alto de la ventana para verse completo al cargar:
+   la imagen se reduce y el texto sube. A 1920×1080 queda exacto al XD. */
+.hero {
+  --hero-h: clamp(760px, calc(100vh / var(--z, 1)), 1080px);
+  --hero-cut: calc(1080px - var(--hero-h));
+  height: var(--hero-h);
+}
+
+.hero__img {
+  left: calc(839px + var(--hero-cut) / 2);
+  bottom: 0;
+  width: calc(943px - var(--hero-cut));
+  height: calc(943px - var(--hero-cut));
+}
+
+.hero__copy {
+  position: absolute;
+  inset: 0;
+  translate: 0 calc(var(--hero-cut) * -0.45);
+}

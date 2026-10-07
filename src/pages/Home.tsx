@@ -50,17 +50,20 @@ export function Home() {
   return (
     <main>
       {/* ── Hero ─────────────────────────────────────────────── */}
-      <section className="sec" style={{ height: 1080 }}>
+      {/* En pantallas bajas (laptop) el hero toma el alto de la ventana: ver Home.css */}
+      <section className="sec hero">
         <div className="bg px-bg" style={{ left: 0, top: 0, width: 1920, height: 1200, backgroundImage: `url(${asset('fondo-azul.webp')})` }} />
-        <img className="abs" src={asset('hero-piezas.webp')} alt="Medalla y trofeo de cristal Goberna" width={943} height={943} style={{ left: 839, top: 137 }} />
-        <Txt x={200} y={289} w={500} s={32} lh={39} ls={140} up c="var(--gold)">Colección institucional · 2026</Txt>
-        <Txt x={200} y={432} f="p" w={700} s={89} lh={90} ls={-30} c="var(--cream)" as="h1">
-          {'Lo que se construye\nmerece permanecer.'}
-        </Txt>
-        <Txt x={200} y={560} s={22} lh={32} ls={32} c="#f7f3eb" width={746}>
-          Piezas de prestigio, excelencia académica y poder destinado a perdurar.
-        </Txt>
-        <CtaLink x={200} y={747} href="#universos" down lineW={362} />
+        <img className="abs hero__img" src={asset('hero-piezas.webp')} alt="Medalla y trofeo de cristal Goberna" width={943} height={943} />
+        <div className="hero__copy">
+          <Txt x={200} y={289} w={500} s={32} lh={39} ls={140} up c="var(--gold)">Colección institucional · 2026</Txt>
+          <Txt x={200} y={432} f="p" w={700} s={89} lh={90} ls={-30} c="var(--cream)" as="h1">
+            {'Lo que se construye\nmerece permanecer.'}
+          </Txt>
+          <Txt x={200} y={560} s={22} lh={32} ls={32} c="#f7f3eb" width={746}>
+            Piezas de prestigio, excelencia académica y poder destinado a perdurar.
+          </Txt>
+          <CtaLink x={200} y={747} href="#universos" down lineW={362} />
+        </div>
       </section>
 
       {/* ── El propósito (animado al hacer scroll) ──────────── */}
