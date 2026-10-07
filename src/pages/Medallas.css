@@ -1,0 +1,80 @@
+.medal-grid {
+  padding: 306px 0 127px;
+}
+
+.medal-grid__head {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 306px;
+}
+
+/* Fila: 526px (imagen + pedestal) y 64px de separación */
+.medal-row {
+  position: relative;
+  height: 526px;
+  margin-bottom: 64px;
+}
+
+.medal-row:last-child {
+  margin-bottom: 0;
+}
+
+.medal-row.has-panel {
+  margin-bottom: 48px;
+}
+
+.medal {
+  position: absolute;
+  top: 0;
+  width: 494px;
+  height: 526px;
+  color: var(--navy);
+}
+
+.medal__name {
+  transition: color 0.3s ease-out;
+}
+
+.medal:hover .medal__name,
+.medal:focus-visible .medal__name,
+.medal.is-selected .medal__name {
+  color: var(--gold);
+}
+
+.medal__img {
+  transition: translate 0.4s ease-out;
+}
+
+.medal:hover .medal__img,
+.medal.is-selected .medal__img {
+  translate: 0 -8px;
+}
+
+/* Panel "Medalla seleccionada": 1520×500, 100px antes de la siguiente fila */
+.medal-panel {
+  position: relative;
+  left: 200px;
+  width: 1520px;
+  height: 500px;
+  margin-bottom: 100px;
+  background: var(--ivory);
+  border: 1px solid var(--gold-2);
+  border-radius: 20px;
+  color: var(--navy);
+  animation: panel-in 0.4s ease-out;
+}
+
+/* Compensa el borde para conservar las coordenadas internas del XD */
+.medal-panel > * {
+  margin: -1px 0 0 -1px;
+}
+
+.medal-panel__ico {
+  color: var(--gold);
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+  }
+}

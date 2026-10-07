@@ -1,0 +1,132 @@
+.ico {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+}
+
+.ico svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Texto + icono en línea (ver TextIcon en ui.tsx) */
+.txt-ico__text {
+  display: inline-block;
+}
+
+.txt-ico__ico {
+  position: relative;
+  display: inline-block;
+  height: 0;
+}
+
+.masked {
+  overflow: hidden;
+}
+
+.masked > img {
+  object-fit: cover;
+}
+
+/* ── Componente 88: "Descubrir la colección" ─────────────────────────── */
+.cta-link {
+  position: absolute;
+  display: block;
+  height: 48px;
+  color: var(--cream);
+}
+
+.cta-link.is-dark {
+  color: var(--navy);
+}
+
+.cta-link__line {
+  position: absolute;
+  left: 0.5px;
+  top: 46.5px;
+  width: var(--line-w);
+  height: 1px;
+  background: var(--gold);
+  transition: width 0.3s ease-out;
+}
+
+.cta-link__arrow {
+  transition: translate 0.3s ease-out;
+}
+
+.cta-link:hover .cta-link__line {
+  width: calc(var(--line-w) + 17px);
+}
+
+.cta-link:hover .cta-link__arrow {
+  translate: 16px 0;
+}
+
+.cta-link.is-down:hover .cta-link__arrow {
+  translate: 0 6px;
+}
+
+/* ── Componente 87: enlace dorado pequeño ────────────────────────────── */
+.mini-link {
+  position: absolute;
+  display: block;
+  width: 180px;
+  height: 20px;
+  color: var(--gold);
+}
+
+.mini-link__arrow {
+  transition: translate 0.3s ease-out;
+}
+
+.mini-link:hover .mini-link__arrow {
+  translate: 16px 0;
+}
+
+/* ── Botones ─────────────────────────────────────────────────────────── */
+.btn {
+  position: absolute;
+  display: block;
+  transition: background-color 0.3s ease-out, color 0.3s ease-out;
+}
+
+.btn--solid {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+.btn--outline {
+  border: 1px solid var(--gold);
+  color: var(--cream);
+}
+
+.btn--outline.btn--dark-text {
+  color: var(--navy);
+}
+
+/* Compensa el borde de 1px para que el contenido quede en las coords XD */
+.btn--outline > * {
+  margin: -1px 0 0 -1px;
+}
+
+.btn__ico {
+  transition: translate 0.3s ease-out;
+}
+
+.btn--solid:hover {
+  background: #b08d58;
+}
+
+.btn--solid:hover .btn__ico {
+  translate: 6px 0;
+}
+
+.btn--outline:hover {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+.btn--outline:hover .btn__ico {
+  translate: 0 3px;
+}

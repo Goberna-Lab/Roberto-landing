@@ -1,0 +1,59 @@
+.to-top {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 1px solid #a17c48;
+  color: #a07c48;
+  box-shadow: 0 3px 3px rgb(0 0 0 / 0.16);
+  display: grid;
+  place-items: center;
+  transition: background-color 0.3s ease-out, color 0.3s ease-out, border-color 0.3s ease-out;
+}
+
+.to-top span,
+.to-top svg {
+  display: block;
+  width: 17.5px;
+  height: 22px;
+}
+
+.to-top:hover,
+.to-top.is-filled {
+  background: #202020;
+  border-color: #202020;
+  color: #fff;
+}
+
+.to-top.is-filled:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+
+.other-card__box {
+  position: absolute;
+  height: 162px;
+  background: #fbf9f6;
+  border: 1px solid var(--line);
+  border-left: 0;
+  border-radius: 0 6px 6px 0;
+}
+
+.other-card .masked img {
+  transition: scale 0.6s ease-out;
+}
+
+.other-card:hover .masked img {
+  scale: 1.06;
+}
+
+/* Laptop: la descripción crece al tamaño mínimo legible y se ajusta a la caja */
+.is-laptop .other-card__desc {
+  white-space: pre-line;
+  width: 268px;
+}
+
+/* Laptop: el enlace pequeño crece; se reduce el espaciado para que quepa en la caja */
+.is-laptop .other-card .mini-link .t {
+  letter-spacing: 0.06em !important; /* el estilo en línea de Txt usa 0.14em */
+}

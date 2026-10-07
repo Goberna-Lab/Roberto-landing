@@ -1,0 +1,52 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  height: 80px;
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 1px;
+  background: var(--navy);
+  opacity: var(--bg-op);
+}
+
+.header::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 79px;
+  height: 1px;
+  background: rgb(54 64 80 / 0.7);
+}
+
+.header__inner {
+  position: relative;
+  width: 1920px;
+  height: 79px;
+  margin: 0 auto;
+}
+
+.header__logo {
+  position: absolute;
+  left: 200px;
+  top: 16px;
+}
+
+.header__link {
+  position: absolute;
+  top: 15px;
+  height: 50px;
+  color: #fff;
+  transition: color 0.3s ease-out;
+}
+
+.header__link:hover,
+.header__link.is-active {
+  color: #c9a36b;
+}

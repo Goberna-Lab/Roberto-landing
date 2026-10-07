@@ -1,0 +1,77 @@
+/* Carrusel de libros: 3 visibles (x 271 → 1651) */
+.books {
+  position: absolute;
+  width: 1380px;
+  height: 720px;
+  overflow: hidden;
+}
+
+.books__track {
+  position: absolute;
+  inset: 0;
+  transition: translate 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.book {
+  position: absolute;
+  top: 0;
+  width: 470px;
+  height: 720px;
+}
+
+.book__cover img {
+  transition: scale 0.6s ease-out;
+}
+
+.book:hover .book__cover img {
+  scale: 1.04;
+}
+
+.books__nav {
+  position: absolute;
+  width: 59px;
+  height: 59px;
+  border-radius: 50%;
+  transition: opacity 0.3s ease-out, scale 0.3s ease-out;
+}
+
+.books__nav.is-next {
+  width: 56px;
+  height: 56px;
+}
+
+.books__nav svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.books__nav:not(:disabled):hover {
+  scale: 1.06;
+}
+
+.books__nav:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* Lista de packs con scroll propio dentro de la sección */
+.packs__scroll {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 1062px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.packs__scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.packs__list {
+  position: relative;
+  width: 1920px;
+  height: 2148px;
+}
