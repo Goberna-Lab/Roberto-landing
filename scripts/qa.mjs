@@ -22,7 +22,8 @@ let problems = 0
 if (SHOTS) fs.mkdirSync('qa-shots', { recursive: true })
 
 for (const pg of PAGES) {
-  const page = await browser.newPage({ viewport: { width: W, height: H } })
+  // Animaciones desactivadas: se mide el diseño final (y se prueba la versión accesible)
+  const page = await browser.newPage({ viewport: { width: W, height: H }, reducedMotion: 'reduce' })
   const errors = []
   page.on('pageerror', (e) => errors.push(e.message))
   page.on('console', (m) => m.type() === 'error' && errors.push(m.text()))

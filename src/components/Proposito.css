@@ -1,0 +1,16 @@
+.prop-bg {
+  will-change: transform;
+}
+
+.prop-line {
+  transform-origin: left center;
+}
+
+.pw {
+  will-change: opacity;
+}
+
+.prop-content {
+  position: absolute;
+  inset: 0;
+}

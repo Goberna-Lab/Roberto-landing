@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Header } from './components/Header'
 import { Home } from './pages/Home'
 import { Medallas } from './pages/Medallas'
@@ -12,7 +12,11 @@ const TITLES: Record<Page, string> = {
   biblioteca: 'Biblioteca Goberna · Libros y ediciones de colección',
 }
 
-/* Rutas por hash: #/medallas, #/biblioteca, #/inicio/pines (página/sección) */
+/* Rutas por hash (pantallas del XD):
+   #/              → 1 · inicio            (#/inicio/pines → sección)
+   #/medallas      → 2 · categoría medallas
+   #/medallas/3    → 3 · medalla n.º 3 seleccionada (1–9)
+   #/biblioteca    → 4 · biblioteca */
 function parse(hash: string): { page: Page; section?: string } {
   const [, page = 'inicio', section] = hash.replace(/^#/, '').split('/')
   const p = (['inicio', 'medallas', 'biblioteca'] as const).find((x) => x === page) ?? 'inicio'
@@ -45,17 +49,25 @@ function App() {
     return () => document.removeEventListener('click', onClick)
   }, [])
 
-  // Cambio de página: saltar sin animación (el scroll suave es solo para anclas)
+  // Cambio de página: saltar sin animación (el scroll suave es solo para anclas).
+  // Abrir/cerrar una medalla dentro de #/medallas no mueve la página.
+  const prevPage = useRef<Page | null>(null)
   useEffect(() => {
     document.title = TITLES[route.page]
-    if (route.section) document.getElementById(route.section)?.scrollIntoView({ behavior: 'instant' })
-    else window.scrollTo({ top: 0, behavior: 'instant' })
+    const samePage = prevPage.current === route.page
+    prevPage.current = route.page
+    const medal = route.page === 'medallas' && /^\d+$/.test(route.section ?? '')
+    if (samePage && (route.page === 'medallas' || medal)) return
+    if (route.section && !medal) document.getElementById(route.section)?.scrollIntoView({ behavior: 'instant' })
+    else if (!medal) window.scrollTo({ top: 0, behavior: 'instant' })
   }, [route])
+
+  const selected = route.page === 'medallas' && route.section ? Number(route.section) || undefined : undefined
 
   return (
     <div className="page">
       <Header opacity={route.page === 'inicio' ? 0.95 : 0.8} active={route.page === 'inicio' ? undefined : `#/${route.page}`} />
-      {route.page === 'medallas' ? <Medallas /> : route.page === 'biblioteca' ? <Biblioteca /> : <Home />}
+      {route.page === 'medallas' ? <Medallas selected={selected} /> : route.page === 'biblioteca' ? <Biblioteca /> : <Home />}
     </div>
   )
 }

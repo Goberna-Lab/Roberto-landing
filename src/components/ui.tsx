@@ -92,8 +92,8 @@ export function Icon({ svg, box, rot, className = '' }: { svg: string; box: Box;
   return <span className={`ico ${className}`} style={style} aria-hidden dangerouslySetInnerHTML={{ __html: svg }} />
 }
 
-export function HLine({ x, y, w, c = 'var(--gold)', h = 1 }: { x: number; y: number; w: number; c?: string; h?: number }) {
-  return <span className="hline" style={{ left: x, top: y - h / 2, width: w, height: h, background: c }} />
+export function HLine({ x, y, w, c = 'var(--gold)', h = 1, className = '' }: { x: number; y: number; w: number; c?: string; h?: number; className?: string }) {
+  return <span className={`hline ${className}`} style={{ left: x, top: y - h / 2, width: w, height: h, background: c }} />
 }
 
 export function VLine({ x, y, h, c }: { x: number; y: number; h: number; c?: string }) {

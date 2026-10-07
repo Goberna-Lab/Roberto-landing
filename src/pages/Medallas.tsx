@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useRef } from 'react'
 import { asset } from '../asset'
 import icoMaterial from '../assets/icons/ico-material.svg?raw'
 import icoAcabado from '../assets/icons/ico-acabado.svg?raw'
@@ -109,9 +109,25 @@ function MedalPanel({ m }: { m: Medal }) {
   )
 }
 
-export function Medallas() {
-  /* clave "fila-columna" de la medalla abierta */
-  const [open, setOpen] = useState<string | null>(null)
+/**
+ * `selected`: n.º de medalla abierta (1–9, en orden de lectura), viene de la
+ * ruta #/medallas/n (pantalla 3 del XD). Abrir/cerrar cambia la ruta.
+ */
+export function Medallas({ selected }: { selected?: number }) {
+  const valid = selected && selected >= 1 && selected <= ROWS * COLS.length ? selected : undefined
+  const open = valid ? `${Math.floor((valid - 1) / COLS.length)}-${(valid - 1) % COLS.length}` : null
+  const toggle = (n: number) => {
+    location.hash = valid === n ? '#/medallas' : `#/medallas/${n}`
+  }
+
+  // Al entrar directo con #/medallas/n, llevar la medalla y su panel a la vista
+  const grid = useRef<HTMLElement>(null)
+  const entry = useRef(valid)
+  useEffect(() => {
+    if (!entry.current) return
+    const row = grid.current?.querySelectorAll('.medal-row')[Math.floor((entry.current - 1) / COLS.length)]
+    row?.scrollIntoView({ behavior: 'instant', block: 'start' })
+  }, [])
 
   return (
     <main>
@@ -148,7 +164,7 @@ export function Medallas() {
       </section>
 
       {/* ── Colección de medallas ────────────────────────────── */}
-      <section className="sec medal-grid" style={{ background: 'var(--ivory)' }}>
+      <section ref={grid} className="sec medal-grid" style={{ background: 'var(--ivory)' }}>
         <div className="bg" style={{ left: 0, top: 0, width: 1920, height: 675, backgroundImage: `url(${asset('fondo-textura.webp')})`, opacity: 0.65 }} />
         <div className="medal-grid__head">
           <Txt x={638} y={169} f="p" w={500} s={64} lh={71} c="var(--navy)" as="h2">
@@ -168,7 +184,7 @@ export function Medallas() {
                     m={m}
                     x={COLS[c]}
                     selected={openCol === c}
-                    onSelect={() => setOpen(open === `${r}-${c}` ? null : `${r}-${c}`)}
+                    onSelect={() => toggle(r * COLS.length + c + 1)}
                   />
                 ))}
                 <VLine x={709} y={137} h={214} />

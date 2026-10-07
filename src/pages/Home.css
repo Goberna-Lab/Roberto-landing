@@ -1,0 +1,27 @@
+/* Banners de colección clicables completos (Piezas de honor, Biblioteca del poder) */
+.universe__cover {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.universe .cta-link {
+  z-index: 2;
+}
+
+.universe__bg {
+  transition: scale 1.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* Al pasar sobre el banner: leve acercamiento y el enlace en su estado hover */
+.universe.has-cover:hover .universe__bg {
+  scale: 1.03;
+}
+
+.universe.has-cover:hover .cta-link__line {
+  width: calc(var(--line-w) + 17px);
+}
+
+.universe.has-cover:hover .cta-link__arrow {
+  translate: 16px 0;
+}

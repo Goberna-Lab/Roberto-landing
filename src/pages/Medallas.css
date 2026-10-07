@@ -78,3 +78,8 @@
     opacity: 0;
   }
 }
+
+/* Al abrir #/medallas/n directo, la fila queda bajo el header fijo */
+.medal-row {
+  scroll-margin-top: 110px;
+}
