@@ -1,4 +1,5 @@
 import toTopArrow from '../assets/icons/to-top-arrow.svg?raw'
+import { asset } from '../asset'
 import { Btn, HLine, Masked, MiniLink, Txt } from './ui'
 import './sections.css'
 
@@ -24,7 +25,7 @@ export function ToTop({ x, y, filled }: { x: number; y: number; filled?: boolean
 export function FinalCta({ filledTop }: { filledTop?: boolean }) {
   return (
     <section id="contacto" className="sec final-cta" style={{ height: 900 }}>
-      <div className="bg" style={{ inset: 0, backgroundImage: 'url(/img/fondo-medalla.webp)' }} />
+      <div className="bg" style={{ inset: 0, backgroundImage: `url(${asset('fondo-medalla.webp')})` }} />
       <Txt x={997} y={274} f="p" w={700} s={60} lh={70} up c="var(--cream)" width={723} as="h2">
         Encuentra una pieza para reconocer lo construido.
       </Txt>
@@ -41,19 +42,19 @@ const OTHERS = [
     desc: 'Pines y piezas de identidad',
     href: '#/inicio/pines',
     // máscara 190×162 con radio izquierdo; imagen 288×162 desplazada -41px
-    img: { src: '/img/mini-pines.webp', mask: [0, 0, 190, 162], box: [-41, 0, 288, 162] },
+    img: { src: asset('mini-pines.webp'), mask: [0, 0, 190, 162], box: [-41, 0, 288, 162] },
   },
   {
     title: 'Presentar',
     desc: 'Portadiplomas y elementos\nceremoniales',
     href: '#/inicio/diplomas',
-    img: { src: '/img/mini-diploma.webp', mask: [0, 0, 192, 162], box: [-1, -13, 194, 194] },
+    img: { src: asset('mini-diploma.webp'), mask: [0, 0, 192, 162], box: [-1, -13, 194, 194] },
   },
   {
     title: 'Conocer',
     desc: 'Libros, packs y colecciones premium',
     href: '#/biblioteca',
-    img: { src: '/img/banner-libros.webp', mask: [0, 0, 191, 162], box: [-18, -2, 356, 166] },
+    img: { src: asset('banner-libros.webp'), mask: [0, 0, 191, 162], box: [-18, -2, 356, 166] },
   },
 ] as const
 

@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { asset } from '../asset'
 import { CtaLink, HLine, Txt } from '../components/ui'
 import { FinalCta } from '../components/sections'
 
@@ -42,8 +43,8 @@ export function Home() {
     <main>
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="sec" style={{ height: 1080 }}>
-        <div className="bg" style={{ left: 0, top: 0, width: 1920, height: 1200, backgroundImage: 'url(/img/fondo-azul.webp)' }} />
-        <img className="abs" src="/img/hero-piezas.webp" alt="Medalla y trofeo de cristal Goberna" width={943} height={943} style={{ left: 839, top: 137 }} />
+        <div className="bg" style={{ left: 0, top: 0, width: 1920, height: 1200, backgroundImage: `url(${asset('fondo-azul.webp')})` }} />
+        <img className="abs" src={asset('hero-piezas.webp')} alt="Medalla y trofeo de cristal Goberna" width={943} height={943} style={{ left: 839, top: 137 }} />
         <Txt x={200} y={289} w={500} s={32} lh={39} ls={140} up c="var(--gold)">Colección institucional · 2026</Txt>
         <Txt x={200} y={432} f="p" w={700} s={89} lh={90} ls={-30} c="var(--cream)" as="h1">
           {'Lo que se construye\nmerece permanecer.'}
@@ -56,7 +57,7 @@ export function Home() {
 
       {/* ── El propósito ─────────────────────────────────────── */}
       <section id="proposito" className="sec" style={{ height: 900, background: 'var(--sand)' }}>
-        <div className="bg" style={{ left: 321, top: 0, width: 1599, height: 900, backgroundImage: 'url(/img/proposito.webp)' }} />
+        <div className="bg" style={{ left: 321, top: 0, width: 1599, height: 900, backgroundImage: `url(${asset('proposito.webp')})` }} />
         <Txt x={200} y={117} w={600} s={18} lh={22} ls={140} up c="var(--navy)">El propósito</Txt>
         <Txt x={427} y={297} f="p" w={700} s={46} lh={65} up c="var(--navy)" width={1066} as="h2">
           <span className="gold">Goberna reúne piezas para representar </span>
@@ -75,7 +76,7 @@ export function Home() {
       {/* ── Universos de la colección ────────────────────────── */}
       <div id="universos">
         <Universe
-          id="medallas" img="/img/banner-medallas.webp"
+          id="medallas" img={asset('banner-medallas.webp')}
           title={'PIEZAS DE\nHONOR'} titleX={1027} titleY={353}
           sub="Medallas, placas y reconocimientos de cristal" subX={1035} subY={497}
           linkX={1035} linkY={590} href="#/medallas"
@@ -84,19 +85,19 @@ export function Home() {
         </Universe>
       </div>
       <Universe
-        id="pines" img="/img/banner-pines.webp"
+        id="pines" img={asset('banner-pines.webp')}
         title={'SÍMBOLOS DE\nPRESTIGIO'} titleX={1035} titleY={267}
         sub="Pines y piezas de identidad" subX={1035} subY={432}
         linkX={1035} linkY={504} href="#/medallas"
       />
       <Universe
-        id="diplomas" img="/img/banner-diploma.webp" dark tight
+        id="diplomas" img={asset('banner-diploma.webp')} dark tight
         title={'PRESENTACIÓN\nDE DISTINCIÓN'} titleX={1057} titleY={363}
         sub="Portadiplomas y elementos ceremoniales" subX={1063} subY={507}
         linkX={1063} linkY={599} href="#/medallas"
       />
       <Universe
-        id="libros" img="/img/banner-libros.webp"
+        id="libros" img={asset('banner-libros.webp')}
         title={'BIBLIOTECA\nDEL PODER'} titleX={1082} titleY={293}
         sub="Libros, packs y ediciones premium" subX={1088} subY={437}
         linkX={1088} linkY={531} href="#/biblioteca"
@@ -109,7 +110,7 @@ export function Home() {
           {'El valor también está\nen los detalles.'}
         </Txt>
         <img
-          className="abs" src="/img/materia.webp" alt="Detalles de acabados: metal, cristal, cinta y estuche"
+          className="abs" src={asset('materia.webp')} alt="Detalles de acabados: metal, cristal, cinta y estuche"
           width={1820} height={1208} loading="lazy" decoding="async" style={{ left: 50, top: 548, objectFit: 'cover' }}
         />
       </section>

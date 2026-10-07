@@ -1,4 +1,5 @@
 import { Fragment, useState } from 'react'
+import { asset } from '../asset'
 import icoMaterial from '../assets/icons/ico-material.svg?raw'
 import icoAcabado from '../assets/icons/ico-acabado.svg?raw'
 import icoDiametro from '../assets/icons/ico-diametro.svg?raw'
@@ -30,7 +31,7 @@ type Medal = {
 /* Igual que el XD: las 9 tarjetas usan el título y la ficha de la pantalla 3. */
 const BASE = {
   name: 'Medalla del\nAsesor Presidencial',
-  detail: '/img/medalla-detalle.webp',
+  detail: asset('medalla-detalle.webp'),
   material: 'Bronce de 1/6',
   finish: 'Bombeadas bañadas\nen oro',
   diameter: '8 cm',
@@ -39,9 +40,9 @@ const BASE = {
 }
 
 const MEDALS: Medal[] = [
-  { id: 'oro', img: '/img/medalla-1.webp', ...BASE },
-  { id: 'plata', img: '/img/medalla-2.webp', ...BASE },
-  { id: 'turquesa', img: '/img/medalla-3.webp', ...BASE },
+  { id: 'oro', img: asset('medalla-1.webp'), ...BASE },
+  { id: 'plata', img: asset('medalla-2.webp'), ...BASE },
+  { id: 'turquesa', img: asset('medalla-3.webp'), ...BASE },
 ]
 
 /* Columnas del grid: x del pedestal (476px de ancho) */
@@ -58,7 +59,7 @@ function MedalCard({ m, x, selected, onSelect }: { m: Medal; x: number; selected
       onClick={onSelect}
       aria-expanded={selected}
     >
-      <img className="abs" src="/img/card-base.webp" alt="" loading="lazy" style={{ left: 10, top: 49, width: 476, height: 477 }} />
+      <img className="abs" src={asset('card-base.webp')} alt="" loading="lazy" style={{ left: 10, top: 49, width: 476, height: 477 }} />
       <img className="abs medal__img" src={m.img} alt="" loading="lazy" style={{ left: 0, top: 0, width: 494, height: 390 }} />
       <Txt x={248} y={485} w={600} s={17} lh={20} ls={140} up align="c" as="span" className="medal__name">
         {m.name}
@@ -116,7 +117,7 @@ export function Medallas() {
     <main>
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="sec" style={{ height: 800 }}>
-        <div className="bg" style={{ left: 0, top: 0, width: 1920, height: 900, backgroundImage: 'url(/img/banner-medallas.webp)' }} />
+        <div className="bg" style={{ left: 0, top: 0, width: 1920, height: 900, backgroundImage: `url(${asset('banner-medallas.webp')})` }} />
         <Txt x={1720} y={450} f="p" w={500} s={72} lh={80} up align="r" c="var(--ivory)" as="h1">
           {'Medallas, placas y\nreconocimientos\nde cristal'}
         </Txt>
@@ -128,7 +129,7 @@ export function Medallas() {
         <Txt x={200} y={263} f="p" w={500} s={64} lh={71} c="var(--navy)" as="h2">
           <span className="it gold">Reconocer</span>{' es dar \nvalor a lo construido.'}
         </Txt>
-        <Masked mask={[200, 407, 719, 473]} img={[200, 407, 1009, 473]} src="/img/fondo-medalla.webp" alt="Medalla Goberna en estuche" />
+        <Masked mask={[200, 407, 719, 473]} img={[200, 407, 1009, 473]} src={asset('fondo-medalla.webp')} alt="Medalla Goberna en estuche" />
         <Txt x={200} y={919} s={16} lh={19} ls={140} up c="var(--navy)">Trayectoria · Mérito · Distinción</Txt>
 
         <Txt x={1067} y={211} s={17} lh={32} ls={32} c="var(--ink)" width={653}>
@@ -148,7 +149,7 @@ export function Medallas() {
 
       {/* ── Colección de medallas ────────────────────────────── */}
       <section className="sec medal-grid" style={{ background: 'var(--ivory)' }}>
-        <div className="bg" style={{ left: 0, top: 0, width: 1920, height: 675, backgroundImage: 'url(/img/fondo-textura.webp)', opacity: 0.65 }} />
+        <div className="bg" style={{ left: 0, top: 0, width: 1920, height: 675, backgroundImage: `url(${asset('fondo-textura.webp')})`, opacity: 0.65 }} />
         <div className="medal-grid__head">
           <Txt x={638} y={169} f="p" w={500} s={64} lh={71} c="var(--navy)" as="h2">
             Colección de <span className="it gold">medallas</span>
