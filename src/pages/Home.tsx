@@ -4,6 +4,8 @@ import { asset } from '../asset'
 import { CtaLink, Txt } from '../components/ui'
 import { FinalCta } from '../components/sections'
 import { Proposito } from '../components/Proposito'
+import { useGSAP } from '@gsap/react'
+import gsap from 'gsap'
 import './Home.css'
 
 /** Banner de colección 1920×900 con título grande a la derecha. */
@@ -47,13 +49,82 @@ function Universe({
 }
 
 export function Home() {
+  useGSAP(() => {
+    const img = document.querySelector<HTMLImageElement>('.hero__img')
+    const shine = document.querySelector<HTMLDivElement>('.hero__shine')
+    const wrapper = document.querySelector<HTMLDivElement>('.hero__img-wrap')
+    if (!img || !shine || !wrapper) return
+
+    const mm = gsap.matchMedia()
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      // Brillo sutil que sigue al mouse
+      const handleMouse = (e: MouseEvent) => {
+        const rect = wrapper.getBoundingClientRect()
+        const x = ((e.clientX - rect.left) / rect.width - 0.5) * 2 // -1 to 1
+        const y = ((e.clientY - rect.top) / rect.height - 0.5) * 2
+
+        // Brillo se mueve con el mouse
+        gsap.to(shine, {
+          left: `${x * 30 + 20}%`,
+          top: `${y * 20 + 20}%`,
+          duration: 1.2,
+          ease: 'power2.out',
+          overwrite: true,
+        })
+
+        // Rotación 3D sutil siguiendo el mouse
+        gsap.to(wrapper, {
+          rotateY: x * 5,
+          rotateX: -y * 5,
+          duration: 1,
+          ease: 'power2.out',
+          overwrite: true,
+        })
+      }
+
+      wrapper.addEventListener('mousemove', handleMouse)
+
+      // Al salir, vuelve al centro suavemente
+      wrapper.addEventListener('mouseleave', () => {
+        gsap.to(shine, {
+          left: '20%',
+          top: '20%',
+          duration: 1.5,
+          ease: 'power2.out',
+        })
+        gsap.to(wrapper, {
+          rotateY: 0,
+          rotateX: 0,
+          duration: 1.5,
+          ease: 'power2.out',
+        })
+      })
+
+      // Brillo ambiental muy sutil que se mueve solo lentamente
+      gsap.to(shine, {
+        left: '45%',
+        top: '35%',
+        duration: 6,
+        ease: 'sine.inOut',
+        repeat: -1,
+        yoyo: true,
+        delay: 2,
+      })
+    })
+
+    return () => mm.revert()
+  }, { scope: '.hero' })
+
   return (
     <main>
       {/* ── Hero ─────────────────────────────────────────────── */}
       {/* En pantallas bajas (laptop) el hero toma el alto de la ventana: ver Home.css */}
       <section className="sec hero">
         <div className="bg px-bg" style={{ left: 0, top: 0, width: 1920, height: 1200, backgroundImage: `url(${asset('fondo-azul.webp')})` }} />
-        <img className="abs hero__img" src={asset('hero-piezas.webp')} alt="Medalla y trofeo de cristal Goberna" width={943} height={943} />
+        <div className="abs hero__img-wrap">
+          <img className="hero__img" src={asset('hero-piezas.webp')} alt="Medalla y trofeo de cristal Goberna" width={943} height={943} />
+          <div className="hero__shine" />
+        </div>
         <div className="hero__copy">
           <Txt x={200} y={289} w={500} s={32} lh={39} ls={140} up c="var(--gold)">Colección institucional · 2026</Txt>
           <Txt x={200} y={432} f="p" w={700} s={89} lh={90} ls={-30} c="var(--cream)" as="h1">
