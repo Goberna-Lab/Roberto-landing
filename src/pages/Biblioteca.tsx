@@ -59,8 +59,8 @@ export function Biblioteca() {
     <main>
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="sec" style={{ height: 798 }}>
-        <div className="bg px-bg" style={{ left: 213, top: 0, width: 1707, height: 800, backgroundImage: `url(${asset('banner-libros.webp')})` }} />
-        <div className="bg px-bg" style={{ left: 0, top: 0, width: 1707, height: 800, backgroundImage: `url(${asset('banner-libros.webp')})` }} />
+        <div className="bg px-bg" data-px-drift={18} style={{ left: 213, top: 0, width: 1707, height: 800, backgroundImage: `url(${asset('banner-libros.webp')})` }} />
+        <div className="bg px-bg" data-px-drift={18} style={{ left: 0, top: 0, width: 1707, height: 800, backgroundImage: `url(${asset('banner-libros.webp')})` }} />
         <Txt x={1720} y={390} f="p" w={500} s={72} lh={80} up align="r" c="var(--ivory)" as="h1" className="tw-title">
           <TW text={'Ideas que amplían\nla mirada'} />
         </Txt>
