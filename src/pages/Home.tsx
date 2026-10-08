@@ -128,7 +128,7 @@ export function Home() {
         <div className="hero__copy">
           <Txt x={200} y={289} w={500} s={32} lh={39} ls={140} up c="var(--gold)">Colección institucional · 2026</Txt>
           <Txt x={200} y={432} f="p" w={700} s={89} lh={90} ls={-30} c="var(--cream)" as="h1">
-            {'Lo que se construye\nmerece permanecer.'}
+            {'Lo que se construye\nmerece permanecer'}
           </Txt>
           <Txt x={200} y={560} s={22} lh={32} ls={32} c="#f7f3eb" width={746}>
             Piezas de prestigio, excelencia académica y poder destinado a perdurar.
@@ -174,7 +174,7 @@ export function Home() {
       <section id="materia" className="sec" style={{ height: 1806, background: 'var(--ivory)' }}>
         <Txt x={200} y={187} w={600} s={18} lh={22} ls={140} up c="var(--navy)">Materia &amp; oficio</Txt>
         <Txt x={689} y={272} f="p" w={700} s={84} lh={85} up c="var(--navy)" as="h2" className="tw-title">
-          <TW text={'El valor también está\nen los detalles.'} />
+          <TW text={'El valor también está\nen los detalles'} />
         </Txt>
         <img
           className="abs" src={asset('materia.webp')} alt="Detalles de acabados: metal, cristal, cinta y estuche"
