@@ -148,13 +148,13 @@ export function Home() {
           id="medallas" img={asset('banner-medallas.webp')}
           title={'PIEZAS DE\nHONOR'} titleX={1027} titleY={353}
           sub="Medallas y placas" subX={1035} subY={518}
-          linkX={1035} linkY={590} href="#/medallas" cover
+          linkX={1035} linkY={590} href="#/medallas" cover still
         >
           <Txt x={200} y={117} w={600} s={18} lh={22} ls={140} up c="var(--sand)">Universos de la colección</Txt>
         </Universe>
       </div>
       <Universe
-        id="pines" img={asset('banner-pines.webp')}
+        id="pines" img={asset('banner-pines.webp')} still
         title={'SÍMBOLOS DE\nPRESTIGIO'} titleX={1035} titleY={267}
         sub="Pines y piezas de identidad" subX={1035} subY={432}
         linkX={1035} linkY={504} href="#/pines"

@@ -11,6 +11,8 @@
 
 .universe__bg {
   transition: scale 1.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+  /* el acercamiento crece hacia la derecha: no recorta lo que está en el borde izquierdo */
+  transform-origin: left center;
 }
 
 /* Al pasar sobre el banner: leve acercamiento y el enlace en su estado hover */

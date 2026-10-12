@@ -48,7 +48,8 @@ export function Pines() {
     <main>
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="sec" style={{ height: 700 }}>
-        <div className="bg px-bg" style={{ left: 0, top: 0, width: 1920, height: 700, backgroundImage: `url(${asset('banner-pines-cat.webp')})` }} />
+        {/* Sin parallax: el zoom recortaba el pin del borde izquierdo */}
+        <div className="bg" style={{ left: 0, top: 0, width: 1920, height: 700, backgroundImage: `url(${asset('banner-pines-cat.webp')})` }} />
         <Txt x={1720} y={342} f="p" w={500} s={65} lh={70} up align="r" c="var(--ivory)" as="h1" className="tw-title">
           <TW text={'Símbolos de\nprestigio'} />
         </Txt>
