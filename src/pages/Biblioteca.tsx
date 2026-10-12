@@ -13,16 +13,17 @@ import './Biblioteca.css'
  * Pantalla CATALOGO – 4. Textos tal cual el XD (incluidos sus errores de tipeo).
  * Libros: x de la portada dentro del carrusel ("Grupo de desplazamiento",
  * viewport 1396px desde x 266). Portadas 360×499 con sombra incluida.
+ * `tx`: x de los textos respecto a la portada (12 salvo donde el XD los corre).
  */
-const BOOKS: { title: string; img: string; x: number; w: number }[] = [
+const BOOKS: { title: string; img: string; x: number; w: number; tx?: number }[] = [
   { title: 'EL PODER DE LA ORATORIA E\nIMAGEN POLÍTICA', img: asset('libro-01.webp'), x: 1, w: 360 },
   { title: 'LAWFARE GUERRA JURÍDICA EN LA\nPOLÍTICA', img: asset('libro-02.webp'), x: 519, w: 360 },
   { title: 'GUERRA ELECTORAL-EL PODER EN\nLAS SOMBRAS', img: asset('libro-03.webp'), x: 1021, w: 360 },
   { title: 'MANUEL DEL CONSULTOR\nPOLÍTICO', img: asset('libro-04.webp'), x: 1523, w: 360 },
-  { title: 'MÁQUINA\nELECTORAL', img: asset('libro-05.webp'), x: 2041, w: 360 },
-  { title: 'MANUAL DE OPERACIONES\nPSICOLÓGICAS Y PSICOSOCIALES', img: asset('libro-06.webp'), x: 2543, w: 360 },
-  { title: 'WAR ROOM EN CAMPAÑAS\nELECTORALES', img: asset('libro-07.webp'), x: 3045, w: 359.7 },
-  { title: 'MANUAL DE INTELIGENCIA Y\nCONTRA INTELIGENCIA', img: asset('libro-08.webp'), x: 3548, w: 359.7 },
+  { title: 'MÁQUINA\nELECTORAL', img: asset('libro-05.webp'), x: 2041, w: 360, tx: 13 },
+  { title: 'MANUAL DE OPERACIONES\nPSICOLÓGICAS Y PSICOSOCIALES', img: asset('libro-06.webp'), x: 2543, w: 360, tx: 15 },
+  { title: 'WAR ROOM EN CAMPAÑAS\nELECTORALES', img: asset('libro-07.webp'), x: 3045, w: 359.7, tx: 19 },
+  { title: 'MANUAL DE INTELIGENCIA Y\nCONTRA INTELIGENCIA', img: asset('libro-08.webp'), x: 3548, w: 359.7, tx: 18 },
 ]
 const VISIBLE = 3
 
@@ -77,9 +78,9 @@ export function Biblioteca() {
             {BOOKS.map((b, i) => (
               <article key={b.img} className="book" style={{ left: b.x }}>
                 <img className="abs" src={b.img} alt={b.title.replace('\n', ' ')} loading="lazy" style={{ left: 0, top: 0, width: b.w, height: 499 }} />
-                <Txt x={12} y={556} w={600} s={18} lh={22} ls={140} c="var(--gold)">{String(i + 1).padStart(2, '0')}</Txt>
-                <Txt x={12} y={580} w={600} s={17} lh={28} ls={140} c="var(--navy)" width={392} as="h3">{b.title}</Txt>
-                <MiniLink x={12} y={668} big href="#contacto">Ver edición</MiniLink>
+                <Txt x={b.tx ?? 12} y={556} w={600} s={18} lh={22} ls={140} c="var(--gold)">{String(i + 1).padStart(2, '0')}</Txt>
+                <Txt x={b.tx ?? 12} y={580} w={600} s={17} lh={28} ls={140} c="var(--navy)" width={392} as="h3">{b.title}</Txt>
+                <MiniLink x={b.tx ?? 12} y={668} big href="#contacto">Ver edición</MiniLink>
               </article>
             ))}
           </div>
