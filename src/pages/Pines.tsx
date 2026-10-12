@@ -29,13 +29,13 @@ const PINS: { name: string; img?: string; dx?: number }[] = [
 /* Columnas del grid: x del pedestal (476px de ancho), igual que Medallas */
 const COLS = [222, 723, 1236]
 
-/* Tarjeta: caja de 494×526 desde la imagen del producto (x - 10). Sin interacción: el XD no la define. */
+/* Tarjeta: caja de 494×526 desde la imagen del producto (x - 10). Al pasar el mouse, igual que Medallas. */
 function PinCard({ p, x }: { p: (typeof PINS)[number]; x: number }) {
   return (
-    <article className="pin" style={{ left: x - 10 }}>
+    <article className="medal" style={{ left: x - 10 }}>
       <img className="abs" src={asset('card-base.webp')} alt="" loading="lazy" style={{ left: 10, top: 49, width: 476, height: 477 }} />
-      {p.img && <img className="abs" src={p.img} alt="" loading="lazy" style={{ left: 0, top: 0, width: 494, height: 390 }} />}
-      <Txt x={248 + (p.dx ?? 0)} y={485} w={600} s={17} lh={20} ls={140} up align="c" as="h3">
+      {p.img && <img className="abs medal__img" src={p.img} alt="" loading="lazy" style={{ left: 0, top: 0, width: 494, height: 390 }} />}
+      <Txt x={248 + (p.dx ?? 0)} y={485} w={600} s={17} lh={20} ls={140} up align="c" as="h3" className="medal__name">
         {p.name}
       </Txt>
       <GoldDash cx={248 + (p.dx ?? 0)} y={523} />
