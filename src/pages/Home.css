@@ -11,7 +11,12 @@
 
 .universe__bg {
   transition: scale 1.2s cubic-bezier(0.22, 0.61, 0.36, 1);
-  /* el acercamiento crece hacia la derecha: no recorta lo que está en el borde izquierdo */
+}
+
+/* Banners fijos: el acercamiento al pasar el mouse crece hacia la derecha y no
+   recorta lo que está en el borde izquierdo. Los que tienen parallax (.px-bg)
+   escalan desde el centro, como en el XD. */
+.universe__bg:not(.px-bg) {
   transform-origin: left center;
 }
 

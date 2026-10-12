@@ -160,7 +160,7 @@ export function Home() {
         linkX={1035} linkY={504} href="#/pines"
       />
       <Universe
-        id="diplomas" img={asset('banner-diploma.webp')} dark tight
+        id="diplomas" img={asset('banner-diploma.webp')} dark tight still
         title={'PRESENTACIÓN\nDE DISTINCIÓN'} titleX={1057} titleY={363}
         sub="Portadiplomas y elementos ceremoniales" subX={1063} subY={507} subW={638}
         linkX={1063} linkY={599} href="#/medallas"

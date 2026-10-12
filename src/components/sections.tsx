@@ -26,7 +26,8 @@ export function ToTop({ x, y, filled }: { x: number; y: number; filled?: boolean
 export function FinalCta({ filledTop }: { filledTop?: boolean }) {
   return (
     <section id="contacto" className="sec final-cta" style={{ height: 900 }}>
-      <div className="bg px-bg" style={{ inset: 0, backgroundImage: `url(${asset('fondo-medalla.webp')})` }} />
+      {/* Sin parallax: el zoom agrandaba la medalla y acercaba el logo al título */}
+      <div className="bg" style={{ inset: 0, backgroundImage: `url(${asset('fondo-medalla.webp')})` }} />
       <Txt x={997} y={274} f="p" w={700} s={60} lh={70} up c="var(--cream)" width={723} as="h2" className="tw-title">
         <TW text="Encuentra una pieza para reconocer lo construido." />
       </Txt>
