@@ -10,7 +10,7 @@ import './Home.css'
 
 /** Banner de colección 1920×900 con título grande a la derecha. */
 function Universe({
-  id, img, title, titleX, titleY, sub, subX, subY, linkX, linkY, href, dark, tight, cover, still, children,
+  id, img, title, titleX, titleY, sub, subX, subY, subW, linkX, linkY, href, dark, tight, cover, still, children,
 }: {
   id: string
   img: string
@@ -20,6 +20,8 @@ function Universe({
   sub: string
   subX: number
   subY: number
+  /** subtítulo de área (autoHeight en XD): `subY` es el borde superior */
+  subW?: number
   linkX: number
   linkY: number
   href: string
@@ -42,7 +44,7 @@ function Universe({
       >
         <TW text={title} />
       </Txt>
-      <Txt x={subX} y={subY} s={22} lh={40} ls={32} c={color}>{sub}</Txt>
+      <Txt x={subX} y={subY} s={22} lh={40} ls={32} c={color} width={subW}>{sub}</Txt>
       <CtaLink x={linkX} y={linkY} href={href} dark={dark} />
     </section>
   )
@@ -128,7 +130,7 @@ export function Home() {
         <div className="hero__copy">
           <Txt x={200} y={289} w={500} s={32} lh={39} ls={140} up c="var(--gold)">Colección institucional · 2026</Txt>
           <Txt x={200} y={432} f="p" w={700} s={89} lh={90} ls={-30} c="var(--cream)" as="h1">
-            {'Lo que se construye\nmerece permanecer'}
+            {'Lo que se construye\nmerece permanecer.'}
           </Txt>
           <Txt x={200} y={560} s={22} lh={32} ls={32} c="#f7f3eb" width={746}>
             Piezas de prestigio, excelencia académica y poder destinado a perdurar.
@@ -145,7 +147,7 @@ export function Home() {
         <Universe
           id="medallas" img={asset('banner-medallas.webp')}
           title={'PIEZAS DE\nHONOR'} titleX={1027} titleY={353}
-          sub="Medallas, placas y reconocimientos de cristal" subX={1035} subY={497}
+          sub="Medallas y placas" subX={1035} subY={518}
           linkX={1035} linkY={590} href="#/medallas" cover
         >
           <Txt x={200} y={117} w={600} s={18} lh={22} ls={140} up c="var(--sand)">Universos de la colección</Txt>
@@ -155,7 +157,7 @@ export function Home() {
         id="pines" img={asset('banner-pines.webp')}
         title={'SÍMBOLOS DE\nPRESTIGIO'} titleX={1035} titleY={267}
         sub="Pines y piezas de identidad" subX={1035} subY={432}
-        linkX={1035} linkY={504} href="#/medallas"
+        linkX={1035} linkY={504} href="#/pines"
       />
       <Universe
         id="diplomas" img={asset('banner-diploma.webp')} dark tight
@@ -164,9 +166,9 @@ export function Home() {
         linkX={1063} linkY={599} href="#/medallas"
       />
       <Universe
-        id="libros" img={asset('banner-libros.webp')} still
-        title={'BIBLIOTECA\nDEL PODER'} titleX={1082} titleY={293}
-        sub="Libros, packs y ediciones premium" subX={1088} subY={437}
+        id="libros" img={asset('banner-biblioteca.webp')} still
+        title={'BILIOTECA\nDEL PODER'} titleX={1082} titleY={293}
+        sub="Libros, packs y ediciónes premium" subX={1088} subY={437} subW={638}
         linkX={1088} linkY={531} href="#/biblioteca" cover
       />
 
@@ -174,7 +176,7 @@ export function Home() {
       <section id="materia" className="sec" style={{ height: 1806, background: 'var(--ivory)' }}>
         <Txt x={200} y={187} w={600} s={18} lh={22} ls={140} up c="var(--navy)">Materia &amp; oficio</Txt>
         <Txt x={689} y={272} f="p" w={700} s={84} lh={85} up c="var(--navy)" as="h2" className="tw-title">
-          <TW text={'El valor también está\nen los detalles'} />
+          <TW text={'El valor también está\nen los detalles.'} />
         </Txt>
         <img
           className="abs" src={asset('materia.webp')} alt="Detalles de acabados: metal, cristal, cinta y estuche"

@@ -1,5 +1,11 @@
 .medal-grid {
-  padding: 306px 0 127px;
+  padding: 306px 0 0;
+}
+
+/* "Placas de Distinción": desde el fin de la 3.ª fila hasta "Otras piezas" */
+.placas {
+  position: relative;
+  height: 929px;
 }
 
 .medal-grid__head {
@@ -15,7 +21,8 @@
   margin-bottom: 64px;
 }
 
-.medal-row:last-child {
+.medal-row:last-child,
+.medal-row:has(+ .placas) {
   margin-bottom: 0;
 }
 
@@ -23,7 +30,8 @@
   margin-bottom: 48px;
 }
 
-.medal {
+.medal,
+.pin {
   position: absolute;
   top: 0;
   width: 494px;
@@ -31,32 +39,18 @@
   color: var(--navy);
 }
 
-.medal__name {
-  transition: color 0.3s ease-out;
-}
-
-.medal:hover .medal__name,
-.medal:focus-visible .medal__name,
+/* Pantalla 3 del XD: el título de la medalla seleccionada va en dorado */
 .medal.is-selected .medal__name {
   color: var(--gold);
 }
 
-.medal__img {
-  transition: translate 0.4s ease-out;
-}
-
-.medal:hover .medal__img,
-.medal.is-selected .medal__img {
-  translate: 0 -8px;
-}
-
-/* Panel "Medalla seleccionada": 1520×500, 100px antes de la siguiente fila */
+/* Panel "Medalla seleccionada": 1520×500, 64px antes de la siguiente fila */
 .medal-panel {
   position: relative;
   left: 200px;
   width: 1520px;
   height: 500px;
-  margin-bottom: 100px;
+  margin-bottom: 64px;
   background: var(--ivory);
   border: 1px solid var(--gold-2);
   border-radius: 20px;

@@ -1,7 +1,7 @@
-/* Carrusel de libros: 3 visibles (x 271 → 1651) */
+/* Carrusel de libros: "Grupo de desplazamiento" del XD, viewport 1396px desde x 266 */
 .books {
   position: absolute;
-  width: 1380px;
+  width: 1396px;
   height: 720px;
   overflow: hidden;
 }
@@ -19,20 +19,11 @@
   height: 720px;
 }
 
-.book__cover img {
-  transition: scale 0.6s ease-out;
-}
-
-.book:hover .book__cover img {
-  scale: 1.04;
-}
-
 .books__nav {
   position: absolute;
   width: 59px;
   height: 59px;
   border-radius: 50%;
-  transition: opacity 0.3s ease-out, scale 0.3s ease-out;
 }
 
 .books__nav.is-next {
@@ -46,32 +37,42 @@
   height: 100%;
 }
 
-.books__nav:not(:disabled):hover {
-  scale: 1.06;
-}
-
 .books__nav:disabled {
-  opacity: 0.35;
   cursor: default;
 }
 
-/* Lista de packs con scroll propio dentro de la sección */
-.packs__scroll {
+/* Línea de tiempo de los packs (degradado del XD, de abajo hacia arriba) */
+.packs__timeline {
   position: absolute;
-  top: 0;
-  right: 0;
-  height: 1062px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  scrollbar-width: none;
+  background: linear-gradient(
+    to top,
+    rgb(159 124 73 / 0) 4.3%,
+    rgb(160 124 72 / 0.518) 37.3%,
+    rgb(201 157 93) 100%
+  );
 }
 
-.packs__scroll::-webkit-scrollbar {
-  display: none;
+.packs__ring,
+.packs__dot {
+  position: absolute;
+  border-radius: 50%;
+  box-sizing: border-box;
 }
 
-.packs__list {
-  position: relative;
-  width: 1920px;
-  height: 2148px;
+.packs__ring {
+  border: 1px solid rgb(161 124 72);
+}
+
+.packs__dot {
+  background: #0a0b10;
+  border: 1px solid rgb(159 123 71);
+}
+
+.packs__dot.is-on {
+  background: rgb(160 124 72);
+  border: 0;
+}
+
+.packs__wa {
+  color: rgb(160 124 72);
 }

@@ -189,23 +189,27 @@ type BtnProps = {
   small?: boolean
   /** texto oscuro en el botón de borde (panel de detalle) */
   darkText?: boolean
+  /** texto distinto al por defecto ("Consultar este pack") */
+  label?: string
+  /** medidas propias del XD: caja, texto (x, línea base) e icono */
+  size?: { w: number; h: number; textX: number; baseY: number; ico: Box }
 }
 
 /**
  * Botones "Solicitar información" (sólido) y "Descargar catálogo PDF" (borde).
  * Normal 350×72 / pequeño 235×48 (panel de producto).
  */
-export function Btn({ x, y, variant, href, small, darkText }: BtnProps) {
+export function Btn({ x, y, variant, href, small, darkText, label: customLabel, size }: BtnProps) {
   const solid = variant === 'solid'
-  const label = solid ? 'Solicitar información' : 'Descargar catálogo PDF'
-  const w = small ? 235 : 350
-  const h = small ? 48 : 72
-  const textX = small ? (solid ? 39 : 27) : solid ? 58 : 40
-  const baseY = small ? 28 : 42
+  const label = customLabel ?? (solid ? 'Solicitar información' : 'Descargar catálogo PDF')
+  const w = size?.w ?? (small ? 235 : 350)
+  const h = size?.h ?? (small ? 48 : 72)
+  const textX = size?.textX ?? (small ? (solid ? 39 : 27) : solid ? 58 : 40)
+  const baseY = size?.baseY ?? (small ? 28 : 42)
   // caja visual del icono en XD (relativa al botón)
-  const [ix, iy, iw, ih]: Box = small
+  const [ix, iy, iw, ih]: Box = size?.ico ?? (small
     ? solid ? [183.3, 18.8, 12.5, 10.5] : [190.9, 20.6, 8.9, 8.9]
-    : solid ? [273.3, 28, 18.7, 15.6] : [285, 30.8, 13.2, 13.2]
+    : solid ? [273.3, 28, 18.7, 15.6] : [285, 30.8, 13.2, 13.2])
   const content = (
     <TextIcon
       text={label} minW={ix - textX} svg={solid ? btnArrow : btnDownload}

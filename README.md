@@ -1,7 +1,7 @@
 # Goberna · Landing de productos (Catálogo 2026)
 
 Landing del catálogo institucional de Goberna, construida desde el Adobe XD
-`LANDING-PRODUCTOS-GOBERNA.xd` (4 artboards de 1920 px).
+`LANDING-PRODUCTOS-GOBERNA.xd` (5 artboards de 1920 px).
 
 > Desktop: diseño exacto a **1920 px** y adaptación a laptop (1280–1919 px). Mobile pendiente.
 
@@ -30,6 +30,7 @@ todo queda en las coordenadas del XD (`npm run qa -- 1920 1080` lo comprueba).
 | CATALOGO – 2 | `#/medallas` |
 | CATALOGO – 3 (medalla seleccionada) | `#/medallas` + clic en una medalla |
 | CATALOGO – 4 | `#/biblioteca` |
+| CATALOGO – 5 | `#/pines` |
 
 Secciones enlazables: `#/inicio/pines`, `#/inicio/diplomas`, `#/biblioteca/ediciones`.
 
@@ -40,7 +41,7 @@ Secciones enlazables: `#/inicio/pines`, `#/inicio/diplomas`, `#/biblioteca/edici
   botones e iconos reutilizables.
 - `src/components/sections.tsx` — bloques compartidos: “Otras piezas de colección”,
   cierre “Encuentra una pieza…” y botón “volver arriba”.
-- `src/pages/` — Home, Medallas, Biblioteca.
+- `src/pages/` — Home, Medallas, Pines, Biblioteca.
 - `src/assets/icons/` — logo e iconos exportados como SVG desde los vectores del XD.
 - `public/img/` — imágenes del XD en WebP (generadas desde los originales del `.xd`).
 

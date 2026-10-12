@@ -14,6 +14,7 @@ const PAGES = [
   { name: 'home', route: '' },
   { name: 'medallas', route: '#/medallas' },
   { name: 'medallas-panel', route: '#/medallas', open: true },
+  { name: 'pines', route: '#/pines' },
   { name: 'biblioteca', route: '#/biblioteca' },
 ]
 
@@ -95,7 +96,8 @@ for (const pg of PAGES) {
         if (b.right > boxEl.right + 1 || b.bottom > boxEl.bottom + 1) out.spills.push(`tarjeta: "${label(t)}"`)
       })
     })
-    document.querySelectorAll('.books, .medal-panel').forEach((cont) => {
+    // (.books no se revisa: en el XD el viewport del carrusel corta el 3.er título)
+    document.querySelectorAll('.medal-panel').forEach((cont) => {
       const c = cont.getBoundingClientRect()
       cont.querySelectorAll('.t').forEach((t) => {
         const b = box(t)

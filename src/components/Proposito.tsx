@@ -93,7 +93,7 @@ export function Proposito() {
           momentos significativos en objetos con valor institucional.
         </Txt>
         <HLine x={427} y={636} w={1065} className="prop-line" />
-        <Txt x={428} y={715} s={16} lh={19} ls={140} up c="var(--navy)" className="prop-tag">Reconocimiento</Txt>
+        <Txt x={428} y={715} s={16} lh={19} ls={140} up c="var(--navy)" className="prop-tag">Reconocimiemto</Txt>
         <Txt x={695} y={715} s={16} lh={19} ls={140} up c="var(--navy)" className="prop-tag">Identidad</Txt>
         <Txt x={906} y={715} s={16} lh={19} ls={140} up c="var(--navy)" className="prop-tag">Conocimiento</Txt>
       </div>

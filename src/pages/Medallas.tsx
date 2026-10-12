@@ -12,15 +12,14 @@ import './Medallas.css'
 
 const SPECS = [
   { n: '01', label: 'Materiales', value: 'Bronce y acabados\nmetálicos.' },
-  { n: '02', label: 'Acabado', value: 'Dorado, plateado, envejecido\ny esmaltado.' },
+  { n: '02', label: 'Acabado', value: 'Dorado, plateado, envejecido\nY esmaltado.' },
   { n: '03', label: 'Personalización', value: 'Relieve, grabado, color y\ncinta institucional.' },
-  { n: '04', label: 'Presentación', value: 'Estuche individual o caja de\nreconocimiento.' },
+  { n: '04', label: 'Presentación', value: 'Estuche individual o caja de\nReconocimiento.' },
 ]
 
-type Medal = {
-  id: string
+/* Ficha de la pantalla 3 (medalla seleccionada), textos tal cual el XD */
+type Detail = {
   name: string
-  img: string
   detail: string
   material: string
   finish: string
@@ -29,21 +28,39 @@ type Medal = {
   before: string
 }
 
-/* Igual que el XD: las 9 tarjetas usan el título y la ficha de la pantalla 3. */
-const BASE = {
-  name: 'Medalla del\nAsesor Presidencial',
+const DETAIL: Detail = {
+  name: 'Medalla del Asesor Presidencial',
   detail: asset('medalla-detalle.webp'),
-  material: 'Bronce de 1/6',
-  finish: 'Bombeadas bañadas\nen oro',
-  diameter: '8 cm',
+  material: 'Brondce de 1/6',
+  finish: 'Bombeadas bañadas\nEn oro',
+  diameter: '8 CM',
   price: '180',
   before: 'S/250',
 }
 
-const MEDALS: Medal[] = [
-  { id: 'oro', img: asset('medalla-1.webp'), ...BASE },
-  { id: 'plata', img: asset('medalla-2.webp'), ...BASE },
-  { id: 'turquesa', img: asset('medalla-3.webp'), ...BASE },
+/*
+ * Pantalla 2: 9 medallas en orden de lectura. `dx`: desfase del título
+ * respecto al centro de la tarjeta, tal cual el XD. En el XD solo la 1.ª
+ * medalla lleva a la pantalla 3 (medalla seleccionada).
+ */
+type Piece = { name: string; img: string; dx: number }
+const MEDALS: Piece[] = [
+  { name: 'Medalla del Medalla del\nAsesor Presidencial', img: asset('medalla-1.webp'), dx: -17 },
+  { name: 'Medalla del Arquitecto de\nPoder Político', img: asset('medalla-2.webp'), dx: -1 },
+  { name: 'Medalla del Maestro de\nEstrategias Globales', img: asset('medalla-3.webp'), dx: -1 },
+  { name: 'Medalla del Asesor Estratégico\nen Criminología', img: asset('medalla-4.webp'), dx: -1 },
+  { name: 'Medalla del Consultor Político\nInternacional', img: asset('medalla-5.webp'), dx: 0 },
+  { name: 'Medalla del\nOrador Político', img: asset('medalla-6.webp'), dx: -1 },
+  { name: 'Medalla del Asesor Especializado\nen OSINT y SOCMINT', img: asset('medalla-7.webp'), dx: -1 },
+  { name: 'Medalla del\nAsesor Presidencial', img: asset('medalla-8.webp'), dx: -1 },
+  { name: 'Medalla del\nAsesor Presidencial', img: asset('medalla-9.webp'), dx: -1 },
+]
+
+/* "Placas de Distinción": pedestal, máscara 427×406 e imagen 534×421 (x absolutas del XD) */
+const PLACAS = [
+  { name: 'Placa consultor de inteligencia\ny contra inteligencia avanzada', img: asset('placa-1.webp'), base: 221, mask: 245, x: 188, cx: 459 },
+  { name: 'Placa placa del director\nde seguridad', img: asset('placa-2.webp'), base: 722, mask: 747, x: 690, cx: 960 },
+  { name: 'Placa placa de\ncriminólogo', img: asset('placa-3.webp'), base: 1235, mask: 1260, x: 1203, cx: 1473 },
 ]
 
 /* Columnas del grid: x del pedestal (476px de ancho) */
@@ -51,32 +68,38 @@ const COLS = [222, 723, 1236]
 const ROWS = 3
 
 /* Tarjeta: caja de 494×526 desde la imagen del producto (x - 10). */
-function MedalCard({ m, x, selected, onSelect }: { m: Medal; x: number; selected: boolean; onSelect: () => void }) {
+function MedalCard({ m, x, selected, onSelect }: { m: Piece; x: number; selected: boolean; onSelect?: () => void }) {
+  const content = (
+    <>
+      <img className="abs" src={asset('card-base.webp')} alt="" loading="lazy" style={{ left: 10, top: 49, width: 476, height: 477 }} />
+      <img className="abs" src={m.img} alt="" loading="lazy" style={{ left: 0, top: 0, width: 494, height: 390 }} />
+      <Txt x={248 + m.dx} y={485} w={600} s={17} lh={20} ls={140} up align="c" as="span" className="medal__name">
+        {m.name}
+      </Txt>
+      <GoldDash cx={248 + m.dx} y={523} />
+    </>
+  )
+  if (!onSelect) return <div className="medal" style={{ left: x - 10 }}>{content}</div>
   return (
     <button
       type="button"
-      className={`medal ${selected ? 'is-selected' : ''}`}
+      className={`medal is-link ${selected ? 'is-selected' : ''}`}
       style={{ left: x - 10 }}
       onClick={onSelect}
       aria-expanded={selected}
     >
-      <img className="abs" src={asset('card-base.webp')} alt="" loading="lazy" style={{ left: 10, top: 49, width: 476, height: 477 }} />
-      <img className="abs medal__img" src={m.img} alt="" loading="lazy" style={{ left: 0, top: 0, width: 494, height: 390 }} />
-      <Txt x={248} y={485} w={600} s={17} lh={20} ls={140} up align="c" as="span" className="medal__name">
-        {m.name}
-      </Txt>
-      <GoldDash cx={248} y={523} />
+      {content}
     </button>
   )
 }
 
-function MedalPanel({ m }: { m: Medal }) {
+function MedalPanel({ m }: { m: Detail }) {
   const laptop = useLaptop()
   return (
     <div className="medal-panel">
       <Txt x={80} y={65} s={16} lh={19} ls={140} up c="var(--gold)">Medalla seleccionada</Txt>
       <img className="abs" src={m.detail} alt="" style={{ left: 42, top: 94, width: 313, height: 373, objectFit: 'contain' }} />
-      <Txt x={429} y={138} f="p" w={600} s={44} lh={71} as="h3">{m.name.replace('\n', ' ')}</Txt>
+      <Txt x={429} y={138} f="p" w={600} s={44} lh={71} as="h3">{m.name}</Txt>
       <HLine x={429} y={171} w={64} h={2} c="#9f7d48" />
 
       <Icon svg={icoMaterial} box={[429, 255, 55.8, 22.9]} className="medal-panel__ico" />
@@ -111,11 +134,13 @@ function MedalPanel({ m }: { m: Medal }) {
 }
 
 /**
- * `selected`: n.º de medalla abierta (1–9, en orden de lectura), viene de la
- * ruta #/medallas/n (pantalla 3 del XD). Abrir/cerrar cambia la ruta.
+ * `selected`: n.º de medalla abierta, viene de la ruta #/medallas/n (pantalla 3
+ * del XD). El XD solo enlaza la 1.ª medalla. Abrir/cerrar cambia la ruta.
  */
+const LINKED = [1]
+
 export function Medallas({ selected }: { selected?: number }) {
-  const valid = selected && selected >= 1 && selected <= ROWS * COLS.length ? selected : undefined
+  const valid = selected && LINKED.includes(selected) ? selected : undefined
   const open = valid ? `${Math.floor((valid - 1) / COLS.length)}-${(valid - 1) % COLS.length}` : null
   const toggle = (n: number) => {
     location.hash = valid === n ? '#/medallas' : `#/medallas/${n}`
@@ -133,15 +158,15 @@ export function Medallas({ selected }: { selected?: number }) {
   return (
     <main>
       {/* ── Hero ─────────────────────────────────────────────── */}
-      <section className="sec" style={{ height: 800 }}>
-        <div className="bg px-bg" style={{ left: 0, top: 0, width: 1920, height: 900, backgroundImage: `url(${asset('banner-medallas.webp')})` }} />
-        <Txt x={1720} y={450} f="p" w={500} s={72} lh={80} up align="r" c="var(--ivory)" as="h1" className="tw-title">
+      <section className="sec" style={{ height: 700 }}>
+        <div className="bg px-bg" style={{ left: 0, top: 0, width: 1920, height: 700, backgroundImage: `url(${asset('banner-medallas-cat.webp')})` }} />
+        <Txt x={1720} y={310} f="p" w={500} s={65} lh={70} up align="r" c="var(--ivory)" as="h1" className="tw-title">
           <TW text={'Medallas, placas y\nreconocimientos\nde cristal'} />
         </Txt>
       </section>
 
       {/* ── Categoría ────────────────────────────────────────── */}
-      <section className="sec" style={{ height: 1037, background: 'var(--ivory)' }}>
+      <section className="sec" style={{ height: 1023, background: 'var(--ivory)' }}>
         <Txt x={200} y={117} w={600} s={18} lh={22} ls={140} up c="var(--navy)">Categoría - Medallas</Txt>
         <Txt x={200} y={263} f="p" w={500} s={64} lh={71} c="var(--navy)" as="h2" className="tw-title">
           <span className="it gold"><TW text="Reconocer" /></span>
@@ -150,8 +175,9 @@ export function Medallas({ selected }: { selected?: number }) {
         <Masked mask={[200, 407, 719, 473]} img={[200, 407, 1009, 473]} src={asset('fondo-medalla.webp')} alt="Medalla Goberna en estuche" />
         <Txt x={200} y={919} s={16} lh={19} ls={140} up c="var(--navy)">Trayectoria · Mérito · Distinción</Txt>
 
-        <Txt x={1067} y={211} s={17} lh={32} ls={32} c="var(--ink)" width={653}>
-          {'Cada logro representa tiempo, conocimiento, compromiso y trayectoria.\nLa colección Goberna reúne piezas concebidas para materializar ese reconocimiento y acompañar los momentos que merecen ser recordados.'}
+        {/* Cortes de línea del XD: con 653px de caja el navegador partía la 1.ª línea */}
+        <Txt x={1067} y={211} s={17} lh={32} ls={32} c="var(--ink)" width={670}>
+          {'Cada logro representa tiempo, conocimiento, compromiso y trayectoria.\nLa colección Goberna reúne piezas concebidas para materializar ese\nreconocimiento y acompañar los momentos que merecen ser\nrecordados.'}
         </Txt>
         {[408, 526, 644, 762, 880].map((y) => (
           <HLine key={y} x={1060} y={y + 0.5} w={660} c="var(--line)" />
@@ -173,33 +199,55 @@ export function Medallas({ selected }: { selected?: number }) {
             <TW text="Colección de " />
             <span className="it gold"><TW text="medallas" /></span>
           </Txt>
-          <HLine x={941} y={206.5} w={40} c="var(--line)" />
+          <HLine x={941} y={206.5} w={40} c="#a07c48" />
         </div>
 
         {Array.from({ length: ROWS }, (_, r) => {
-          const openCol = MEDALS.findIndex((_, c) => open === `${r}-${c}`)
+          const openCol = COLS.findIndex((_, c) => open === `${r}-${c}`)
           return (
             <Fragment key={r}>
               <div className={`medal-row ${openCol >= 0 ? 'has-panel' : ''}`}>
-                {MEDALS.map((m, c) => (
-                  <MedalCard
-                    key={m.id}
-                    m={m}
-                    x={COLS[c]}
-                    selected={openCol === c}
-                    onSelect={() => toggle(r * COLS.length + c + 1)}
-                  />
-                ))}
+                {COLS.map((x, c) => {
+                  const n = r * COLS.length + c + 1
+                  return (
+                    <MedalCard
+                      key={n}
+                      m={MEDALS[n - 1]}
+                      x={x}
+                      selected={openCol === c}
+                      onSelect={LINKED.includes(n) ? () => toggle(n) : undefined}
+                    />
+                  )
+                })}
                 <VLine x={709} y={137} h={214} />
                 <VLine x={1217} y={137} h={214} />
               </div>
-              {openCol >= 0 && <MedalPanel key={open} m={MEDALS[openCol]} />}
+              {openCol >= 0 && <MedalPanel key={open} m={DETAIL} />}
             </Fragment>
           )
         })}
+
+        {/* ── Placas de Distinción (y desde el fin de la 3.ª fila) ── */}
+        <div className="placas">
+          <Txt x={674} y={166} f="p" w={500} s={64} lh={71} c="var(--navy)" as="h2" className="tw-title">
+            <TW text="Placas de " />
+            <span className="it gold"><TW text="Distinción" /></span>
+          </Txt>
+          <HLine x={941} y={203.5} w={40} c="var(--line)" />
+          {PLACAS.map((p) => (
+            <Fragment key={p.img}>
+              <img className="abs" src={asset('card-base.webp')} alt="" loading="lazy" style={{ left: p.base, top: 352, width: 476, height: 477 }} />
+              <Masked mask={[p.mask, 294, 427, 406]} img={[p.x, 279, 534, 421]} src={p.img} />
+              <Txt x={p.cx} y={788} w={600} s={17} lh={20} ls={140} up align="c" as="span" c="var(--navy)">{p.name}</Txt>
+              <GoldDash cx={p.cx + 0.5} y={826} />
+            </Fragment>
+          ))}
+          <VLine x={709} y={440} h={214} />
+          <VLine x={1217} y={440} h={214} />
+        </div>
       </section>
 
-      <OtherPieces height={499} titleY={109} titleSize={50} />
+      <OtherPieces height={454} titleY={134} titleSize={50} />
       <FinalCta filledTop />
     </main>
   )

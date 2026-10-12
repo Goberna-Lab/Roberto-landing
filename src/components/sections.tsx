@@ -52,7 +52,7 @@ const OTHERS = [
     img: { src: asset('mini-diploma.webp'), mask: [0, 0, 192, 162], box: [-1, -13, 194, 194] },
   },
   {
-    title: 'Conocer',
+    title: 'Bilioteca del poder', // tal cual el XD
     desc: 'Libros, packs y colecciones premium',
     href: '#/biblioteca',
     img: { src: asset('banner-libros.webp'), mask: [0, 0, 191, 162], box: [-18, -2, 356, 166] },
@@ -92,7 +92,7 @@ export function OtherPieces({ height, titleY, titleSize }: { height: number; tit
               radius="6px 0 0 6px"
             />
             <div className="other-card__box" style={{ left: c.box, top, width: c.boxW }} />
-            <Txt x={tx} y={top + 62} f="p" w={700} s={28} lh={34} up as="h3">{o.title}</Txt>
+            <Txt x={tx} y={top + 62} f="p" w={700} s={23} lh={34} up as="h3">{o.title}</Txt>
             <Txt x={tx} y={top + 88} s={14} lh={20} ls={36} className="other-card__desc">{o.desc}</Txt>
             <MiniLink x={tx} y={top + 133} href={o.href}>Descubrir la colección</MiniLink>
           </article>

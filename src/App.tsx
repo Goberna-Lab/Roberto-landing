@@ -5,23 +5,26 @@ import { useParallax } from './components/useParallax'
 import { Home } from './pages/Home'
 import { Medallas } from './pages/Medallas'
 import { Biblioteca } from './pages/Biblioteca'
+import { Pines } from './pages/Pines'
 
-type Page = 'inicio' | 'medallas' | 'biblioteca'
+type Page = 'inicio' | 'medallas' | 'pines' | 'biblioteca'
 
 const TITLES: Record<Page, string> = {
   inicio: 'Goberna · Colección Institucional 2026',
   medallas: 'Medallas, placas y reconocimientos · Goberna',
+  pines: 'Pines y piezas de identidad · Goberna',
   biblioteca: 'Biblioteca Goberna · Libros y ediciones de colección',
 }
 
 /* Rutas por hash (pantallas del XD):
    #/              → 1 · inicio            (#/inicio/pines → sección)
    #/medallas      → 2 · categoría medallas
-   #/medallas/3    → 3 · medalla n.º 3 seleccionada (1–9)
+   #/medallas/1    → 3 · medalla seleccionada (solo la 1.ª, como el XD)
+   #/pines         → 5 · categoría pines
    #/biblioteca    → 4 · biblioteca */
 function parse(hash: string): { page: Page; section?: string } {
   const [, page = 'inicio', section] = hash.replace(/^#/, '').split('/')
-  const p = (['inicio', 'medallas', 'biblioteca'] as const).find((x) => x === page) ?? 'inicio'
+  const p = (['inicio', 'medallas', 'pines', 'biblioteca'] as const).find((x) => x === page) ?? 'inicio'
   return { page: p, section }
 }
 
@@ -75,7 +78,7 @@ function App() {
   return (
     <div ref={pageRef} className="page">
       <Header opacity={route.page === 'inicio' ? 0.95 : 0.8} active={route.page === 'inicio' ? undefined : `#/${route.page}`} />
-      {route.page === 'medallas' ? <Medallas selected={selected} /> : route.page === 'biblioteca' ? <Biblioteca /> : <Home />}
+      {route.page === 'medallas' ? <Medallas selected={selected} /> : route.page === 'pines' ? <Pines /> : route.page === 'biblioteca' ? <Biblioteca /> : <Home />}
     </div>
   )
 }

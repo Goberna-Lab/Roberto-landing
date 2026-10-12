@@ -1,5 +1,5 @@
 // Prueba el flujo de pantallas del XD (requiere `npm run dev`):
-// inicio → Piezas de honor → 3.ª medalla → atrás → inicio → Biblioteca del poder
+// inicio → Piezas de honor → 1.ª medalla → atrás → inicio → Pines → Biblioteca del poder
 import { chromium } from 'playwright'
 
 const W = +(process.argv[2] ?? 1920), H = +(process.argv[3] ?? 1080)
@@ -23,11 +23,11 @@ await p.waitForTimeout(400)
 let s = await state()
 ok(s.hash === '#/medallas' && s.y === 0 && /MEDALLAS, PLACAS/i.test(s.h1), `Piezas de honor → pantalla 2 (${s.hash}, arriba)`)
 
-// 2 → 3: clic en la 3.ª medalla
-await p.locator('.medal').nth(2).click()
+// 2 → 3: clic en la 1.ª medalla (la única enlazada en el XD)
+await p.locator('.medal').nth(0).click()
 await p.waitForTimeout(500)
 s = await state()
-ok(s.hash === '#/medallas/3' && s.panel && s.selected === 3, `3.ª medalla → pantalla 3 (${s.hash}, panel abierto, medalla ${s.selected})`)
+ok(s.hash === '#/medallas/1' && s.panel && s.selected === 1, `1.ª medalla → pantalla 3 (${s.hash}, panel abierto, medalla ${s.selected})`)
 const yClick = s.y
 // cerrar con "atrás" del navegador sin mover la página
 await p.goBack(); await p.waitForTimeout(400)
@@ -35,10 +35,18 @@ s = await state()
 ok(s.hash === '#/medallas' && !s.panel && s.y === yClick, `Atrás → cierra el panel sin mover la página (y=${s.y})`)
 
 // enlace directo compartible
-await p.goto('http://localhost:5173/#/medallas/3', { waitUntil: 'networkidle' }); await p.waitForTimeout(400)
+await p.goto('http://localhost:5173/#/medallas/1', { waitUntil: 'networkidle' }); await p.waitForTimeout(400)
 s = await state()
 const vis = await p.evaluate(() => { const r = document.querySelector('.medal-panel').getBoundingClientRect(); return r.top < innerHeight && r.bottom > 0 })
-ok(s.panel && s.selected === 3 && vis, `Enlace directo #/medallas/3 → panel abierto y a la vista`)
+ok(s.panel && s.selected === 1 && vis, `Enlace directo #/medallas/1 → panel abierto y a la vista`)
+
+// 1 → 5: enlace "Descubrir la colección" de Símbolos de prestigio
+await p.goto('http://localhost:5173/', { waitUntil: 'networkidle' })
+await p.locator('#pines h2').scrollIntoViewIfNeeded()
+await p.locator('#pines a[href="#/pines"]').first().click()
+await p.waitForTimeout(400)
+s = await state()
+ok(s.hash === '#/pines' && s.y === 0 && /SÍMBOLOS DE/i.test(s.h1), `Símbolos de prestigio → pantalla 5 (${s.hash}, arriba)`)
 
 // 1 → 4: clic en el banner de libros
 await p.goto('http://localhost:5173/', { waitUntil: 'networkidle' })
