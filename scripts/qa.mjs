@@ -3,6 +3,8 @@
 // Revisa en cada página: scroll horizontal, tamaño mínimo de texto, textos
 // encimados, contenido que se sale de botones/tarjetas y (a 1920) que cada
 // línea base coincida con el XD. Con --shots guarda capturas en qa-shots/.
+// Además compara cada sección con las animaciones activas (parallax, zoom)
+// contra la versión sin animaciones, que es la que coincide con el XD.
 import { chromium } from 'playwright'
 import fs from 'node:fs'
 
@@ -149,6 +151,66 @@ for (const pg of PAGES) {
   }
   await page.close()
 }
+
+// ── Animaciones activas vs XD ───────────────────────────────────────────
+// Con la sección centrada en pantalla (donde el parallax la deja en su sitio)
+// los fondos e imágenes deben verse igual que sin animaciones. Se ocultan los
+// textos (máquina de escribir) y se anula el hover. Un zoom de parallax que
+// recorta o agranda la imagen da ~0.14–0.19; los fondos lisos, ≤ 0.03.
+const ANIM_MAX = 0.06
+const HIDE = '.t, .btn, .cta-link, .mini-link, .to-top, .books__nav, header, .hero__shine { visibility: hidden !important } html { pointer-events: none !important }'
+const SECTIONS = 'main > section, main > div > section'
+
+async function sectionShots(route, reduced) {
+  const page = await browser.newPage({ viewport: { width: W, height: H }, reducedMotion: reduced ? 'reduce' : 'no-preference' })
+  await page.goto(BASE + route, { waitUntil: 'networkidle' })
+  await page.addStyleTag({ content: HIDE })
+  const shots = []
+  for (let i = 0, n = await page.locator(SECTIONS).count(); i < n; i++) {
+    const sec = page.locator(SECTIONS).nth(i)
+    await sec.evaluate((e) => {
+      const r = e.getBoundingClientRect()
+      window.scrollTo({ top: r.top + scrollY - (innerHeight - r.height) / 2, behavior: 'instant' })
+    })
+    await page.waitForTimeout(1600) // el scrub de GSAP alcanza al scroll
+    const r = await sec.evaluate((e) => {
+      const r = e.getBoundingClientRect()
+      const top = Math.max(0, r.top)
+      return { y: top, height: Math.min(innerHeight, r.bottom) - top, id: e.id || `sección ${[...e.parentElement.children].indexOf(e) + 1}` }
+    })
+    shots.push({ id: r.id, png: (await page.screenshot({ clip: { x: 0, y: r.y, width: W, height: r.height } })).toString('base64') })
+  }
+  await page.close()
+  return shots
+}
+
+const diffPage = await browser.newPage()
+const rmse = (a, b) => diffPage.evaluate(async ([a, b]) => {
+  const load = (s) => new Promise((ok) => { const i = new Image(); i.onload = () => ok(i); i.src = 'data:image/png;base64,' + s })
+  const [ia, ib] = await Promise.all([load(a), load(b)])
+  const w = Math.min(ia.width, ib.width), h = Math.min(ia.height, ib.height)
+  const ctx = new OffscreenCanvas(w, h).getContext('2d')
+  ctx.drawImage(ia, 0, 0); const da = ctx.getImageData(0, 0, w, h).data
+  ctx.clearRect(0, 0, w, h); ctx.drawImage(ib, 0, 0); const db = ctx.getImageData(0, 0, w, h).data
+  let sum = 0
+  for (let i = 0; i < da.length; i += 4) for (let k = 0; k < 3; k++) sum += ((da[i + k] - db[i + k]) / 255) ** 2
+  return Math.sqrt(sum / (w * h * 3))
+}, [a, b])
+
+console.log(`\nanimaciones activas vs XD @ ${W}×${H} (máx. ${ANIM_MAX})`)
+let animProblems = 0
+for (const route of [...new Set(PAGES.map((p) => p.route))]) {
+  const [anim, still] = [await sectionShots(route, false), await sectionShots(route, true)]
+  for (let i = 0; i < anim.length; i++) {
+    const d = await rmse(anim[i].png, still[i].png)
+    if (d > ANIM_MAX) {
+      animProblems++
+      console.log(`  ✗ ${route || '#/'} ${anim[i].id}: la animación cambia la imagen (${d.toFixed(3)})`)
+    }
+  }
+}
+if (!animProblems) console.log('  ✓ fondos e imágenes iguales al XD con animaciones')
+problems += animProblems
 
 await browser.close()
 console.log(`\n${problems ? `✗ ${problems} problema(s)` : '✓ todo correcto'}`)
