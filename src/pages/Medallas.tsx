@@ -72,7 +72,7 @@ function MedalCard({ m, x, selected, onSelect }: { m: Piece; x: number; selected
   const content = (
     <>
       <img className="abs" src={asset('card-base.webp')} alt="" loading="lazy" style={{ left: 10, top: 49, width: 476, height: 477 }} />
-      <img className="abs" src={m.img} alt="" loading="lazy" style={{ left: 0, top: 0, width: 494, height: 390 }} />
+      <img className="abs medal__img" src={m.img} alt="" loading="lazy" style={{ left: 0, top: 0, width: 494, height: 390 }} />
       <Txt x={248 + m.dx} y={485} w={600} s={17} lh={20} ls={140} up align="c" as="span" className="medal__name">
         {m.name}
       </Txt>

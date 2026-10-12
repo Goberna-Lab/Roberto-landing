@@ -39,9 +39,23 @@
   color: var(--navy);
 }
 
-/* Pantalla 3 del XD: el título de la medalla seleccionada va en dorado */
+.medal__name {
+  transition: color 0.3s ease-out;
+}
+
+.medal:hover .medal__name,
+.medal:focus-visible .medal__name,
 .medal.is-selected .medal__name {
   color: var(--gold);
+}
+
+.medal__img {
+  transition: translate 0.4s ease-out;
+}
+
+.medal:hover .medal__img,
+.medal.is-selected .medal__img {
+  translate: 0 -8px;
 }
 
 /* Panel "Medalla seleccionada": 1520×500, 64px antes de la siguiente fila */
