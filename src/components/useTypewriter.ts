@@ -20,8 +20,10 @@ export function useTypewriter(scope: RefObject<HTMLElement | null>, deps: unknow
           gsap.set(chars, { opacity: 0 })
           gsap.to(chars, {
             opacity: 1,
-            duration: 0.22, // cada letra entra con un fundido corto, no de golpe
-            stagger: 0.07, // ~14 caracteres por segundo
+            duration: 0.3, // cada letra entra con un fundido que se solapa con las siguientes
+            // ~25 caracteres por segundo, pero los títulos largos se aceleran
+            // para que ninguno tarde más de ~1,6 s en total
+            stagger: Math.min(0.04, 1.3 / Math.max(chars.length - 1, 1)),
             ease: 'none',
             scrollTrigger: { trigger: title, start: 'top 85%', once: true },
           })
