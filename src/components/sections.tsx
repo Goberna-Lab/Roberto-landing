@@ -57,7 +57,7 @@ const OTHERS = [
     img: { src: asset('mini-diploma.webp'), mask: [0, 0, 192, 186], box: [-1, -4, 194, 194] },
   },
   {
-    title: 'Bilioteca del\npoder', // tal cual el XD
+    title: 'Biblioteca del\npoder',
     desc: 'Libros, packs y colecciones premium',
     href: '#/biblioteca',
     img: { src: asset('banner-libros.webp'), mask: [0, 0, 191, 186], box: [-21, -2, 402, 188] },

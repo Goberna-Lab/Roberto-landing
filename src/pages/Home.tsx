@@ -173,8 +173,8 @@ export function Home() {
       />
       <Universe
         id="libros" img={asset('banner-biblioteca.webp')} still
-        title={'BILIOTECA\nDEL PODER'} titleX={1028} titleY={292.8}
-        sub="Libros, packs y ediciónes premium" subX={1028} subY={436.8} subW={638}
+        title={'BIBLIOTECA\nDEL PODER'} titleX={1028} titleY={292.8}
+        sub="Libros, packs y ediciones premium" subX={1028} subY={436.8} subW={638}
         linkX={1028} linkY={530.5} href="#/biblioteca" cover
       />
 
@@ -208,11 +208,11 @@ export function Home() {
           <img className="abs" src={asset('esenciales-agenda.webp')} alt="Agenda Goberna" loading="lazy" style={{ left: 1185, top: 883, width: 219, height: 266 }} />
           <img className="abs" src={asset('sombra.webp')} alt="" loading="lazy" style={{ left: 1075, top: 1118, width: 164, height: 39 }} />
           <img className="abs" src={asset('esenciales-vaso.webp')} alt="Vaso térmico Goberna" loading="lazy" style={{ left: 1084, top: 977, width: 156, height: 179 }} />
-          <Txt x={1431} y={979} f="p" s={29} lh={32} ls={20} c="var(--cream)" as="h3">{'Escenciales\nEjecutivos'}</Txt>
+          <Txt x={1431} y={979} f="p" s={29} lh={32} ls={20} c="var(--cream)" as="h3">{'Esenciales\nEjecutivos'}</Txt>
           <Txt x={1432} y={1041} s={10} lh={28} ls={32} up c="var(--gold)">Agenda</Txt>
           <span className="esencial__dot" style={{ left: 1504, top: 1037, width: 3, height: 3 }} />
-          <Txt x={1523} y={1041} s={10} lh={28} ls={32} up c="var(--gold)">Vaso término</Txt>
-          <CircleArrow x={1637} y={1115.7} href="#contacto" label="Consultar Escenciales Ejecutivos" />
+          <Txt x={1523} y={1041} s={10} lh={28} ls={32} up c="var(--gold)">Vaso térmico</Txt>
+          <CircleArrow x={1637} y={1115.7} href="#contacto" label="Consultar Esenciales Ejecutivos" />
         </article>
       </section>
 

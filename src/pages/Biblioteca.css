@@ -90,14 +90,6 @@
   );
 }
 
-/* Tramo dorado del pack activo (Línea 727 del XD, 5px) */
-.packs__seg {
-  position: absolute;
-  width: 5px;
-  background: rgb(160 124 72);
-  transition: top 0.3s ease-out, height 0.3s ease-out;
-}
-
 .packs__ring,
 .packs__dot {
   position: absolute;
@@ -109,7 +101,7 @@
   width: 26px;
   height: 26px;
   border: 1px solid rgb(161 124 72);
-  transition: top 0.3s ease-out;
+  transition: opacity 0.3s ease-out, scale 0.3s ease-out;
 }
 
 .packs__dot {
@@ -117,12 +109,23 @@
   height: 16px;
   background: #0a0b10;
   border: 1px solid rgb(159 123 71);
+  transition: background-color 0.3s ease-out;
 }
 
-.packs__dot.is-on {
+/* Círculo del medio relleno (estado del XD); con scroll, solo mientras un pack pasa por él */
+.packs__dot.is-mid {
   background: rgb(160 124 72);
-  border: 0;
-  transition: top 0.3s ease-out;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .packs-scroll:not(.is-filled) .packs__dot.is-mid {
+    background: #0a0b10;
+  }
+
+  .packs-scroll:not(.is-filled) .packs__ring {
+    opacity: 0;
+    scale: 0.6;
+  }
 }
 
 .packs__pick {

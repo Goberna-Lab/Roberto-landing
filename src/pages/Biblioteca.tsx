@@ -17,7 +17,7 @@ import './Biblioteca.css'
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
 /*
- * Pantalla CATALOGO – 4. Textos tal cual el XD (incluidos sus errores de tipeo).
+ * Pantalla CATALOGO – 4. Textos del XD con sus erratas corregidas.
  * Libros: x de la portada dentro del carrusel ("Grupo de desplazamiento 4",
  * viewport 1256px desde x 331). Portadas 317×439 con sombra incluida.
  * `tx`: x de los textos respecto a la portada.
@@ -26,7 +26,7 @@ const BOOKS: { title: string; img: string; x: number; w: number; tx: number }[] 
   { title: 'EL PODER DE LA ORATORIA E\nIMAGEN POLÍTICA', img: asset('libro-01.webp'), x: 1, w: 317, tx: 12 },
   { title: 'LAWFARE GUERRA JURÍDICA EN LA POLÍTICA', img: asset('libro-02.webp'), x: 457, w: 316, tx: 13 },
   { title: 'GUERRA ELECTORAL-EL PODER EN LAS SOMBRAS', img: asset('libro-03.webp'), x: 899, w: 316, tx: 13 },
-  { title: 'MANUEL DEL CONSULTOR\nPOLÍTICO', img: asset('libro-04.webp'), x: 1341, w: 315, tx: 13 },
+  { title: 'MANUAL DEL CONSULTOR\nPOLÍTICO', img: asset('libro-04.webp'), x: 1341, w: 315, tx: 13 },
   { title: 'MÁQUINA\nELECTORAL', img: asset('libro-05.webp'), x: 1797, w: 316, tx: 15 },
   { title: 'MANUAL DE OPERACIONES\nPSICOLÓGICAS Y PSICOSOCIALES', img: asset('libro-06.webp'), x: 2239, w: 315, tx: 17 },
   { title: 'WAR ROOM EN CAMPAÑAS\nELECTORALES', img: asset('libro-07.webp'), x: 2679.6, w: 316.5, tx: 22.4 },
@@ -78,24 +78,27 @@ const PACK_BOOKS: { src: string; box: Box }[] = [
  * packs uno debajo del otro). Al hacer scroll, una ventana del alto del fondo
  * azul (1104px) queda fija con la columna izquierda y la línea de tiempo, y la
  * lista de packs sube dentro de ella: no se pasa a la sección siguiente sin
- * recorrer los 6. Con movimiento reducido no se fija y queda como el XD.
+ * recorrer los 6. Cada pack pasa por el círculo del medio de la línea de
+ * tiempo: ahí cambia el pack seleccionado y el círculo se rellena.
+ * Con movimiento reducido no se fija y queda como el XD.
  */
 const PACKS_H = 2047
 const WINDOW_H = 1104
-/** Borde inferior de las portadas del pack 06 (relativo a la sección) */
-const LIST_BOTTOM = 2010
 /** Límite superior para fijar la ventana: el título queda bajo la cabecera */
 const MAX_LIFT = 50
 
 const TIMELINE: Box = [817, 134, 1, 946]
-
-/** Tramo dorado: la franja del pack activo (con la lista subida `shift` px), recortada a la línea de tiempo */
-function segment(i: number, shift: number) {
-  const [, top, , h] = TIMELINE
-  const a = Math.max(top, PACKS[i].band[0] + 1 - shift)
-  const b = Math.min(top + h, PACKS[i].band[1] - 3.4 - shift)
-  return { top: a, h: Math.max(0, b - a), mid: (a + b) / 2 }
-}
+/** Círculos de la línea de tiempo (top de cada uno, 16px); el del medio es el de selección */
+const DOTS = [206, 554, 968]
+/** Centro del círculo del medio: zona donde cambia el pack seleccionado */
+const MID = DOTS[1] + 8
+/** Distancia al centro del pack dentro de la que el círculo se ve relleno */
+const FILL_ZONE = 110
+/** Centro vertical de cada pack (entre sus líneas divisorias) */
+const CENTERS = PACKS.map((p) => (p.band[0] + p.band[1]) / 2)
+/** Recorrido de la lista: del pack 01 al 06 centrados en el círculo del medio */
+const SHIFT_FROM = CENTERS[0] - MID
+const SHIFT_TO = CENTERS[CENTERS.length - 1] - MID
 
 export function Biblioteca() {
   const [start, setStart] = useState(0)
@@ -114,23 +117,18 @@ export function Biblioteca() {
         // En pantallas más bajas que la ventana se fija un poco más arriba
         // (sin esconder el título bajo la cabecera)
         const lift = () => Math.min(MAX_LIFT, Math.max(0, WINDOW_H - innerHeight / zoom()))
-        // Lo que tiene que subir la lista para ver completo el pack 06
-        const maxShift = () => {
-          const visible = Math.min(WINDOW_H, innerHeight / zoom() + lift()) - 24
-          return Math.max(0, LIST_BOTTOM - visible)
-        }
         // Variables CSS (no estado de React): se actualizan en cada frame de scroll
         const update = (p: number) => {
           // Pantallas bajas (laptop): el bloque "disponible en Amazon" sube para no quedar cortado
           wrap.style.setProperty('--store-up', `${Math.min(130, Math.max(0, 1000 - innerHeight / zoom()))}px`)
-          const s = Math.min(1, p * 1.1) * maxShift()
-          const i = Math.min(PACKS.length - 1, Math.floor(p * PACKS.length))
-          const seg = segment(i, s)
+          const s = SHIFT_FROM + p * (SHIFT_TO - SHIFT_FROM)
           wrap.style.setProperty('--packs-top', `${-lift()}px`)
           wrap.style.setProperty('--packs-shift', `${-s}px`)
-          wrap.style.setProperty('--seg-top', `${seg.top}px`)
-          wrap.style.setProperty('--seg-h', `${seg.h}px`)
-          wrap.style.setProperty('--seg-mid', `${seg.mid}px`)
+          // Pack seleccionado: el que está pasando por el círculo del medio
+          const at = MID + s
+          let i = 0
+          CENTERS.forEach((c, k) => { if (Math.abs(c - at) < Math.abs(CENTERS[i] - at)) i = k })
+          wrap.classList.toggle('is-filled', Math.abs(CENTERS[i] - at) < FILL_ZONE)
           setPack(i)
         }
         packsST.current = ScrollTrigger.create({
@@ -143,21 +141,21 @@ export function Biblioteca() {
         })
         return () => {
           packsST.current = null
-          for (const v of ['--packs-top', '--packs-shift', '--seg-top', '--seg-h', '--seg-mid', '--store-up']) wrap.style.removeProperty(v)
+          wrap.classList.remove('is-filled')
+          for (const v of ['--packs-top', '--packs-shift', '--store-up']) wrap.style.removeProperty(v)
         }
       })
     },
     { scope: packsWrap },
   )
-  // Clic en un pack: con scroll, lleva la página a su tramo; si no, lo elige directo
+  // Clic en un pack: con scroll, lleva la página hasta que el pack quede en el
+  // círculo del medio; sin scroll (movimiento reducido), lo elige directo
   const pickPack = (i: number) => {
     const st = packsST.current
     if (!st) return setPack(i)
-    window.scrollTo({ top: st.start + ((i + 0.5) / PACKS.length) * (st.end - st.start), behavior: 'smooth' })
+    const p = (CENTERS[i] - MID - SHIFT_FROM) / (SHIFT_TO - SHIFT_FROM)
+    window.scrollTo({ top: st.start + p * (st.end - st.start), behavior: 'smooth' })
   }
-
-  // Sin scroll (movimiento reducido) el tramo sigue al pack elegido con clic
-  const seg = segment(pack, 0)
 
   return (
     <main>
@@ -165,13 +163,13 @@ export function Biblioteca() {
       <section className="sec" style={{ height: 700 }}>
         <div className="bg" style={{ left: 0, top: 0, width: 1920, height: 700, backgroundImage: `url(${asset('biblioteca-hero.webp')})` }} />
         <Txt x={1720} y={338} f="p" w={500} s={72} lh={80} up align="r" c="var(--ivory)" as="h1" className="tw-title">
-          <TW text={'Ideas que aplian\nla mirada'} />
+          <TW text={'Ideas que amplían\nla mirada'} />
         </Txt>
       </section>
 
       {/* ── 6 títulos ────────────────────────────────────────── */}
       <section className="sec" style={{ height: 1152, background: 'var(--ivory)' }}>
-        <Txt x={200} y={119} w={600} s={18} lh={22} ls={140} up c="var(--navy)">Biblioeca Goberna</Txt>
+        <Txt x={200} y={119} w={600} s={18} lh={22} ls={140} up c="var(--navy)">Biblioteca Goberna</Txt>
         <Txt x={200} y={265} f="p" w={500} s={64} lh={71} c="var(--navy)" as="h2" className="tw-title">
           <span className="it gold"><TW text={'6 Títulos.\n'} /></span>
           <TW text="Distintas perspectivas" />
@@ -225,13 +223,13 @@ export function Biblioteca() {
             {PACK_LINES.map((y) => <HLine key={y} x={928} y={y} w={792} c="var(--line-dark)" />)}
           </div>
 
-          {/* Línea de tiempo: puntos de inicio y fin, y el tramo dorado del pack activo */}
+          {/* Línea de tiempo: 3 círculos vacíos; el del medio se rellena (con aro)
+              cuando un pack pasa por él */}
           <span className="packs__timeline" style={{ left: TIMELINE[0], top: TIMELINE[1], width: TIMELINE[2], height: TIMELINE[3] }} />
-          <span className="packs__dot" style={{ left: 810, top: 206 }} />
-          <span className="packs__dot" style={{ left: 810, top: 968 }} />
-          <span className="packs__seg" style={{ left: 815, top: `var(--seg-top, ${seg.top}px)`, height: `var(--seg-h, ${seg.h}px)` }} />
-          <span className="packs__dot is-on" style={{ left: 810, top: `calc(var(--seg-mid, ${seg.mid}px) - 8px)` }} />
-          <span className="packs__ring" style={{ left: 805, top: `calc(var(--seg-mid, ${seg.mid}px) - 13px)` }} />
+          {DOTS.map((y) => (
+            <span key={y} className={`packs__dot ${y === DOTS[1] ? 'is-mid' : ''}`} style={{ left: 810, top: y }} />
+          ))}
+          <span className="packs__ring" style={{ left: 805, top: DOTS[1] - 5 }} />
 
           {/* Columna izquierda: pack seleccionado */}
           <Txt x={200} y={190} f="p" w={500} s={60} lh={71} c="var(--cream)" as="h2" className="tw-title">
@@ -268,8 +266,12 @@ export function Biblioteca() {
 
       {/* ── Edición exclusiva ────────────────────────────────── */}
       <section className="sec" style={{ height: 750 }}>
-        <div className="bg" style={{ left: 0, top: -148, width: 1920, height: 1024, backgroundImage: `url(${asset('exclusiva-fondo.webp')})` }} />
-        <img className="abs" src={asset('caja-libros.webp')} alt="Estuche de colección Goberna con las 6 obras" loading="lazy" style={{ left: 863, top: 118, width: 905, height: 589 }} />
+        {/* Escena con zoom al entrar (fondo y estuche juntos) */}
+        <div className="abs zoom-bg" style={{ inset: 0 }}>
+          {/* Fondo 55px más arriba que en el XD (top -148): así el piso queda bajo el estuche y no flota */}
+          <div className="bg" style={{ left: 0, top: -203, width: 1920, height: 1024, backgroundImage: `url(${asset('exclusiva-fondo.webp')})` }} />
+          <img className="abs" src={asset('caja-libros.webp')} alt="Estuche de colección Goberna con las 6 obras" loading="lazy" style={{ left: 863, top: 118, width: 905, height: 589 }} />
+        </div>
         <Txt x={201} y={94.8} s={14} lh={18} ls={60} up c="var(--gold)">Edición exclusiva · Goberna</Txt>
         <Txt x={200} y={247} f="p" w={600} s={62} lh={83} ls={-40} up c="var(--gold)" as="h2" className="tw-title">
           <TW text="06 Obras" />
