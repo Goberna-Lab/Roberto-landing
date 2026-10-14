@@ -1,8 +1,8 @@
-/* Carrusel de libros: "Grupo de desplazamiento" del XD, viewport 1396px desde x 266 */
+/* Carrusel de libros: "Grupo de desplazamiento 4" del XD, viewport 1256px desde x 331 */
 .books {
   position: absolute;
-  width: 1396px;
-  height: 720px;
+  width: 1256px;
+  height: 640px;
   overflow: hidden;
 }
 
@@ -15,8 +15,8 @@
 .book {
   position: absolute;
   top: 0;
-  width: 470px;
-  height: 720px;
+  width: 420px;
+  height: 640px;
 }
 
 .books__nav {
@@ -41,15 +41,61 @@
   cursor: default;
 }
 
+/* Packs: contenedor del alto del XD (2047px) con fondo oscuro; la ventana
+   (fondo azul, 1104px) queda fija mientras la lista sube dentro de ella */
+.packs-scroll {
+  position: relative;
+  background: #01050e;
+}
+
+.packs-scroll > .packs {
+  position: sticky;
+  top: var(--packs-top, 0px);
+  height: 1104px;
+}
+
+.packs__bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1920px;
+  height: 1104px;
+  overflow: hidden;
+}
+
+.packs__list {
+  position: absolute;
+  inset: 0;
+  translate: 0 var(--packs-shift, 0px);
+}
+
+/* Sin animaciones: la sección no se fija y muestra los 6 packs como el XD */
+@media (prefers-reduced-motion: reduce) {
+  .packs-scroll > .packs {
+    position: relative;
+    top: 0;
+    height: 100%;
+  }
+}
+
 /* Línea de tiempo de los packs (degradado del XD, de abajo hacia arriba) */
 .packs__timeline {
   position: absolute;
+  opacity: 0.5;
   background: linear-gradient(
     to top,
     rgb(159 124 73 / 0) 4.3%,
     rgb(160 124 72 / 0.518) 37.3%,
     rgb(201 157 93) 100%
   );
+}
+
+/* Tramo dorado del pack activo (Línea 727 del XD, 5px) */
+.packs__seg {
+  position: absolute;
+  width: 5px;
+  background: rgb(160 124 72);
+  transition: top 0.3s ease-out, height 0.3s ease-out;
 }
 
 .packs__ring,
@@ -60,10 +106,15 @@
 }
 
 .packs__ring {
+  width: 26px;
+  height: 26px;
   border: 1px solid rgb(161 124 72);
+  transition: top 0.3s ease-out;
 }
 
 .packs__dot {
+  width: 16px;
+  height: 16px;
   background: #0a0b10;
   border: 1px solid rgb(159 123 71);
 }
@@ -71,8 +122,30 @@
 .packs__dot.is-on {
   background: rgb(160 124 72);
   border: 0;
+  transition: top 0.3s ease-out;
+}
+
+.packs__pick {
+  position: absolute;
 }
 
 .packs__wa {
   color: rgb(160 124 72);
+}
+
+.packs__pdf .ico {
+  color: var(--cream);
+}
+
+.packs__store {
+  opacity: 0.8;
+}
+
+.packs__amazon {
+  color: #fff;
+}
+
+.packs__store,
+.packs__amazon {
+  translate: 0 calc(-1 * var(--store-up, 0px));
 }

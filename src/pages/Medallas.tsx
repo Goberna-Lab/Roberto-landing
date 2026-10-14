@@ -17,31 +17,41 @@ const SPECS = [
   { n: '04', label: 'Presentación', value: 'Estuche individual o caja de\nReconocimiento.' },
 ]
 
-/* Ficha de la pantalla 3 (medalla seleccionada), textos tal cual el XD */
+/*
+ * Fichas de las 9 medallas (pantalla 7 del XD, "Medalla seleccionada"), textos
+ * tal cual el XD. `size`: tamaño de los valores. `finish` en varias líneas =
+ * textos separados 23px en el XD; entonces la columna "Acabado" se corre a la
+ * izquierda (`finishX`). Las fichas 3, 6 y 8 usan en el XD la imagen de la 1.ª.
+ */
 type Detail = {
   name: string
+  nameSize?: number
   detail: string
   material: string
-  finish: string
+  finish: string | string[]
+  size: number
   diameter: string
   price: string
   before: string
 }
 
-const DETAIL: Detail = {
-  name: 'Medalla del Asesor Presidencial',
-  detail: asset('medalla-detalle.webp'),
-  material: 'Brondce de 1/6',
-  finish: 'Bombeadas bañadas\nEn oro',
-  diameter: '8 CM',
-  price: '180',
-  before: 'S/250',
-}
+const QUEMADAS = ['-Quemadas bombeadas']
+const DETAILS: Detail[] = [
+  { name: 'Medalla del Asesor Presidencial', detail: asset('medalla-detalle.webp'), material: 'Bronce de 1/16', finish: 'Bombeadas bañadas\nEn oro', size: 16, diameter: '8 CM', price: '180', before: 'S/250' },
+  { name: 'Medalla del Arquitecto Poder Político', detail: asset('ficha-2.webp'), material: 'Bronce de 1/16', finish: ['-Bombeadas bañadas en níquel', '-Cinta azul y blanco'], size: 15, diameter: '8 CM', price: '180', before: 'S/250' },
+  { name: 'Medalla del Maestro de Estrategias Globales', detail: asset('medalla-detalle.webp'), material: 'Brondce de 1/16', finish: ['-Quemadas bombeadas', '-Cinta azul y blanco'], size: 15, diameter: '8 CM', price: '180', before: 'S/250' },
+  { name: 'Medalla del Asesor Estratégico en Criminología', detail: asset('ficha-4.webp'), material: 'Bronce de 1/16', finish: QUEMADAS, size: 15, diameter: '8 CM', price: '180', before: 'S/250' },
+  { name: 'Medalla del Consultor Político Internacional', detail: asset('ficha-5.webp'), material: 'Bronce de 1/16', finish: QUEMADAS, size: 15, diameter: '8 CM', price: '180', before: 'S/250' },
+  { name: 'Medalla del Orador Político', detail: asset('medalla-detalle.webp'), material: 'Bronce de 1/16', finish: QUEMADAS, size: 15, diameter: '8 CM', price: '180', before: 'S/250' },
+  { name: 'Medalla del Asesor Especializándolasdo en Osint y Socmint', nameSize: 38, detail: asset('ficha-7.webp'), material: 'Bronce de 1/16', finish: QUEMADAS, size: 15, diameter: '8 CM', price: '180', before: 'S/250' },
+  { name: 'Medalla del Asesor Estratégico PSYOPS', detail: asset('medalla-detalle.webp'), material: 'Bronce de 1/16', finish: QUEMADAS, size: 15, diameter: '8 CM', price: '180', before: 'S/250' },
+  { name: 'Medalla del Analista de Inteligencia', detail: asset('ficha-9.webp'), material: 'Bronce de 1/16', finish: QUEMADAS, size: 15, diameter: '8 CM', price: '180', before: 'S/250' },
+]
 
 /*
  * Pantalla 2: 9 medallas en orden de lectura. `dx`: desfase del título
- * respecto al centro de la tarjeta, tal cual el XD. En el XD solo la 1.ª
- * medalla lleva a la pantalla 3 (medalla seleccionada).
+ * respecto al centro de la tarjeta, tal cual el XD. Cada medalla abre su
+ * ficha (pantallas 3 y 7 del XD).
  */
 type Piece = { name: string; img: string; dx: number }
 const MEDALS: Piece[] = [
@@ -95,26 +105,35 @@ function MedalCard({ m, x, selected, onSelect }: { m: Piece; x: number; selected
 
 function MedalPanel({ m }: { m: Detail }) {
   const laptop = useLaptop()
+  // Acabado en varias líneas: la columna empieza más a la izquierda (x 731.5)
+  const lines = Array.isArray(m.finish)
+  const fx = lines ? 731.5 : 765
   return (
     <div className="medal-panel">
       <Txt x={80} y={65} s={16} lh={19} ls={140} up c="var(--gold)">Medalla seleccionada</Txt>
       <img className="abs" src={m.detail} alt="" style={{ left: 42, top: 94, width: 313, height: 373, objectFit: 'contain' }} />
-      <Txt x={429} y={138} f="p" w={600} s={44} lh={71} as="h3">{m.name}</Txt>
+      <Txt x={429} y={138} f="p" w={600} s={m.nameSize ?? 44} lh={71} as="h3">{m.name}</Txt>
       <HLine x={429} y={171} w={64} h={2} c="#9f7d48" />
 
       <Icon svg={icoMaterial} box={[429, 255, 55.8, 22.9]} className="medal-panel__ico" />
-      <Icon svg={icoAcabado} box={[725, 255, 28.9, 35.1]} className="medal-panel__ico" />
+      <Icon svg={icoAcabado} box={[fx - 40, 255, 28.9, 35.1]} className="medal-panel__ico" />
       <Icon svg={icoDiametro} box={[1045, 252.8, 20, 20]} className="medal-panel__ico" />
       <Icon svg={icoInversion} box={[1263, 256.2, 20, 13.8]} className="medal-panel__ico" />
 
       <Txt x={495} y={268} w={600} s={16} lh={19} ls={140} up>Materiales</Txt>
-      <Txt x={765} y={269} w={600} s={16} lh={19} ls={140} up>Acabado</Txt>
+      <Txt x={fx} y={269} w={600} s={16} lh={19} ls={140} up>Acabado</Txt>
       <Txt x={1075} y={269} w={600} s={16} lh={19} ls={140} up>Diámetro</Txt>
       <Txt x={1293} y={269} w={600} s={16} lh={19} ls={140} up>Inversión</Txt>
 
-      <Txt x={495} y={305} s={18} lh={32} ls={32} c="var(--ink)">{m.material}</Txt>
-      <Txt x={765} y={306} s={18} lh={32} ls={32} c="var(--ink)">{m.finish}</Txt>
-      <Txt x={1075} y={306} s={18} lh={32} ls={32} c="var(--ink)">{m.diameter}</Txt>
+      <Txt x={495} y={305} s={m.size} lh={32} ls={32} c="var(--ink)">{m.material}</Txt>
+      {lines ? (
+        (m.finish as string[]).map((t, i) => (
+          <Txt key={t} x={fx} y={306 + 23 * i} s={m.size} lh={32} ls={32} c="var(--ink)">{t}</Txt>
+        ))
+      ) : (
+        <Txt x={fx} y={306} s={m.size} lh={32} ls={32} c="var(--ink)">{m.finish}</Txt>
+      )}
+      <Txt x={1075} y={306} s={m.size} lh={32} ls={32} c="var(--ink)">{m.diameter}</Txt>
       <Txt x={1293} y={316} w={600} s={31} lh={55} ls={32} c="var(--gold-2)">
         <span style={{ fontSize: 22 }}>S/</span> {m.price}
       </Txt>
@@ -134,13 +153,11 @@ function MedalPanel({ m }: { m: Detail }) {
 }
 
 /**
- * `selected`: n.º de medalla abierta, viene de la ruta #/medallas/n (pantalla 3
- * del XD). El XD solo enlaza la 1.ª medalla. Abrir/cerrar cambia la ruta.
+ * `selected`: n.º de medalla abierta, viene de la ruta #/medallas/n (pantallas
+ * 3 y 7 del XD). Abrir/cerrar cambia la ruta.
  */
-const LINKED = [1]
-
 export function Medallas({ selected }: { selected?: number }) {
-  const valid = selected && LINKED.includes(selected) ? selected : undefined
+  const valid = selected && selected >= 1 && selected <= DETAILS.length ? selected : undefined
   const open = valid ? `${Math.floor((valid - 1) / COLS.length)}-${(valid - 1) % COLS.length}` : null
   const toggle = (n: number) => {
     location.hash = valid === n ? '#/medallas' : `#/medallas/${n}`
@@ -216,14 +233,14 @@ export function Medallas({ selected }: { selected?: number }) {
                       m={MEDALS[n - 1]}
                       x={x}
                       selected={openCol === c}
-                      onSelect={LINKED.includes(n) ? () => toggle(n) : undefined}
+                      onSelect={() => toggle(n)}
                     />
                   )
                 })}
                 <VLine x={709} y={137} h={214} />
                 <VLine x={1217} y={137} h={214} />
               </div>
-              {openCol >= 0 && <MedalPanel key={open} m={DETAIL} />}
+              {openCol >= 0 && valid && <MedalPanel key={open} m={DETAILS[valid - 1]} />}
             </Fragment>
           )
         })}
@@ -248,8 +265,29 @@ export function Medallas({ selected }: { selected?: number }) {
         </div>
       </section>
 
-      <OtherPieces height={454} titleY={134} titleSize={50} />
-      <FinalCta filledTop />
+      {/* ── Excelencia en Cristal ─────────────────────────────── */}
+      <section className="sec cristal" style={{ height: 1000 }}>
+        <div className="bg" style={{ inset: 0, backgroundImage: `url(${asset('cristal-fondo.webp')})` }} />
+        <div className="bg" style={{ inset: 0, backgroundImage: `url(${asset('cristal-fondo-2.webp')})` }} />
+        <div className="cristal__shade" />
+        <img className="abs" src={asset('cristal-2.webp')} alt="Reconocimiento de cristal Goberna" loading="lazy" style={{ left: 1033, top: 111, width: 410, height: 764 }} />
+        <img className="abs" src={asset('cristal-3.webp')} alt="" loading="lazy" style={{ left: 1443, top: 294, width: 277, height: 481 }} />
+        {/* Indicador de piezas (estático en el XD) */}
+        <span className="cristal__dot" style={{ left: 1204, top: 929 }} />
+        <span className="cristal__pill" style={{ left: 1216, top: 929 }} />
+        <span className="cristal__dot" style={{ left: 1259, top: 929 }} />
+        <img className="abs" src={asset('cristal-logo.webp')} alt="" loading="lazy" style={{ left: 1165, top: 372, width: 147, height: 138 }} />
+        <img className="abs" src={asset('cristal-1.webp')} alt="" loading="lazy" style={{ left: 631, top: 168, width: 469, height: 704 }} />
+        <Txt x={200} y={349} f="p" w={500} s={75} lh={80} c="var(--cream)" as="h2" className="tw-title">
+          <TW text={'Excelencia en \n'} />
+          <span className="it gold"><TW text="Cristal" /></span>
+        </Txt>
+        <HLine x={200} y={460} w={40} c="#a07c48" />
+        <Txt x={200} y={516} s={17} lh={32} ls={32} c="var(--cream)">Una expresión de honor, mérito y trayectoria.</Txt>
+      </section>
+
+      <OtherPieces height={478} titleY={134} />
+      <FinalCta />
     </main>
   )
 }

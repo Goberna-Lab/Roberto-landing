@@ -21,42 +21,46 @@ export function ToTop({ x, y, filled }: { x: number; y: number; filled?: boolean
 
 /**
  * Cierre común: "Encuentra una pieza para reconocer lo construido."
- * Fondo-medalla 1920×900.
+ * BANNER-FOOTER 1920×750 y, debajo, la barra del pie (104px) con "volver arriba".
  */
-export function FinalCta({ filledTop }: { filledTop?: boolean }) {
+export function FinalCta() {
   return (
-    <section id="contacto" className="sec final-cta" style={{ height: 900 }}>
-      {/* Sin parallax: el zoom agrandaba la medalla y acercaba el logo al título */}
-      <div className="bg" style={{ inset: 0, backgroundImage: `url(${asset('fondo-medalla.webp')})` }} />
-      <Txt x={997} y={274} f="p" w={700} s={60} lh={70} up c="var(--cream)" width={723} as="h2" className="tw-title">
-        <TW text="Encuentra una pieza para reconocer lo construido." />
-      </Txt>
-      <Btn x={996} y={555} variant="solid" href="mailto:informes@goberna.pe?subject=Solicitud%20de%20informaci%C3%B3n%20%E2%80%94%20Colecci%C3%B3n%20Goberna" />
-      <Btn x={1370} y={555} variant="outline" href="#contacto" />
-      <ToTop x={1660} y={810} filled={filledTop} />
-    </section>
+    <>
+      <section id="contacto" className="sec final-cta" style={{ height: 750 }}>
+        {/* Sin parallax: el zoom agrandaba la medalla y acercaba el logo al título */}
+        <div className="bg" style={{ inset: 0, backgroundImage: `url(${asset('banner-footer.webp')})` }} />
+        <Txt x={997} y={207} f="p" w={700} s={60} lh={70} up c="var(--cream)" width={723} as="h2" className="tw-title">
+          <TW text="Encuentra una pieza para reconocer lo construido." />
+        </Txt>
+        <Btn x={996} y={472} variant="solid" href="mailto:informes@goberna.pe?subject=Solicitud%20de%20informaci%C3%B3n%20%E2%80%94%20Colecci%C3%B3n%20Goberna" />
+        <Btn x={1370} y={472} variant="outline" href="#contacto" />
+      </section>
+      <footer className="sec site-footer" style={{ height: 104, background: 'var(--navy)' }}>
+        <ToTop x={1836} y={20} filled />
+      </footer>
+    </>
   )
 }
 
 const OTHERS = [
   {
-    title: 'Pertenecer',
+    title: 'Símbolos de\nprestigio',
     desc: 'Pines y piezas de identidad',
     href: '#/inicio/pines',
-    // máscara 190×162 con radio izquierdo; imagen 288×162 desplazada -41px
-    img: { src: asset('mini-pines.webp'), mask: [0, 0, 190, 162], box: [-41, 0, 288, 162] },
+    // máscara 190×186 con radio izquierdo; imagen 330×186 desplazada -62px
+    img: { src: asset('mini-pines.webp'), mask: [0, 0, 190, 186], box: [-62, 0, 330, 186] },
   },
   {
-    title: 'Presentar',
+    title: 'Presentación de\ndistinción',
     desc: 'Portadiplomas y elementos\nceremoniales',
     href: '#/inicio/diplomas',
-    img: { src: asset('mini-diploma.webp'), mask: [0, 0, 192, 162], box: [-1, -13, 194, 194] },
+    img: { src: asset('mini-diploma.webp'), mask: [0, 0, 192, 186], box: [-1, -4, 194, 194] },
   },
   {
-    title: 'Bilioteca del poder', // tal cual el XD
+    title: 'Bilioteca del\npoder', // tal cual el XD
     desc: 'Libros, packs y colecciones premium',
     href: '#/biblioteca',
-    img: { src: asset('banner-libros.webp'), mask: [0, 0, 191, 162], box: [-18, -2, 356, 166] },
+    img: { src: asset('banner-libros.webp'), mask: [0, 0, 191, 186], box: [-21, -2, 402, 188] },
   },
 ] as const
 
@@ -68,17 +72,20 @@ const CARD_X = [
 ]
 
 /**
- * "Otras piezas de colección": 3 tarjetas horizontales.
- * `titleY` = línea base del título; las tarjetas empiezan 78px debajo.
+ * "Otras piezas de colección": 3 tarjetas horizontales (186px de alto).
+ * Con título (`titleY` = su línea base) las tarjetas empiezan 78px debajo;
+ * sin título (Pines, Biblioteca) empiezan en `cardsTop`.
  */
-export function OtherPieces({ height, titleY, titleSize }: { height: number; titleY: number; titleSize: 50 | 64 }) {
-  const top = titleY + 78
+export function OtherPieces({ height, titleY, cardsTop }: { height: number; titleY?: number; cardsTop?: number }) {
+  const top = titleY !== undefined ? titleY + 78 : (cardsTop ?? 0)
   return (
     <section className="sec" style={{ height, background: '#fff' }}>
-      <Txt x={200} y={titleY} f="p" w={500} s={titleSize} lh={71} as="h2" className="tw-title">
-        <TW text="Otras piezas de " />
-        <span className="it gold"><TW text="colección" /></span>
-      </Txt>
+      {titleY !== undefined && (
+        <Txt x={200} y={titleY} f="p" w={500} s={50} lh={71} as="h2" className="tw-title">
+          <TW text="Otras piezas de " />
+          <span className="it gold"><TW text="colección" /></span>
+        </Txt>
+      )}
       {OTHERS.map((o, i) => {
         const c = CARD_X[i]
         const [mx, my, mw, mh] = o.img.mask
@@ -93,9 +100,9 @@ export function OtherPieces({ height, titleY, titleSize }: { height: number; tit
               radius="6px 0 0 6px"
             />
             <div className="other-card__box" style={{ left: c.box, top, width: c.boxW }} />
-            <Txt x={tx} y={top + 62} f="p" w={700} s={23} lh={34} up as="h3">{o.title}</Txt>
-            <Txt x={tx} y={top + 88} s={14} lh={20} ls={36} className="other-card__desc">{o.desc}</Txt>
-            <MiniLink x={tx} y={top + 133} href={o.href}>Descubrir la colección</MiniLink>
+            <Txt x={tx} y={top + 49} f="p" w={700} s={23} lh={24} up as="h3">{o.title}</Txt>
+            <Txt x={tx} y={top + 109.2} s={14} lh={20} ls={36} className="other-card__desc">{o.desc}</Txt>
+            <MiniLink x={tx} y={top + 150} href={o.href}>Descubrir la colección</MiniLink>
           </article>
         )
       })}

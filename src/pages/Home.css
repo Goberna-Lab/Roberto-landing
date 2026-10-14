@@ -84,3 +84,53 @@
   mix-blend-mode: screen;
   filter: blur(8px);
 }
+
+/* Esenciales Goberna: botón circular (Componente 8). Hover del XD: relleno dorado y flecha crema */
+.circle-arrow {
+  position: absolute;
+  width: 48.4px;
+  height: 48.4px;
+  border-radius: 50%;
+}
+
+.circle-arrow svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.circle-arrow svg * {
+  transition: fill 0.3s ease-out;
+}
+
+.circle-arrow:hover svg path:first-child {
+  fill: #a07c48;
+}
+
+.circle-arrow:hover svg path:last-child {
+  fill: #f7f3ec;
+}
+
+.esencial__dot {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+/* Materia & oficio: fotos con zoom al pasar el mouse (578 → 654px, estado del XD) */
+.materia__tile {
+  overflow: hidden;
+}
+
+.materia__tile img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: scale 0.6s ease-out;
+}
+
+.materia__tile:hover img {
+  scale: 1.1315;
+}

@@ -148,7 +148,7 @@ export function CtaLink({
  * posición exacta del XD y, si el texto crece (laptop), el icono se desplaza
  * en vez de encimarse.
  */
-function TextIcon({
+export function TextIcon({
   text, minW, svg, w, h, rot, dy, className,
 }: { text: ReactNode; minW: number; svg: string; w: number; h: number; rot?: boolean; dy: number; className: string }) {
   // El contenedor del icono mide 0px de alto y se apoya en la línea base: no
@@ -166,14 +166,16 @@ function TextIcon({
 
 /**
  * Enlace dorado pequeño (Componente 87). Hover: flecha +16px.
- * Variante 9px ("Descubrir la colección") y 15px ("Ver edición").
+ * Variante 9px ("Descubrir la colección") y 13px ("Ver edición").
  */
 export function MiniLink({ x, y, big, href, children }: { x: number; y: number; big?: boolean; href: string; children: ReactNode }) {
-  const arrow = <TextIcon text={children} minW={163.2} svg={arrowSm} w={15} h={12.5} rot dy={-10} className="mini-link__arrow" />
+  const arrow = big
+    ? <TextIcon text={children} minW={143.9} svg={arrowSm} w={13.2} h={11} rot dy={-8.9} className="mini-link__arrow" />
+    : <TextIcon text={children} minW={163.2} svg={arrowSm} w={15} h={12.5} rot dy={-10} className="mini-link__arrow" />
   return (
     <a href={href} className="mini-link" style={{ left: x, top: y }}>
       {big ? (
-        <Txt x={0} y={15} w={600} s={15} lh={19} ls={140} up as="span">{arrow}</Txt>
+        <Txt x={0} y={15} w={600} s={13} lh={16} ls={140} up as="span">{arrow}</Txt>
       ) : (
         <Txt x={0} y={10} w={600} s={9} lh={11} ls={140} up as="span">{arrow}</Txt>
       )}

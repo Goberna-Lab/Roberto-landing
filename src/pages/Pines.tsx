@@ -13,9 +13,8 @@ const SPECS = [
 ]
 
 /*
- * Pantalla CATALOGO – 5. Textos tal cual el XD (incluidas sus mayúsculas).
- * `dx`: desfase del título respecto al centro de la
- * tarjeta, tal cual el XD. La 6.ª pieza no tiene imagen en el XD (solo pedestal).
+ * Pantalla CATALOGO – 5. Textos tal cual el XD (en mayúsculas por estilo).
+ * `dx`: desfase del título respecto al centro de la tarjeta, tal cual el XD.
  */
 const PINS: { name: string; img?: string; dx?: number }[] = [
   { name: 'Pin del 1 Foro de Estado\nGobernador Lima 2026', img: asset('pin-1.webp'), dx: -17 },
@@ -23,7 +22,10 @@ const PINS: { name: string; img?: string; dx?: number }[] = [
   { name: 'Pin institucional\nde Goberna', img: asset('pin-3.webp'), dx: -1 },
   { name: 'Pin de Director\nde Seguridad', img: asset('pin-4.webp'), dx: -1 },
   { name: 'Pin de\nCriminología', img: asset('pin-5.webp') },
-  { name: 'Medalla del\nOrador Político', dx: -1 },
+  { name: 'Del Asesor Especializado\nen OSINT y SOCMINT', img: asset('pin-6.webp') },
+  { name: 'Pin del\nOrador Político', img: asset('pin-7.webp'), dx: -1 },
+  { name: 'Pin del Consultor Político\nInternacional', img: asset('pin-8.webp') },
+  { name: 'Pin de\nOSINT & SOCMINT', img: asset('pin-9.webp') },
 ]
 
 /* Columnas del grid: x del pedestal (476px de ancho), igual que Medallas */
@@ -81,7 +83,7 @@ export function Pines() {
       </section>
 
       {/* ── Colección de pines ───────────────────────────────── */}
-      <section className="sec medal-grid" style={{ background: 'var(--ivory)', padding: '286px 0 120px' }}>
+      <section className="sec medal-grid" style={{ background: 'var(--ivory)', padding: '286px 0 160px' }}>
         <div className="bg" style={{ left: 0, top: 0, width: 1920, height: 675, backgroundImage: `url(${asset('fondo-textura.webp')})`, opacity: 0.65 }} />
         <div className="medal-grid__head">
           <Txt x={693} y={169} f="p" w={500} s={64} lh={71} c="var(--navy)" as="h2" className="tw-title">
@@ -91,7 +93,7 @@ export function Pines() {
           <HLine x={941} y={206.5} w={40} c="#a07c48" />
         </div>
 
-        {[0, 1].map((r) => (
+        {[0, 1, 2].map((r) => (
           <div key={r} className="medal-row">
             {COLS.map((x, c) => (
               <PinCard key={c} p={PINS[r * COLS.length + c]} x={x} />
@@ -102,8 +104,8 @@ export function Pines() {
         ))}
       </section>
 
-      <OtherPieces height={434} titleY={114} titleSize={50} />
-      <FinalCta filledTop />
+      <OtherPieces height={346} cardsTop={80} />
+      <FinalCta />
     </main>
   )
 }

@@ -159,7 +159,9 @@ for (const pg of PAGES) {
 // recorta o agranda la imagen da ~0.14–0.19; los fondos lisos, ≤ 0.03.
 const ANIM_MAX = 0.06
 const HIDE = '.t, .btn, .cta-link, .mini-link, .to-top, .books__nav, header, .hero__shine { visibility: hidden !important } html { pointer-events: none !important }'
-const SECTIONS = 'main > section, main > div > section'
+// Los packs de Biblioteca no entran: con animaciones la lista sube con el scroll
+// (es la interacción), así que nunca coinciden con la versión estática.
+const SECTIONS = 'main > section, main > div > section:not(.packs)'
 
 async function sectionShots(route, reduced) {
   const page = await browser.newPage({ viewport: { width: W, height: H }, reducedMotion: reduced ? 'reduce' : 'no-preference' })

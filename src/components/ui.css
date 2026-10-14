@@ -8,6 +8,7 @@
   display: block;
   width: 100%;
   height: 100%;
+  overflow: visible; /* trazos que XD dibuja sobre el borde de la caja */
 }
 
 /* Texto + icono en línea (ver TextIcon en ui.tsx) */

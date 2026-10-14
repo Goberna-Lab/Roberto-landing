@@ -1,7 +1,8 @@
 # Goberna · Landing de productos (Catálogo 2026)
 
 Landing del catálogo institucional de Goberna, construida desde el Adobe XD
-`LANDING-PRODUCTOS-GOBERNA.xd` (5 artboards de 1920 px).
+"GOBERNA CATALOGO" (https://xd.adobe.com/view/6bc6ebf5-b2d7-4d0b-8357-00d3558434be-3e95/,
+7 artboards de 1920 px).
 
 > Desktop: diseño exacto a **1920 px** y adaptación a laptop (1280–1919 px). Mobile pendiente.
 
@@ -28,9 +29,10 @@ todo queda en las coordenadas del XD (`npm run qa -- 1920 1080` lo comprueba).
 |---|---|
 | CATALOGO | `#/` |
 | CATALOGO – 2 | `#/medallas` |
-| CATALOGO – 3 (medalla seleccionada) | `#/medallas` + clic en una medalla |
+| CATALOGO – 3 y 7 (fichas de cada medalla) | `#/medallas/1` … `#/medallas/9` (clic en una medalla) |
 | CATALOGO – 4 | `#/biblioteca` |
 | CATALOGO – 5 | `#/pines` |
+| CATALOGO – 6 | borrador en el XD (hero de portadiplomas sobre contenido de Biblioteca): no implementado |
 
 Secciones enlazables: `#/inicio/pines`, `#/inicio/diplomas`, `#/biblioteca/ediciones`.
 
@@ -49,5 +51,5 @@ Secciones enlazables: `#/inicio/pines`, `#/inicio/diplomas`, `#/biblioteca/edici
 
 - Correo real para “Solicitar información” (hoy `informes@goberna.pe`).
 - PDF del catálogo para “Descargar catálogo PDF”.
-- Fichas reales (material, acabado, diámetro, precio) de cada medalla.
+- Fotos propias de las fichas 3, 6 y 8 (en el XD repiten la de la medalla 1).
 - Mockups de libros/packs en mayor resolución (los del XD son pequeños).
