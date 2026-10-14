@@ -9,6 +9,18 @@ import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import './Home.css'
 
+/*
+ * Materia & oficio: recorte de cada foto dentro de materia.webp (1750×1162 en
+ * x 85, y 420), separadas por líneas blancas de ~6px. Las 2 de abajo a la
+ * izquierda son fotos nuevas del XD que van encima.
+ */
+const MATERIA_CROPS: [x: number, y: number, w: number, h: number][] = [
+  [0, 0, 580.8, 578.8],
+  [586.6, 0, 577.8, 578.8],
+  [1168.3, 0, 581.7, 578.8],
+  [1168.3, 581.7, 581.7, 580.3],
+]
+
 /** Botón circular con flecha (Componente 8 del XD). Hover: relleno dorado, flecha crema. */
 function CircleArrow({ x, y, href, label }: { x: number; y: number; href: string; label: string }) {
   return (
@@ -226,6 +238,15 @@ export function Home() {
           className="abs" src={asset('materia.webp')} alt="Detalles de acabados: metal, cristal, cinta y estuche"
           width={1750} height={1162} loading="lazy" decoding="async" style={{ left: 85, top: 420, objectFit: 'cover' }}
         />
+        {/* Las otras 4 fotos de la grilla, recortadas de materia.webp, con el mismo zoom al pasar el mouse */}
+        {MATERIA_CROPS.map(([x, y, w, h]) => (
+          <div key={`${x}-${y}`} className="abs materia__tile" style={{ left: 85 + x, top: 420 + y, width: w, height: h }}>
+            <div
+              className="materia__crop"
+              style={{ backgroundImage: `url(${asset('materia.webp')})`, backgroundPosition: `${-x}px ${-y}px` }}
+            />
+          </div>
+        ))}
         {/* Fotos nuevas del XD sobre la grilla; al pasar el mouse, zoom (estado del XD) */}
         <div className="abs materia__tile" style={{ left: 86, top: 1004, width: 578, height: 578 }}>
           <img src={asset('materia-diplomas.webp')} alt="Diplomas Goberna" loading="lazy" />
