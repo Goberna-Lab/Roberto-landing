@@ -9,6 +9,7 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "qa": "node scripts/qa.mjs",
+    "qa:medallas": "node scripts/medallas.mjs",
     "flujo": "node scripts/flujo.mjs"
   },
   "dependencies": {

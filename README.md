@@ -14,6 +14,7 @@ npm run dev      # http://localhost:5173
 npm run build
 npm run lint
 npm run qa -- 1366 620 [--shots]   # QA con Playwright (con `npm run dev` en marcha)
+npm run qa:medallas               # Coordenadas XD y capturas a 1920×1080 y 1366×620
 ```
 
 ## Laptop
@@ -22,6 +23,12 @@ npm run qa -- 1366 620 [--shots]   # QA con Playwright (con `npm run dev` en mar
 1680 px, fija un tamaño mínimo de texto de 11 px reales. Los iconos de enlaces y
 botones van en línea con el texto, así no se enciman si el texto crece. En 1920
 todo queda en las coordenadas del XD (`npm run qa -- 1920 1080` lo comprueba).
+
+La colección de medallas conserva las líneas base y separadores con precisión de
+medio píxel. Al abrir una ficha de la primera fila, la segunda se desplaza 6 px
+a la izquierda, como en «CATALOGO – 3». A 1366 px se mantiene la composición
+proporcional del original de 1920 px; el XD no incluye una mesa de laptop.
+`npm run qa:medallas` comprueba ambos tamaños y guarda capturas en `qa-shots/`.
 
 ## Páginas (rutas por hash)
 

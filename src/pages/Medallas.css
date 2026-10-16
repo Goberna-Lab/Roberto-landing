@@ -43,8 +43,7 @@
 }
 
 .medal:hover .medal__name,
-.medal:focus-visible .medal__name,
-.medal.is-selected .medal__name {
+.medal:focus-visible .medal__name {
   color: var(--gold);
 }
 
@@ -52,8 +51,7 @@
   transition: translate 0.4s ease-out;
 }
 
-.medal:hover .medal__img,
-.medal.is-selected .medal__img {
+.medal:hover .medal__img {
   translate: 0 -8px;
 }
 
@@ -89,28 +87,4 @@
 /* Al abrir #/medallas/n directo, la fila queda bajo el header fijo */
 .medal-row {
   scroll-margin-top: 110px;
-}
-
-/* Excelencia en Cristal: degradado oscuro hacia la izquierda (Rectángulo 14378 del XD) */
-.cristal__shade {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to left, rgb(5 12 24 / 0) 24.2%, rgb(4 11 21 / 0.82) 93.7%);
-}
-
-.cristal__dot,
-.cristal__pill {
-  position: absolute;
-  height: 8px;
-  border-radius: 10px;
-}
-
-.cristal__dot {
-  width: 8px;
-  background: rgb(255 255 255 / 0.44);
-}
-
-.cristal__pill {
-  width: 39px;
-  background: #a07c48;
 }

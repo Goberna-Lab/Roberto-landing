@@ -38,13 +38,13 @@ type Detail = {
 
 const QUEMADAS = ['-Quemadas bombeadas']
 const DETAILS: Detail[] = [
-  { name: 'Medalla del Asesor Presidencial', detail: asset('medalla-detalle.webp'), material: 'Bronce de 1/16', finish: 'Bombeadas bañadas\nEn oro', size: 16, diameter: '8 CM', price: '180', before: 'S/250' },
-  { name: 'Medalla del Arquitecto Poder Político', detail: asset('ficha-2.webp'), material: 'Bronce de 1/16', finish: ['-Bombeadas bañadas en níquel', '-Cinta azul y blanco'], size: 15, diameter: '8 CM', price: '180', before: 'S/250' },
+  { name: 'Medalla del Asesor Presidencial', detail: asset('medalla-detalle.webp'), material: 'Bronce de 1/16', finish: 'Bombeados bañados\nen oro', size: 16, diameter: '8 CM', price: '180', before: 'S/250' },
+  { name: 'Medalla del Arquitecto de Poder Político', detail: asset('ficha-2.webp'), material: 'Bronce de 1/16', finish: ['-Bombeados bañados en níquel', '-Cinta azul y blanco'], size: 15, diameter: '8 CM', price: '180', before: 'S/250' },
   { name: 'Medalla del Maestro de Estrategias Globales', detail: asset('medalla-detalle.webp'), material: 'Bronce de 1/16', finish: ['-Quemadas bombeadas', '-Cinta azul y blanco'], size: 15, diameter: '8 CM', price: '180', before: 'S/250' },
   { name: 'Medalla del Asesor Estratégico en Criminología', detail: asset('ficha-4.webp'), material: 'Bronce de 1/16', finish: QUEMADAS, size: 15, diameter: '8 CM', price: '180', before: 'S/250' },
   { name: 'Medalla del Consultor Político Internacional', detail: asset('ficha-5.webp'), material: 'Bronce de 1/16', finish: QUEMADAS, size: 15, diameter: '8 CM', price: '180', before: 'S/250' },
   { name: 'Medalla del Orador Político', detail: asset('medalla-detalle.webp'), material: 'Bronce de 1/16', finish: QUEMADAS, size: 15, diameter: '8 CM', price: '180', before: 'S/250' },
-  { name: 'Medalla del Asesor Especializado en Osint y Socmint', nameSize: 38, detail: asset('ficha-7.webp'), material: 'Bronce de 1/16', finish: QUEMADAS, size: 15, diameter: '8 CM', price: '180', before: 'S/250' },
+  { name: 'Medalla del Asesor Especializado en OSINT y SOCMINT', nameSize: 38, detail: asset('ficha-7.webp'), material: 'Bronce de 1/16', finish: QUEMADAS, size: 15, diameter: '8 CM', price: '180', before: 'S/250' },
   { name: 'Medalla del Asesor Estratégico PSYOPS', detail: asset('medalla-detalle.webp'), material: 'Bronce de 1/16', finish: QUEMADAS, size: 15, diameter: '8 CM', price: '180', before: 'S/250' },
   { name: 'Medalla del Analista de Inteligencia', detail: asset('ficha-9.webp'), material: 'Bronce de 1/16', finish: QUEMADAS, size: 15, diameter: '8 CM', price: '180', before: 'S/250' },
 ]
@@ -54,17 +54,17 @@ const DETAILS: Detail[] = [
  * respecto al centro de la tarjeta, tal cual el XD. Cada medalla abre su
  * ficha (pantallas 3 y 7 del XD).
  */
-type Piece = { name: string; img: string; dx: number }
+type Piece = { name: string; openName?: string; img: string; dx: number; dashDx?: number }
 const MEDALS: Piece[] = [
-  { name: 'Medalla del\nAsesor Presidencial', img: asset('medalla-1.webp'), dx: -17 },
-  { name: 'Medalla del Arquitecto de\nPoder Político', img: asset('medalla-2.webp'), dx: -1 },
-  { name: 'Medalla del Maestro de\nEstrategias Globales', img: asset('medalla-3.webp'), dx: -1 },
+  { name: 'Medalla del\nAsesor Presidencial', img: asset('medalla-1.webp'), dx: -17, dashDx: -0.5 },
+  { name: 'Medalla del Arquitecto de\nPoder Político', openName: 'Medalla del\nArquitecto de Poder Político', img: asset('medalla-2.webp'), dx: -1 },
+  { name: 'Medalla del Maestro\nde Estrategias Globales', img: asset('medalla-3.webp'), dx: -1 },
   { name: 'Medalla del Asesor Estratégico\nen Criminología', img: asset('medalla-4.webp'), dx: -1 },
   { name: 'Medalla del Consultor Político\nInternacional', img: asset('medalla-5.webp'), dx: 0 },
   { name: 'Medalla del\nOrador Político', img: asset('medalla-6.webp'), dx: -1 },
   { name: 'Medalla del Asesor Especializado\nen OSINT y SOCMINT', img: asset('medalla-7.webp'), dx: -1 },
-  { name: 'Medalla del\nAsesor Presidencial', img: asset('medalla-8.webp'), dx: -1 },
-  { name: 'Medalla del\nAsesor Presidencial', img: asset('medalla-9.webp'), dx: -1 },
+  { name: 'Medalla del Asesor Estratégico\nPSYOPS', img: asset('medalla-8.webp'), dx: -1 },
+  { name: 'Medalla del Analista\nde Inteligencia', img: asset('medalla-9.webp'), dx: -1 },
 ]
 
 /* "Placas de Distinción": pedestal, máscara 427×406 e imagen 534×421 (x absolutas del XD) */
@@ -79,15 +79,15 @@ const COLS = [222, 723, 1236]
 const ROWS = 3
 
 /* Tarjeta: caja de 494×526 desde la imagen del producto (x - 10). */
-function MedalCard({ m, x, selected, onSelect }: { m: Piece; x: number; selected: boolean; onSelect?: () => void }) {
+function MedalCard({ m, x, selected, expanded, onSelect }: { m: Piece; x: number; selected: boolean; expanded: boolean; onSelect?: () => void }) {
   const content = (
     <>
       <img className="abs" src={asset('card-base.webp')} alt="" loading="lazy" style={{ left: 10, top: 49, width: 476, height: 477 }} />
       <img className="abs medal__img" src={m.img} alt="" loading="lazy" style={{ left: 0, top: 0, width: 494, height: 390 }} />
-      <Txt x={248 + m.dx} y={485} w={600} s={17} lh={20} ls={140} up align="c" as="span" className="medal__name">
-        {m.name}
+      <Txt x={248 + m.dx} y={485.5} w={600} s={17} lh={20} ls={140} up align="c" as="span" className="medal__name">
+        {expanded ? (m.openName ?? m.name) : m.name}
       </Txt>
-      <GoldDash cx={248 + m.dx} y={523} />
+      <GoldDash cx={248 + m.dx + (m.dashDx ?? 0.5)} y={522.5} />
     </>
   )
   if (!onSelect) return <div className="medal" style={{ left: x - 10 }}>{content}</div>
@@ -160,6 +160,7 @@ function MedalPanel({ m }: { m: Detail }) {
 export function Medallas({ selected }: { selected?: number }) {
   const valid = selected && selected >= 1 && selected <= DETAILS.length ? selected : undefined
   const open = valid ? `${Math.floor((valid - 1) / COLS.length)}-${(valid - 1) % COLS.length}` : null
+  const firstRowOpen = Boolean(valid && valid <= COLS.length)
   const toggle = (n: number) => {
     location.hash = valid === n ? '#/medallas' : `#/medallas/${n}`
   }
@@ -185,7 +186,7 @@ export function Medallas({ selected }: { selected?: number }) {
       <section className="sec" style={{ height: 700 }}>
         {/* Sin parallax: el zoom recortaba las medallas del borde izquierdo */}
         <div className="bg" style={{ left: 0, top: 0, width: 1920, height: 700, backgroundImage: `url(${asset('banner-medallas-cat.webp')})` }} />
-        <Txt x={1720} y={310} f="p" w={500} s={65} lh={70} up align="r" c="var(--ivory)" as="h1" className="tw-title">
+        <Txt x={1720} y={310} f="p" w={500} s={72} lh={80} up align="r" c="var(--ivory)" as="h1" className="tw-title">
           <TW text={'Medallas, placas y\nreconocimientos\nde cristal'} />
         </Txt>
       </section>
@@ -227,25 +228,26 @@ export function Medallas({ selected }: { selected?: number }) {
           <HLine x={941} y={206.5} w={40} c="#a07c48" />
         </div>
 
-        {Array.from({ length: ROWS }, (_, r) => {
-          const openCol = COLS.findIndex((_, c) => open === `${r}-${c}`)
+        {Array.from({ length: ROWS }, (_, rowIndex) => {
+          const openCol = COLS.findIndex((_, columnIndex) => open === `${rowIndex}-${columnIndex}`)
           return (
-            <Fragment key={r}>
-              <div className={`medal-row ${openCol >= 0 ? 'has-panel' : ''}`}>
+            <Fragment key={rowIndex}>
+              <div className={`medal-row ${openCol >= 0 ? 'has-panel' : ''}`} style={{ left: firstRowOpen && rowIndex === 1 ? -6 : 0 }}>
                 {COLS.map((x, c) => {
-                  const n = r * COLS.length + c + 1
+                  const n = rowIndex * COLS.length + c + 1
                   return (
                     <MedalCard
                       key={n}
                       m={MEDALS[n - 1]}
                       x={x}
                       selected={openCol === c}
+                      expanded={firstRowOpen}
                       onSelect={() => toggle(n)}
                     />
                   )
                 })}
-                <VLine x={709} y={137} h={214} />
-                <VLine x={1217} y={137} h={214} />
+                <VLine x={708.5} y={136.5} h={214} />
+                <VLine x={1217.5} y={136.5} h={214} />
               </div>
               {openCol >= 0 && valid && <MedalPanel key={open} m={DETAILS[valid - 1]} />}
             </Fragment>
@@ -273,21 +275,14 @@ export function Medallas({ selected }: { selected?: number }) {
       </section>
 
       {/* ── Excelencia en Cristal ─────────────────────────────── */}
-      <section className="sec cristal" style={{ height: 1000 }}>
+      <section className="sec cristal" style={{ height: 900 }}>
         {/* Escena con zoom al entrar (fondos y cristales juntos) */}
         <div className="abs zoom-bg" style={{ inset: 0 }}>
-          <div className="bg" style={{ inset: 0, backgroundImage: `url(${asset('cristal-fondo.webp')})` }} />
-          <div className="bg" style={{ inset: 0, backgroundImage: `url(${asset('cristal-fondo-2.webp')})` }} />
-          <div className="cristal__shade" />
-          <img className="abs" src={asset('cristal-2.webp')} alt="Reconocimiento de cristal Goberna" loading="lazy" style={{ left: 1033, top: 111, width: 410, height: 764 }} />
-          <img className="abs" src={asset('cristal-3.webp')} alt="" loading="lazy" style={{ left: 1443, top: 294, width: 277, height: 481 }} />
-          <img className="abs" src={asset('cristal-logo.webp')} alt="" loading="lazy" style={{ left: 1165, top: 372, width: 147, height: 138 }} />
-          <img className="abs" src={asset('cristal-1.webp')} alt="" loading="lazy" style={{ left: 631, top: 168, width: 469, height: 704 }} />
+          <div className="bg" style={{ inset: 0, backgroundImage: `url(${asset('cristal-fondo-v2.webp')})` }} />
+          <img className="abs" src={asset('cristal-inteligencia.webp')} alt="Reconocimiento de cristal de la Escuela de Inteligencia y Estrategia" loading="lazy" style={{ left: 750, top: 177, width: 310, height: 609 }} />
+          <img className="abs" src={asset('cristal-foro.webp')} alt="Reconocimiento de cristal del II Foro de Estado Goberna Lima 2026" loading="lazy" style={{ left: 1041, top: 189, width: 389, height: 585 }} />
+          <img className="abs" src={asset('cristal-goberna.webp')} alt="Reconocimiento de cristal Goberna" loading="lazy" style={{ left: 1382, top: 255, width: 354, height: 531 }} />
         </div>
-        {/* Indicador de piezas (estático en el XD) */}
-        <span className="cristal__dot" style={{ left: 1204, top: 929 }} />
-        <span className="cristal__pill" style={{ left: 1216, top: 929 }} />
-        <span className="cristal__dot" style={{ left: 1259, top: 929 }} />
         <Txt x={200} y={349} f="p" w={500} s={75} lh={80} c="var(--cream)" as="h2" className="tw-title">
           <TW text={'Excelencia en \n'} />
           <span className="it gold"><TW text="Cristal" /></span>

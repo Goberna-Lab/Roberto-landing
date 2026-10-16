@@ -2,7 +2,7 @@
 .books {
   position: absolute;
   width: 1256px;
-  height: 640px;
+  height: 690px;
   overflow: hidden;
 }
 
@@ -16,7 +16,50 @@
   position: absolute;
   top: 0;
   width: 420px;
-  height: 640px;
+  height: 690px;
+}
+
+.editorial-price {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  min-height: 42px;
+  color: var(--navy);
+  font-family: var(--mont);
+  white-space: nowrap;
+}
+
+.editorial-price__promo {
+  color: var(--gold);
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 42px;
+}
+
+.editorial-price__normal {
+  display: flex;
+  flex-direction: column;
+  font-size: max(14px, var(--fsmin, 0px));
+  line-height: 1.25;
+}
+
+.editorial-price__normal > span {
+  font-size: max(12px, var(--fsmin, 0px));
+}
+
+.editorial-price__pending,
+.editorial-price__label {
+  font-size: max(16px, var(--fsmin, 0px));
+  line-height: 1.5;
+}
+
+.editorial-price--dark {
+  color: var(--cream);
+}
+
+.editorial-price--dark .editorial-price__promo {
+  font-size: 31px;
 }
 
 .books__nav {
@@ -41,7 +84,7 @@
   cursor: default;
 }
 
-/* Packs: contenedor del alto del XD (2047px) con fondo oscuro; la ventana
+/* Packs: contenedor ampliado para incluir el pack de cinco libros; la ventana
    (fondo azul, 1104px) queda fija mientras la lista sube dentro de ella */
 .packs-scroll {
   position: relative;
@@ -69,7 +112,7 @@
   translate: 0 var(--packs-shift, 0px);
 }
 
-/* Sin animaciones: la sección no se fija y muestra los 6 packs como el XD */
+/* Sin animaciones: la sección no se fija y muestra las 7 opciones */
 @media (prefers-reduced-motion: reduce) {
   .packs-scroll > .packs {
     position: relative;

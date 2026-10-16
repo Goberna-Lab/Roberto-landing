@@ -22,17 +22,38 @@ gsap.registerPlugin(ScrollTrigger, useGSAP)
  * viewport 1256px desde x 331). Portadas 317×439 con sombra incluida.
  * `tx`: x de los textos respecto a la portada.
  */
-const BOOKS: { title: string; img: string; x: number; w: number; tx: number }[] = [
-  { title: 'EL PODER DE LA ORATORIA E\nIMAGEN POLÍTICA', img: asset('libro-01.webp'), x: 1, w: 317, tx: 12 },
-  { title: 'LAWFARE GUERRA JURÍDICA EN LA POLÍTICA', img: asset('libro-02.webp'), x: 457, w: 316, tx: 13 },
-  { title: 'GUERRA ELECTORAL-EL PODER EN LAS SOMBRAS', img: asset('libro-03.webp'), x: 899, w: 316, tx: 13 },
-  { title: 'MANUAL DEL CONSULTOR\nPOLÍTICO', img: asset('libro-04.webp'), x: 1341, w: 315, tx: 13 },
+type EditorialPrice = { promo: number; normal: number }
+
+const BOOKS: { title: string; img: string; x: number; w: number; tx: number; price?: EditorialPrice }[] = [
+  { title: 'EL PODER DE LA ORATORIA E\nIMAGEN POLÍTICA', img: asset('libro-01.webp'), x: 1, w: 317, tx: 12, price: { promo: 120, normal: 140 } },
+  { title: 'LAWFARE GUERRA JURÍDICA EN LA POLÍTICA', img: asset('libro-02.webp'), x: 457, w: 316, tx: 13, price: { promo: 90, normal: 120 } },
+  { title: 'GUERRA ELECTORAL-EL PODER EN LAS SOMBRAS', img: asset('libro-03.webp'), x: 899, w: 316, tx: 13, price: { promo: 100, normal: 120 } },
+  { title: 'MANUAL DEL CONSULTOR\nPOLÍTICO', img: asset('libro-04.webp'), x: 1341, w: 315, tx: 13, price: { promo: 100, normal: 120 } },
   { title: 'MÁQUINA\nELECTORAL', img: asset('libro-05.webp'), x: 1797, w: 316, tx: 15 },
   { title: 'MANUAL DE OPERACIONES\nPSICOLÓGICAS Y PSICOSOCIALES', img: asset('libro-06.webp'), x: 2239, w: 315, tx: 17 },
-  { title: 'WAR ROOM EN CAMPAÑAS\nELECTORALES', img: asset('libro-07.webp'), x: 2679.6, w: 316.5, tx: 22.4 },
-  { title: 'MANUAL DE INTELIGENCIA Y\nCONTRA INTELIGENCIA', img: asset('libro-08.webp'), x: 3122.2, w: 316.5, tx: 21.8 },
+  { title: 'WAR ROOM EN CAMPAÑAS\nELECTORALES', img: asset('libro-07.webp'), x: 2679.6, w: 316.5, tx: 22.4, price: { promo: 90, normal: 120 } },
+  { title: 'MANUAL DE INTELIGENCIA Y\nCONTRA INTELIGENCIA', img: asset('libro-08.webp'), x: 3122.2, w: 316.5, tx: 21.8, price: { promo: 120, normal: 140 } },
 ]
 const VISIBLE = 3
+const COLLECTION_PRICE: EditorialPrice = { promo: 450, normal: 670 }
+
+function BookPrice({ price, x, y, dark = false, label }: { price?: EditorialPrice; x: number; y: number; dark?: boolean; label?: string }) {
+  return (
+    <div
+      className={`editorial-price${dark ? ' editorial-price--dark' : ''}`}
+      style={{ left: x, top: y }}
+      aria-label={price ? `Precio promocional S/${price.promo}. Precio normal S/${price.normal}.` : undefined}
+    >
+      {price ? (
+        <>
+          {label && <span className="editorial-price__label">{label}</span>}
+          <strong className="editorial-price__promo">S/{price.promo}</strong>
+          <span className="editorial-price__normal"><span>Antes</span><s>S/{price.normal}</s></span>
+        </>
+      ) : <span className="editorial-price__pending">Consultar precio</span>}
+    </div>
+  )
+}
 
 /*
  * Packs (coordenadas relativas a la sección, top 1852 en XD).
@@ -41,15 +62,16 @@ const VISIBLE = 3
  * `name`: el que se muestra en "Pack seleccionado" (el XD solo da el del 02).
  */
 const PACKS = [
-  { n: '01', title: 'Edición\nIndividual', name: 'Edición Individual', y: 157, band: [134, 397.5] },
-  { n: '02', title: 'Edición Dúo\nEstratégico', name: 'Dúo Estratégico', y: 475.4, band: [397.5, 725.9] },
-  { n: '03', title: 'Edición Dúo\nPremium', name: 'Dúo Premium', y: 811.9, band: [725.9, 1041.9] },
-  { n: '04', title: 'Trilogía\nEstratégica', name: 'Trilogía Estratégica', y: 1119.9, band: [1041.9, 1370.9] },
-  { n: '05', title: 'Edición Alta\nDirección', name: 'Alta Dirección', y: 1458.9, band: [1370.9, 1698.9] },
-  { n: '06', title: 'Edición Goberna\nExclusiva', name: 'Goberna Exclusiva', y: 1800.9, band: [1698.9, 2030] },
+  { n: '01', title: 'Edición\nIndividual', name: 'Edición Individual', y: 157, band: [134, 397.5], price: BOOKS[7].price!, description: 'Manual de Inteligencia y Contrainteligencia. Precio por ejemplar.' },
+  { n: '02', title: 'Edición Dúo\nEstratégico', name: 'Dúo Estratégico', y: 475.4, band: [397.5, 725.9], price: { promo: 170, normal: 230 }, description: '2 libros de primera edición. Elige tus títulos.' },
+  { n: '03', title: 'Edición Dúo\nPremium', name: 'Dúo Premium', y: 811.9, band: [725.9, 1041.9], price: { promo: 200, normal: 300 }, description: '2 libros de segunda edición. Elige tus títulos.' },
+  { n: '04', title: 'Trilogía\nEstratégica', name: 'Trilogía Estratégica', y: 1119.9, band: [1041.9, 1370.9], price: { promo: 260, normal: 340 }, description: '3 libros a elección. El pack es por cantidad.' },
+  { n: '05', title: 'Edición Alta\nDirección', name: 'Alta Dirección', y: 1458.9, band: [1370.9, 1698.9], price: { promo: 340, normal: 450 }, description: '4 libros a elección. El pack es por cantidad.' },
+  { n: '06', title: 'Pack de\n5 libros', name: 'Pack de 5 libros', y: 1800.9, band: [1698.9, 2030], price: { promo: 390, normal: 560 }, description: '5 libros a elección. El pack es por cantidad.' },
+  { n: '07', title: 'Edición Goberna\nExclusiva', name: 'Goberna Exclusiva', y: 2129.9, band: [2030, 2359], price: COLLECTION_PRICE, description: '6 libros a elección. El pack es por cantidad.' },
 ]
 /** Líneas divisorias entre packs */
-const PACK_LINES = [397.5, 725.9, 1041.9, 1370.9, 1698.9]
+const PACK_LINES = PACKS.slice(0, -1).map((edition) => edition.band[1])
 
 /* Portadas de cada pack, en el orden de apilado del XD (la última queda encima) */
 const PACK_BOOKS: { src: string; box: Box }[] = [
@@ -65,24 +87,29 @@ const PACK_BOOKS: { src: string; box: Box }[] = [
   { src: asset('pack-waroom.webp'), box: [1395.3, 1416, 170.8, 237] },
   { src: asset('pack-lawfare.webp'), box: [1284, 1416, 166.4, 237.4] },
   { src: asset('pack-guerra.webp'), box: [1185, 1416, 173.4, 247.4] },
-  { src: asset('pack-oratoria.webp'), box: [1549.2, 1762, 170.8, 237] },
   { src: asset('pack-inteligencia.webp'), box: [1491.2, 1762, 170.8, 237] },
   { src: asset('pack-consultor.webp'), box: [1425.3, 1762, 170.8, 237] },
   { src: asset('pack-waroom.webp'), box: [1350.3, 1762, 170.8, 237] },
   { src: asset('pack-lawfare.webp'), box: [1259, 1762, 166.4, 237.4] },
   { src: asset('pack-guerra.webp'), box: [1185, 1762, 173.4, 247.4] },
+  { src: asset('pack-oratoria.webp'), box: [1549.2, 2091, 170.8, 237] },
+  { src: asset('pack-inteligencia.webp'), box: [1491.2, 2091, 170.8, 237] },
+  { src: asset('pack-consultor.webp'), box: [1425.3, 2091, 170.8, 237] },
+  { src: asset('pack-waroom.webp'), box: [1350.3, 2091, 170.8, 237] },
+  { src: asset('pack-lawfare.webp'), box: [1259, 2091, 166.4, 237.4] },
+  { src: asset('pack-guerra.webp'), box: [1185, 2091, 173.4, 247.4] },
 ]
 
 /*
- * Packs con scroll: la sección completa mide lo que en el XD (2047px, los 6
- * packs uno debajo del otro). Al hacer scroll, una ventana del alto del fondo
+ * Packs con scroll: la sección conserva el espaciado del XD e incluye las 7
+ * opciones del catálogo actualizado. Al hacer scroll, una ventana del alto del fondo
  * azul (1104px) queda fija con la columna izquierda y la línea de tiempo, y la
  * lista de packs sube dentro de ella: no se pasa a la sección siguiente sin
- * recorrer los 6. Cada pack pasa por el círculo del medio de la línea de
+ * recorrer los 7. Cada pack pasa por el círculo del medio de la línea de
  * tiempo: ahí cambia el pack seleccionado y el círculo se rellena.
  * Con movimiento reducido no se fija y queda como el XD.
  */
-const PACKS_H = 2047
+const PACKS_H = 2376
 const WINDOW_H = 1104
 /** Límite superior para fijar la ventana: el título queda bajo la cabecera */
 const MAX_LIFT = 50
@@ -96,7 +123,7 @@ const MID = DOTS[1] + 8
 const FILL_ZONE = 110
 /** Centro vertical de cada pack (entre sus líneas divisorias) */
 const CENTERS = PACKS.map((p) => (p.band[0] + p.band[1]) / 2)
-/** Recorrido de la lista: del pack 01 al 06 centrados en el círculo del medio */
+/** Recorrido de la lista: del pack 01 al 07 centrados en el círculo del medio */
 const SHIFT_FROM = CENTERS[0] - MID
 const SHIFT_TO = CENTERS[CENTERS.length - 1] - MID
 
@@ -186,7 +213,8 @@ export function Biblioteca() {
                 <img className="abs" src={b.img} alt={b.title.replace('\n', ' ')} loading="lazy" style={{ left: 0, top: 0, width: b.w, height: 439 }} />
                 <Txt x={b.tx} y={484} w={600} s={i === 6 ? 15 : 16} lh={19} ls={140} c="var(--gold)">{String(i + 1).padStart(2, '0')}</Txt>
                 <Txt x={b.tx} y={505} w={600} s={17} lh={28} ls={140} c="var(--navy)" width={i === 5 ? 364 : 345} as="h3">{b.title}</Txt>
-                <MiniLink x={b.tx} y={581} big href="#contacto">Ver edición</MiniLink>
+                <BookPrice price={b.price} x={b.tx} y={602} />
+                <MiniLink x={b.tx} y={654} big href="#contacto">Ver edición</MiniLink>
               </article>
             ))}
           </div>
@@ -236,14 +264,14 @@ export function Biblioteca() {
             <span className="it"><TW text="Construye " /></span>
             <TW text={'tu\nBiblioteca Goberna'} />
           </Txt>
-          <Txt x={201} y={370.8} s={14} lh={18} ls={60} up c="var(--gold)">Pack seleccionado</Txt>
-          <div aria-live="polite">
-            <Txt x={201} y={438.8} f="p" w={600} s={60} lh={80} ls={-40} c="var(--gold)">{PACKS[pack].n}</Txt>
-            <Txt x={200} y={482.8} f="p" w={600} s={36} lh={25} c="var(--cream)" as="h3">{PACKS[pack].name}</Txt>
+          <div className="packs__selection" aria-live="polite" aria-atomic="true">
+            <Txt x={201} y={330.8} s={14} lh={18} ls={60} up c="var(--gold)">Pack seleccionado · {PACKS[pack].n}</Txt>
+            <Txt x={200} y={382.8} f="p" w={600} s={36} lh={45} c="var(--cream)" as="h3">{PACKS[pack].name}</Txt>
+            <Txt x={200} y={409.8} s={17} lh={32} ls={32} c="var(--cream)" width={395}>
+              {PACKS[pack].description}
+            </Txt>
+            <BookPrice price={PACKS[pack].price} x={200} y={520} dark label="Inversión" />
           </div>
-          <Txt x={200} y={501.8} s={17} lh={32} ls={32} c="var(--cream)" width={395}>
-            Publicaciones de referencia en inteligencia, seguridad y estrategia.
-          </Txt>
           <Btn
             x={200} y={593.6} variant="solid" href="#contacto" label="Consultar este pack"
             size={{ w: 395, h: 56, textX: 85.6, baseY: 33, ico: [292.8, 19.9, 18.7, 15.7] }}
@@ -278,12 +306,14 @@ export function Biblioteca() {
         </Txt>
         <Txt x={200} y={300} f="p" w={600} s={43} lh={45} up c="var(--cream)" as="p">Una biblioteca de poder.</Txt>
         <Txt x={199} y={321} s={16} lh={32} ls={40} c="var(--cream)" width={428}>Disponible con estuche de colección premium.</Txt>
+        <BookPrice price={COLLECTION_PRICE} x={200} y={389} dark label="6 obras" />
+        <Txt x={200} y={458} s={12} lh={16} c="var(--cream)">Precio de los libros; estuche a consultar.</Txt>
         <Btn
-          x={200} y={411.6} variant="solid" href="#contacto" label="Consultar este pack"
+          x={200} y={489.6} variant="solid" href="#contacto" label="Consultar este pack"
           size={{ w: 395, h: 56, textX: 85.6, baseY: 33, ico: [292.8, 19.9, 18.7, 15.7] }}
         />
-        <Icon svg={whatsapp} box={[201, 492.2, 24, 24]} className="packs__wa" />
-        <Txt x={232} y={508.2} s={13} lh={16} ls={60} up c="var(--cream)">Hablar con un asesor</Txt>
+        <Icon svg={whatsapp} box={[201, 570.2, 24, 24]} className="packs__wa" />
+        <Txt x={232} y={586.2} s={13} lh={16} ls={60} up c="var(--cream)">Hablar con un asesor</Txt>
       </section>
 
       <OtherPieces height={378} cardsTop={80} />
