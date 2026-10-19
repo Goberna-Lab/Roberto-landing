@@ -229,25 +229,6 @@
   color: rgb(247 243 236 / 0.86);
 }
 
-.m-uni.is-light .m-uni__sub {
-  color: var(--ink);
-}
-
-/* Presentación de distinción: foto clara y texto oscuro, como en el XD */
-.m-uni.is-light {
-  background: #f3eee6;
-  color: var(--navy);
-}
-
-.m-uni.is-light .m-uni__media::after {
-  display: none;
-}
-
-.m-uni.is-light .m-uni__body {
-  margin-top: 0;
-  padding-top: 36px;
-}
-
 /* ── Esenciales Goberna ──────────────────────────────────────────────── */
 .m-ess {
   padding: 72px 0 80px;

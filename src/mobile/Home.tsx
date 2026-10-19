@@ -21,8 +21,9 @@ function Words({ text }: { text: string }) {
 const UNIVERSES = [
   { id: 'medallas', n: '01', img: 'banner-medallas.webp', pos: '6% 50%', title: 'Piezas de honor', sub: 'Medallas, placas y reconocimientos de cristal', href: '#/medallas' },
   { id: 'pines', n: '02', img: 'banner-pines.webp', pos: '14% 50%', title: 'Símbolos de prestigio', sub: 'Pines y piezas de identidad', href: '#/pines' },
-  { id: 'diplomas', n: '03', img: 'banner-diploma.webp', pos: '18% 50%', title: 'Presentación de distinción', sub: 'Portadiplomas y elementos ceremoniales', href: '#/medallas', light: true },
-  { id: 'libros', n: '04', img: 'banner-biblioteca.webp', pos: '16% 50%', title: 'Biblioteca del poder', sub: 'Libros, packs y ediciones premium', href: '#/biblioteca' },
+  // Foto del evento (XD 19/10): el escenario con sus dos pantallas queda centrado
+  { id: 'diplomas', n: '03', img: 'banner-distincion.webp', pos: '85% 50%', title: 'Presentación de distinción', sub: 'Portadiplomas y elementos ceremoniales', href: '#/medallas' },
+  { id: 'libros', n: '04', img: 'banner-biblioteca.webp', pos: '13% 50%', title: 'Biblioteca del poder', sub: 'Libros, packs y ediciones premium', href: '#/biblioteca' },
 ]
 
 /*
@@ -148,7 +149,7 @@ export function Home() {
       {/* ── Universos de la colección ────────────────────────── */}
       <div id="universos">
         {UNIVERSES.map((u) => (
-          <section key={u.id} id={u.id} className={`m-uni ${u.light ? 'is-light' : ''}`}>
+          <section key={u.id} id={u.id} className="m-uni">
             <a href={u.href} className="m-uni__media" tabIndex={-1} aria-hidden>
               <div className="m-px" data-parallax="22">
                 <img src={asset(u.img)} alt="" loading="lazy" decoding="async" style={{ objectPosition: u.pos }} />
@@ -160,7 +161,7 @@ export function Home() {
                 <TW text={u.title} />
               </h2>
               <p className="m-uni__sub" data-reveal>{u.sub}</p>
-              <CtaLink href={u.href} light={!u.light} />
+              <CtaLink href={u.href} light />
             </div>
           </section>
         ))}
