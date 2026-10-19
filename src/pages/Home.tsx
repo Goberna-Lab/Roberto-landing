@@ -28,12 +28,14 @@ function CircleArrow({ x, y, href, label }: { x: number; y: number; href: string
   )
 }
 
-/** Banner de colección 1920×900 con título grande a la derecha. */
+/** Banner de colección 1920×900 con título grande (a la derecha o, en Distinción, a la izquierda). */
 function Universe({
-  id, img, title, titleX, titleY, sub, subX, subY, subW, linkX, linkY, href, dark, tight, cover, still, children,
+  id, img, imgBox, title, titleX, titleY, sub, subX, subY, subW, subC, linkX, linkY, href, dark, tight, cover, still, children,
 }: {
   id: string
   img: string
+  /** foto más alta que el banner, recortada por la máscara del XD: top y alto */
+  imgBox?: [top: number, height: number]
   title: string
   titleX: number
   titleY: number
@@ -42,6 +44,8 @@ function Universe({
   subY: number
   /** subtítulo de área (autoHeight en XD): `subY` es el borde superior */
   subW?: number
+  /** color del subtítulo si no es el del título */
+  subC?: string
   linkX: number
   linkY: number
   href: string
@@ -56,7 +60,10 @@ function Universe({
   const color = dark ? 'var(--navy)' : 'var(--cream)'
   return (
     <section id={id} className={`sec universe ${cover ? 'has-cover' : ''}`} style={{ height: 900 }}>
-      <div className={`bg universe__bg ${still ? '' : 'px-bg'}`} style={{ inset: 0, backgroundImage: `url(${img})` }} />
+      <div
+        className={`bg universe__bg ${still ? '' : 'px-bg'}`}
+        style={{ ...(imgBox ? { left: 0, top: imgBox[0], width: 1920, height: imgBox[1] } : { inset: 0 }), backgroundImage: `url(${img})` }}
+      />
       {cover && <a href={href} className="universe__cover" aria-label={title.replace('\n', ' ')} />}
       {children}
       <Txt
@@ -64,7 +71,7 @@ function Universe({
       >
         <TW text={title} />
       </Txt>
-      <Txt x={subX} y={subY} s={22} lh={40} ls={32} c={color} width={subW}>{sub}</Txt>
+      <Txt x={subX} y={subY} s={22} lh={40} ls={32} c={subC ?? color} width={subW}>{sub}</Txt>
       <CtaLink x={linkX} y={linkY} href={href} dark={dark} />
     </section>
   )
@@ -177,12 +184,16 @@ export function Home() {
         sub="Pines y piezas de identidad" subX={1028} subY={432.2}
         linkX={1028} linkY={504.2} href="#/pines"
       />
+      {/* XD 19/10: foto del evento (2332×1550 a 1920×1276, desde y −174) bajo la
+          máscara del banner, velo oscuro a la izquierda y textos claros a la izquierda */}
       <Universe
-        id="diplomas" img={asset('banner-diploma.webp')} dark tight still
-        title={'PRESENTACIÓN\nDE DISTINCIÓN'} titleX={1028} titleY={362.9}
-        sub="Portadiplomas y elementos ceremoniales" subX={1028} subY={506.9} subW={638}
-        linkX={1028} linkY={598.6} href="#/medallas"
-      />
+        id="diplomas" img={asset('banner-distincion.webp')} imgBox={[-174, 1276]} tight still
+        title={'PRESENTACIÓN\nDE DISTINCIÓN'} titleX={200} titleY={374.9}
+        sub="Portadiplomas y elementos ceremoniales" subX={200} subY={518.9} subW={638} subC="#fff"
+        linkX={200} linkY={610.6} href="#/medallas"
+      >
+        <span className="universe__shade" />
+      </Universe>
       <Universe
         id="libros" img={asset('banner-biblioteca.webp')} still
         title={'BIBLIOTECA\nDEL PODER'} titleX={1028} titleY={292.8}

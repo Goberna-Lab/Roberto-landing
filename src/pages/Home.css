@@ -48,6 +48,20 @@
   translate: 0 calc(var(--hero-cut) * -0.45);
 }
 
+/* Presentación de distinción: velo del XD ("Trazado 20700", 1028×900,
+   multiplicar al 71.5%) que oscurece la foto detrás de los textos */
+.universe__shade {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1028px;
+  height: 900px;
+  opacity: 0.715;
+  mix-blend-mode: multiply;
+  background: linear-gradient(90deg, #020712 6.45%, #272b34 56.03%, rgb(85 89 96 / 0) 97.96%);
+  pointer-events: none;
+}
+
 /* Shine + 3D rotation para medalla y trofeo */
 .hero__img-wrap {
   position: absolute;
