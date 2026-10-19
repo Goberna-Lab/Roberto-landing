@@ -1,0 +1,363 @@
+/* ── Catálogo mobile: categoría, grillas de piezas, cristal y fichas ─── */
+
+.m-cat {
+  padding-top: 64px;
+  padding-bottom: 72px;
+  background: var(--ivory);
+}
+
+/* Foto en estuche recortada como la máscara del XD (parte izquierda) */
+.m-cat__photo {
+  margin-top: 32px;
+  aspect-ratio: 719 / 473;
+  overflow: hidden;
+}
+
+.m-cat__photo img {
+  display: block;
+  height: 100%;
+  max-width: none;
+}
+
+.m-cat__motto {
+  margin-top: 16px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ── Colecciones (medallas, placas, pines) ───────────────────────────── */
+.m-coll {
+  position: relative;
+  padding: 72px 0 80px;
+  background: var(--ivory);
+}
+
+.m-coll__tex {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 520px;
+  background-size: cover;
+  background-position: center top;
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+.m-coll__head {
+  position: relative;
+  padding-bottom: 36px;
+}
+
+.m-grid + .m-coll__head {
+  margin-top: 72px;
+}
+
+.m-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px 14px;
+}
+
+/* Con dos columnas, una pieza sola en la última fila queda centrada */
+@media (max-width: 639.98px) {
+  .m-grid > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc(50% - 7px);
+  }
+}
+
+.m-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+  color: var(--navy);
+  transition: scale 0.2s ease-out;
+}
+
+.m-card:active {
+  scale: 0.97;
+}
+
+/* El pedestal deja aire transparente debajo: el nombre sube a su base */
+.m-card__name {
+  margin-top: -12%;
+  font: 600 11px/1.45 var(--mont);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-wrap: balance;
+  transition: color 0.25s ease-out;
+}
+
+.m-card:active .m-card__name {
+  color: var(--gold);
+}
+
+.m-card__dash {
+  width: 32px;
+  height: 2px;
+  margin-top: 10px;
+  background: #9f7d48;
+}
+
+.m-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px 12px;
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gold-2);
+}
+
+.m-card__open {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--navy);
+}
+
+.m-card__open::before {
+  content: '+';
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--gold);
+}
+
+/* ── Excelencia en Cristal ───────────────────────────────────────────── */
+.m-cristal {
+  position: relative;
+  overflow: hidden;
+  padding-top: 72px;
+  background: #1e1d1f;
+  color: var(--cream);
+}
+
+.m-cristal__bg {
+  position: absolute;
+  inset: 0;
+}
+
+.m-cristal__bg .m-px > img {
+  object-position: 70% 100%;
+}
+
+.m-cristal__bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(20 19 20 / 0.86) 0%, rgb(20 19 20 / 0.3) 45%, rgb(20 19 20 / 0) 70%);
+}
+
+.m-cristal__copy {
+  position: relative;
+}
+
+.m-cristal__scene {
+  position: relative;
+  width: min(92%, 560px);
+  margin: 36px auto 0;
+  padding-bottom: 0;
+}
+
+.m-cristal__scene::after {
+  content: '';
+  display: block;
+  height: 56px;
+}
+
+.m-cristal__piece {
+  position: absolute;
+  display: block;
+  transition: scale 0.2s ease-out;
+}
+
+.m-cristal__piece:active {
+  scale: 0.97;
+}
+
+.m-piece.is-crystal {
+  height: 100%;
+  aspect-ratio: auto;
+}
+
+/* Reflejo frío para el cristal */
+.is-crystal .m-shine__band {
+  background: linear-gradient(105deg, rgb(255 255 255 / 0) 15%, rgb(235 244 255 / 0.6) 50%, rgb(255 255 255 / 0) 85%);
+}
+
+/* ── Galería de la ficha ─────────────────────────────────────────────── */
+.m-gallery {
+  position: relative;
+  margin-top: 14px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: radial-gradient(circle at 50% 42%, #fff 0%, #efe8dd 78%);
+}
+
+.m-gallery:has(.is-crystal) {
+  background: radial-gradient(circle at 50% 40%, #34312f 0%, #121114 78%);
+}
+
+.m-gallery__track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+
+.m-gallery__track::-webkit-scrollbar {
+  display: none;
+}
+
+.m-gallery__slide {
+  flex: 0 0 100%;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1 / 0.86;
+  padding: 7%;
+  scroll-snap-align: center;
+}
+
+.m-gallery__photo {
+  display: block;
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.m-piece.is-hero {
+  width: 100%;
+}
+
+.m-piece.is-hero.is-crystal {
+  width: 54%;
+  height: auto;
+  aspect-ratio: 389 / 585;
+}
+
+/* Los pines son piezas pequeñas dentro de su foto: se acercan un poco
+   (la caja entera, para que el reflejo siga alineado con la pieza) */
+.m-coll.is-pins .m-piece__img {
+  scale: 1.1;
+}
+
+.m-piece.is-pin .m-piece__img {
+  scale: 1.15;
+}
+
+.m-gallery__dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.m-gallery__dots span,
+.m-packs__dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
+  background: rgb(7 14 26 / 0.2);
+  transition: width 0.3s ease-out, background-color 0.3s ease-out;
+}
+
+.m-gallery__dots .is-on,
+.m-packs__dots .is-on {
+  width: 18px;
+  background: var(--gold);
+}
+
+/* ── Datos de la medalla (Materiales, Acabado, Diámetro, Inversión) ──── */
+.m-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.m-facts > div {
+  padding: 16px 12px 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.m-facts > div:nth-child(even) {
+  padding: 16px 0 16px 16px;
+  border-left: 1px solid var(--line);
+}
+
+.m-facts dt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: 600 10.5px/1.3 var(--mont);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.m-facts__ico {
+  width: 16px;
+  height: 16px;
+  color: var(--gold);
+}
+
+.m-facts__ico.is-wide {
+  width: 27px;
+  height: 11px;
+}
+
+.m-facts dd {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.m-facts dd > span {
+  display: block;
+}
+
+.m-facts .is-price strong {
+  font: 600 26px/1 var(--mont);
+  color: var(--gold-2);
+}
+
+.m-facts .is-price small {
+  font-size: 17px;
+}
+
+.m-facts__before {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  opacity: 0.55;
+}
+
+/* ── Tablet ──────────────────────────────────────────────────────────── */
+@media (min-width: 640px) {
+  .m-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 40px 20px;
+  }
+}

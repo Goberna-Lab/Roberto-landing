@@ -6,8 +6,9 @@ import { Home } from './pages/Home'
 import { Medallas } from './pages/Medallas'
 import { Biblioteca } from './pages/Biblioteca'
 import { Pines } from './pages/Pines'
-
-type Page = 'inicio' | 'medallas' | 'pines' | 'biblioteca'
+import { MobileApp } from './mobile/MobileApp'
+import { useMobile } from './viewport'
+import type { Page } from './routes'
 
 const TITLES: Record<Page, string> = {
   inicio: 'Goberna · Colección Institucional 2026',
@@ -69,16 +70,23 @@ function App() {
 
   const selected = route.page === 'medallas' && route.section ? Number(route.section) || undefined : undefined
 
+  // < 1024 px: composición mobile propia; desde 1024 px, el diseño del XD
+  const mobile = useMobile()
+  return mobile ? <MobileApp page={route.page} selected={selected} /> : <DesktopApp page={route.page} selected={selected} />
+}
+
+/** Versión de escritorio: lienzo de 1920 px del XD, escalado en laptop (viewport.ts). */
+function DesktopApp({ page, selected }: { page: Page; selected?: number }) {
   // Títulos con efecto máquina de escribir al entrar en pantalla
   const pageRef = useRef<HTMLDivElement>(null)
-  useTypewriter(pageRef, [route.page])
+  useTypewriter(pageRef, [page])
   // Fondos de los banners con parallax (se mueven más lento que la página)
-  useParallax(pageRef, [route.page])
+  useParallax(pageRef, [page])
 
   return (
     <div ref={pageRef} className="page">
-      <Header opacity={route.page === 'inicio' ? 0.95 : 0.8} active={route.page === 'inicio' ? undefined : `#/${route.page}`} />
-      {route.page === 'medallas' ? <Medallas selected={selected} /> : route.page === 'pines' ? <Pines /> : route.page === 'biblioteca' ? <Biblioteca /> : <Home />}
+      <Header opacity={page === 'inicio' ? 0.95 : 0.8} active={page === 'inicio' ? undefined : `#/${page}`} />
+      {page === 'medallas' ? <Medallas selected={selected} /> : page === 'pines' ? <Pines /> : page === 'biblioteca' ? <Biblioteca /> : <Home />}
     </div>
   )
 }

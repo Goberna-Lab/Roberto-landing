@@ -1,0 +1,425 @@
+/* ── Inicio mobile ───────────────────────────────────────────────────── */
+
+/* Hero: identificador → titular → descripción → piezas → CTA */
+.m-hero {
+  position: relative;
+  overflow: hidden;
+  padding-top: clamp(32px, 8vw, 64px);
+  background: var(--navy);
+  color: var(--cream);
+}
+
+.m-hero__bg {
+  position: absolute;
+  inset: 0;
+}
+
+.m-hero__copy,
+.m-hero__cta {
+  position: relative;
+  z-index: 2;
+}
+
+.m-hero__kicker {
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+}
+
+.m-hero__title {
+  margin-top: 14px;
+  font: 700 clamp(31px, 9.6vw, 60px) / 1.06 var(--play);
+  letter-spacing: -0.02em;
+  color: var(--cream);
+  text-wrap: balance;
+}
+
+.m-hero__lead {
+  max-width: 30em;
+  margin-top: 16px;
+  font-size: 15px;
+  line-height: 1.6;
+  letter-spacing: 0.03em;
+  color: #f7f3eb;
+  opacity: 0.88;
+}
+
+.m-hero__stage {
+  position: relative;
+  z-index: 1;
+  width: min(88%, 46vh, 520px);
+  width: min(88%, 46svh, 520px);
+  aspect-ratio: 1;
+  margin: 8px auto 0;
+}
+
+.m-hero__piece {
+  position: absolute;
+  inset: 0;
+  /* el mármol de la foto termina en recto: se funde con el fondo */
+  -webkit-mask-image: linear-gradient(180deg, #000 80%, transparent 99%);
+  mask-image: linear-gradient(180deg, #000 80%, transparent 99%);
+}
+
+.m-hero__piece > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Luz ambiental dorada que se desplaza despacio detrás de las piezas */
+.m-hero__glow {
+  position: absolute;
+  left: 4%;
+  top: 6%;
+  width: 62%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(255 228 160 / 0.2), rgb(159 124 73 / 0.08) 55%, transparent);
+  animation: m-glow 9s ease-in-out infinite alternate;
+}
+
+.m-hero__stage:not(.is-live) .m-hero__glow {
+  animation-play-state: paused;
+}
+
+@keyframes m-glow {
+  to {
+    transform: translate(30%, 16%) scale(1.1);
+  }
+}
+
+.m-hero__cta {
+  margin-top: -6px;
+  padding-bottom: 40px;
+}
+
+/* Entrada del hero al cargar */
+@media (prefers-reduced-motion: no-preference) {
+  .m-hero__copy > * {
+    animation: m-rise 0.9s var(--m-ease) both;
+  }
+
+  .m-hero__title {
+    animation-delay: 0.1s;
+  }
+
+  .m-hero__lead {
+    animation-delay: 0.22s;
+  }
+
+  .m-hero__stage {
+    animation: m-hero-in 1.4s var(--m-ease) 0.25s both;
+  }
+}
+
+@keyframes m-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+@keyframes m-hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.95);
+  }
+}
+
+/* ── El propósito ────────────────────────────────────────────────────── */
+.m-prop {
+  position: relative;
+  overflow: hidden;
+  padding: 72px 0 80px;
+  background: var(--sand);
+}
+
+/* La columna del XD, como franja a la derecha que se funde con el fondo */
+.m-prop__col {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 46%;
+  overflow: hidden;
+  opacity: 0.55;
+  -webkit-mask-image: linear-gradient(to left, #000 30%, transparent);
+  mask-image: linear-gradient(to left, #000 30%, transparent);
+}
+
+.m-prop__col .m-px > img {
+  object-position: 92% 50%;
+}
+
+.m-prop__body {
+  position: relative;
+}
+
+.m-prop__title {
+  font: 700 clamp(22px, 6.2vw, 34px) / 1.38 var(--play);
+  text-transform: uppercase;
+  color: var(--navy);
+}
+
+.m-prop__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.m-prop__tags li::before {
+  content: '';
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin: 0 10px 2px 0;
+  background: var(--gold);
+  rotate: 45deg;
+  vertical-align: middle;
+}
+
+/* ── Universos de la colección ───────────────────────────────────────── */
+.m-uni {
+  position: relative;
+  overflow: hidden;
+  background: var(--navy);
+  color: var(--cream);
+}
+
+.m-uni__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 1 / 1.02;
+  max-height: 78vh;
+  overflow: hidden;
+}
+
+.m-uni__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgb(7 14 26 / 0) 42%, rgb(7 14 26 / 0.82) 76%, var(--navy) 99%);
+}
+
+.m-uni__body {
+  position: relative;
+  margin-top: -64px;
+  padding-bottom: 64px;
+}
+
+.m-uni__n {
+  margin-bottom: 14px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+}
+
+.m-uni__sub {
+  margin-top: 16px;
+  font-size: 15px;
+  line-height: 1.6;
+  letter-spacing: 0.03em;
+  /* transparencia en el color: el revelado anima la opacidad del elemento */
+  color: rgb(247 243 236 / 0.86);
+}
+
+.m-uni.is-light .m-uni__sub {
+  color: var(--ink);
+}
+
+/* Presentación de distinción: foto clara y texto oscuro, como en el XD */
+.m-uni.is-light {
+  background: #f3eee6;
+  color: var(--navy);
+}
+
+.m-uni.is-light .m-uni__media::after {
+  display: none;
+}
+
+.m-uni.is-light .m-uni__body {
+  margin-top: 0;
+  padding-top: 36px;
+}
+
+/* ── Esenciales Goberna ──────────────────────────────────────────────── */
+.m-ess {
+  padding: 72px 0 80px;
+  background: var(--navy);
+  color: var(--cream);
+}
+
+.m-ess__list {
+  display: grid;
+  gap: 44px;
+  margin-top: 40px;
+}
+
+.m-ess__media {
+  position: relative;
+  overflow: hidden;
+}
+
+.m-ess__media.is-portrait {
+  aspect-ratio: 698 / 793;
+}
+
+.m-ess__media.is-portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.m-ess__scene {
+  position: relative;
+  height: 100%;
+}
+
+.m-ess__scene > img:first-child {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.m-ess__obj {
+  position: absolute;
+  object-fit: contain;
+}
+
+.m-ess__caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.m-ess__caption h3 {
+  font: 400 24px/1.2 var(--play);
+  letter-spacing: 0.02em;
+}
+
+.m-ess__caption p {
+  margin-top: 8px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.m-circle {
+  flex: none;
+  display: block;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.m-circle .m-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.m-circle svg * {
+  transition: fill 0.25s ease-out;
+}
+
+.m-circle:active svg path:first-child {
+  fill: #a07c48;
+}
+
+.m-circle:active svg path:last-child {
+  fill: #f7f3ec;
+}
+
+/* ── Materia & oficio ────────────────────────────────────────────────── */
+.m-materia {
+  padding: 72px 0 80px;
+  background: var(--ivory);
+}
+
+.m-materia__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-top: 36px;
+}
+
+.m-tile {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #0d1422;
+}
+
+.m-tile img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: scale 0.6s ease-out;
+}
+
+.m-tile img.is-crop {
+  inset: auto;
+  max-width: none;
+  object-fit: fill;
+}
+
+.m-tile:active img {
+  scale: 1.06;
+}
+
+/* Aviso de "ampliar" en la esquina */
+button.m-tile::after {
+  content: '+';
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid rgb(247 243 236 / 0.7);
+  border-radius: 50%;
+  font: 300 16px/1 var(--mont);
+  color: var(--cream);
+  background: rgb(7 14 26 / 0.35);
+}
+
+.m-tile.is-large {
+  margin-top: 10px;
+  border-radius: 8px;
+}
+
+/* ── Tablet ──────────────────────────────────────────────────────────── */
+@media (min-width: 640px) {
+  .m-uni__media {
+    aspect-ratio: 16 / 11;
+  }
+
+  .m-ess__list {
+    grid-template-columns: 1fr 1fr;
+    gap: 44px 24px;
+  }
+
+  .m-ess__item:first-child {
+    grid-row: span 2;
+  }
+
+  .m-materia__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
