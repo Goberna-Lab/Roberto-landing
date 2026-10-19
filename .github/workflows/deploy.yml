@@ -2,7 +2,8 @@ name: Publicar en GitHub Pages
 
 on:
   push:
-    branches: [main]
+    # feat/mobile-premium solo publica en el repo Roberto-landing-mobile (ver `if` abajo)
+    branches: [main, feat/mobile-premium]
   workflow_dispatch:
 
 permissions:
@@ -16,6 +17,7 @@ concurrency:
 
 jobs:
   build:
+    if: github.ref == 'refs/heads/main' || github.repository == 'Goberna-Lab/Roberto-landing-mobile'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -27,6 +29,8 @@ jobs:
         env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
       - run: npm run build
+        env:
+          BASE_PATH: /${{ github.event.repository.name }}/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

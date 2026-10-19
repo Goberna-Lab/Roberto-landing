@@ -74,6 +74,9 @@ Secciones enlazables: `#/inicio/pines`, `#/inicio/diplomas`, `#/biblioteca/edici
 
 ## Estructura
 
+- `BASE_PATH` (variable de entorno) cambia la ruta base del build; el workflow
+  usa el nombre del repo. La rama `feat/mobile-premium` se publica en
+  https://goberna-lab.github.io/Roberto-landing-mobile/.
 - `src/components/ui.tsx` — `Txt` posiciona cada texto con las coordenadas del XD
   (línea base en textos de punto, borde superior en textos de área), más enlaces,
   botones e iconos reutilizables.
