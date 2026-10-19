@@ -10,6 +10,9 @@
     "preview": "vite preview",
     "qa": "node scripts/qa.mjs",
     "qa:medallas": "node scripts/medallas.mjs",
+    "qa:mobile": "node scripts/qa-mobile.mjs",
+    "capturas": "node scripts/capturas.mjs",
+    "comparar": "node scripts/comparar.mjs",
     "flujo": "node scripts/flujo.mjs"
   },
   "dependencies": {

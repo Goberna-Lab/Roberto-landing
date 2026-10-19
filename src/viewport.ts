@@ -41,3 +41,19 @@ export function useLaptop() {
     () => laptop,
   )
 }
+
+/* Teléfonos y tablets (< 1024 px) usan la versión mobile (src/mobile): una
+   composición propia en flujo normal, no el lienzo de 1920 escalado. */
+const MOBILE_QUERY = '(max-width: 1023.98px)'
+
+/** true cuando se debe mostrar la versión mobile. */
+export function useMobile() {
+  return useSyncExternalStore(
+    (cb) => {
+      const mq = matchMedia(MOBILE_QUERY)
+      mq.addEventListener('change', cb)
+      return () => mq.removeEventListener('change', cb)
+    },
+    () => matchMedia(MOBILE_QUERY).matches,
+  )
+}

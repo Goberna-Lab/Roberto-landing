@@ -2,6 +2,8 @@ import toTopArrow from '../assets/icons/to-top-arrow.svg?raw'
 import { TW } from './typewriter'
 import { asset } from '../asset'
 import { Btn, HLine, Masked, MiniLink, Txt } from './ui'
+import { mailto } from '../data/contacto'
+import { OTHERS } from '../data/colecciones'
 import './sections.css'
 
 /** Botón circular "volver arriba" (componente "Let's Go!"). */
@@ -32,7 +34,7 @@ export function FinalCta() {
         <Txt x={997} y={207} f="p" w={700} s={60} lh={70} up c="var(--cream)" width={723} as="h2" className="tw-title">
           <TW text="Encuentra una pieza para reconocer lo construido." />
         </Txt>
-        <Btn x={996} y={472} variant="solid" href="mailto:informes@goberna.pe?subject=Solicitud%20de%20informaci%C3%B3n%20%E2%80%94%20Colecci%C3%B3n%20Goberna" />
+        <Btn x={996} y={472} variant="solid" href={mailto()} />
         <Btn x={1370} y={472} variant="outline" href="#contacto" />
       </section>
       <footer className="sec site-footer" style={{ height: 104, background: 'var(--navy)' }}>
@@ -41,28 +43,6 @@ export function FinalCta() {
     </>
   )
 }
-
-const OTHERS = [
-  {
-    title: 'Símbolos de\nprestigio',
-    desc: 'Pines y piezas de identidad',
-    href: '#/inicio/pines',
-    // máscara 190×186 con radio izquierdo; imagen 330×186 desplazada -62px
-    img: { src: asset('mini-pines.webp'), mask: [0, 0, 190, 186], box: [-62, 0, 330, 186] },
-  },
-  {
-    title: 'Presentación de\ndistinción',
-    desc: 'Portadiplomas y elementos\nceremoniales',
-    href: '#/inicio/diplomas',
-    img: { src: asset('mini-diploma.webp'), mask: [0, 0, 192, 186], box: [-1, -4, 194, 194] },
-  },
-  {
-    title: 'Biblioteca del\npoder',
-    desc: 'Libros, packs y colecciones premium',
-    href: '#/biblioteca',
-    img: { src: asset('banner-libros.webp'), mask: [0, 0, 191, 186], box: [-21, -2, 402, 188] },
-  },
-] as const
 
 /* x de inicio de cada tarjeta y de su caja de texto (bordes del XD) */
 const CARD_X = [

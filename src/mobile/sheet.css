@@ -1,0 +1,149 @@
+/* ── Ficha en panel inferior (bottom sheet) ──────────────────────────── */
+.m-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.m-sheet__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgb(4 8 16 / 0.62);
+  animation: m-fade 0.3s ease-out;
+}
+
+.m-sheet__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 640px;
+  max-height: calc(100vh - 24px);
+  max-height: calc(100svh - 24px - env(safe-area-inset-top, 0px));
+  border-radius: 22px 22px 0 0;
+  background: var(--ivory);
+  color: var(--navy);
+  animation: m-sheet-in 0.5s var(--m-ease);
+  transition: transform 0.3s var(--m-ease);
+}
+
+.m-sheet.is-closing .m-sheet__panel {
+  animation: m-sheet-out 0.28s ease-in forwards;
+}
+
+.m-sheet.is-closing .m-sheet__backdrop {
+  animation: m-fade-out 0.28s ease-in forwards;
+}
+
+@keyframes m-sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes m-sheet-out {
+  to {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes m-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes m-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+.m-sheet__grab {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  width: 40px;
+  height: 4px;
+  margin-left: -20px;
+  border-radius: 2px;
+  background: rgb(7 14 26 / 0.18);
+}
+
+.m-sheet__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgb(191 186 177 / 0.8);
+  background: rgb(251 249 245 / 0.92);
+}
+
+.m-sheet__close span::before,
+.m-sheet__close span::after {
+  content: '';
+  position: absolute;
+  left: 13px;
+  right: 13px;
+  top: 21px;
+  height: 1px;
+  background: var(--navy);
+  rotate: 45deg;
+}
+
+.m-sheet__close span::after {
+  rotate: -45deg;
+}
+
+.m-sheet__body {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 26px var(--m-gut) 28px;
+}
+
+.m-sheet__body > .m-kicker {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  margin: -4px 52px 0 0;
+}
+
+.m-sheet__foot {
+  padding: 12px var(--m-gut) calc(12px + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid rgb(191 186 177 / 0.6);
+  background: var(--ivory);
+}
+
+.m-sheet__title {
+  margin-top: 20px;
+  font: 600 clamp(24px, 6.6vw, 32px) / 1.2 var(--play);
+  color: var(--navy);
+  text-wrap: balance;
+}
+
+.m-sheet__sub {
+  margin-top: 28px;
+  font: 600 11px/1.5 var(--mont);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.m-sheet__caption {
+  margin-top: 14px;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+/* En la ficha no hay revelados por scroll: todo visible al abrir */
+.m-sheet [data-reveal] {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
