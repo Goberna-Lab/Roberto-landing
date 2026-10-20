@@ -212,6 +212,19 @@
   padding-bottom: 64px;
 }
 
+/* Mantiene los tres pines completos y el texto debajo de las piezas. */
+.m-uni--pines .m-uni__media {
+  aspect-ratio: 4 / 3;
+}
+
+.m-uni--pines .m-uni__media::after {
+  background: linear-gradient(180deg, rgb(7 14 26 / 0) 65%, rgb(7 14 26 / 0.28) 86%, var(--navy) 100%);
+}
+
+.m-uni--pines .m-uni__body {
+  margin-top: -24px;
+}
+
 .m-uni__n {
   margin-bottom: 14px;
   font-size: 11px;

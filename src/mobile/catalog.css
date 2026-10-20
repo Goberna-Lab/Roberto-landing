@@ -1,5 +1,19 @@
 /* ── Catálogo mobile: categoría, grillas de piezas, cristal y fichas ─── */
 
+/* Portada de Pines: las tres piezas completas, con el título debajo. */
+.m-cat-hero--pines .m-cat-hero__media {
+  height: auto;
+  aspect-ratio: 3 / 2;
+}
+
+.m-cat-hero--pines .m-cat-hero__media::after {
+  background: linear-gradient(180deg, rgb(7 14 26 / 0) 65%, rgb(7 14 26 / 0.28) 86%, var(--navy) 100%);
+}
+
+.m-cat-hero--pines .m-cat-hero__copy {
+  margin-top: -16px;
+}
+
 .m-cat {
   padding-top: 64px;
   padding-bottom: 72px;

@@ -104,9 +104,9 @@ export function Shine({ src, delay = 0 }: { src: string; delay?: number }) {
 }
 
 /** Portada de categoría: foto protagonista y título institucional. */
-export function CategoryHero({ img, pos, title }: { img: string; pos: string; title: string }) {
+export function CategoryHero({ img, pos, title, className = '' }: { img: string; pos: string; title: string; className?: string }) {
   return (
-    <section className="m-cat-hero">
+    <section className={`m-cat-hero ${className}`}>
       <div className="m-cat-hero__media">
         <div className="m-px" data-parallax="16">
           <img src={img} alt="" fetchPriority="high" decoding="async" style={{ objectPosition: pos }} />

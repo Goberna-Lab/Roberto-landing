@@ -12,7 +12,7 @@ export function Pines() {
 
   return (
     <>
-      <CategoryHero img={asset('banner-pines-cat.webp')} pos="14% 50%" title="Símbolos de prestigio" />
+      <CategoryHero img={asset('banner-pines-cat.webp')} pos="4% 50%" title="Símbolos de prestigio" className="m-cat-hero--pines" />
 
       <Category
         kicker="Categoría - Pines"
