@@ -8,6 +8,7 @@ import icoDiametro from '../assets/icons/ico-diametro.svg?raw'
 import icoInversion from '../assets/icons/ico-inversion.svg?raw'
 import { Btn, HLine, Icon, Masked, Txt, VLine } from '../components/ui'
 import { FinalCta, GoldDash, OtherPieces } from '../components/sections'
+import { PieceShine } from '../components/PieceShine'
 import { useLaptop } from '../viewport'
 import { CRISTALES, DETAILS, MEDALS, PLACAS, SPECS } from '../data/medallas'
 import type { Detail, Piece } from '../data/medallas'
@@ -18,11 +19,12 @@ const COLS = [222, 723, 1236]
 const ROWS = 3
 
 /* Tarjeta: caja de 494×526 desde la imagen del producto (x - 10). */
-function MedalCard({ m, x, selected, expanded, onSelect }: { m: Piece; x: number; selected: boolean; expanded: boolean; onSelect?: () => void }) {
+function MedalCard({ m, x, selected, expanded, delay, onSelect }: { m: Piece; x: number; selected: boolean; expanded: boolean; delay: number; onSelect?: () => void }) {
   const content = (
     <>
       <img className="abs" src={asset('card-base.webp')} alt="" loading="lazy" style={{ left: 10, top: 49, width: 476, height: 477 }} />
       <img className="abs medal__img" src={m.img} alt="" loading="lazy" style={{ left: 0, top: 0, width: 494, height: 390 }} />
+      <PieceShine src={m.img} delay={delay} className="medal__img" style={{ left: 0, top: 0, width: 494, height: 390 }} />
       <Txt x={248 + m.dx} y={485.5} w={600} s={17} lh={20} ls={140} up align="c" as="span" className="medal__name">
         {expanded ? (m.openName ?? m.name) : m.name}
       </Txt>
@@ -181,6 +183,7 @@ export function Medallas({ selected }: { selected?: number }) {
                       x={x}
                       selected={openCol === c}
                       expanded={firstRowOpen}
+                      delay={c * 2.1}
                       onSelect={() => toggle(n)}
                     />
                   )
@@ -200,10 +203,13 @@ export function Medallas({ selected }: { selected?: number }) {
             <span className="it gold"><TW text="Distinción" /></span>
           </Txt>
           <HLine x={941} y={203.5} w={40} c="var(--line)" />
-          {PLACAS.map((p) => (
+          {PLACAS.map((p, i) => (
             <Fragment key={p.img}>
               <img className="abs" src={asset('card-base.webp')} alt="" loading="lazy" style={{ left: p.base, top: 352, width: 476, height: 477 }} />
               <Masked mask={[p.mask, 294, 427, 406]} img={[p.x, 279, 534, 421]} src={p.img} />
+              <div className="abs masked" style={{ left: p.mask, top: 294, width: 427, height: 406, pointerEvents: 'none' }} aria-hidden>
+                <PieceShine src={p.img} delay={i * 2.1} style={{ left: p.x - p.mask, top: -15, width: 534, height: 421 }} />
+              </div>
               <Txt x={p.cx} y={788} w={600} s={17} lh={20} ls={140} up align="c" as="span" c="var(--navy)">{p.name}</Txt>
               <GoldDash cx={p.cx + 0.5} y={826} />
             </Fragment>
@@ -218,8 +224,11 @@ export function Medallas({ selected }: { selected?: number }) {
         {/* Escena con zoom al entrar (fondos y cristales juntos) */}
         <div className="abs zoom-bg" style={{ inset: 0 }}>
           <div className="bg" style={{ inset: 0, backgroundImage: `url(${asset('cristal-fondo-v2.webp')})` }} />
-          {CRISTALES.map(({ name, img, box: [left, top, width, height] }) => (
-            <img key={img} className="abs" src={img} alt={name} loading="lazy" style={{ left, top, width, height }} />
+          {CRISTALES.map(({ name, img, box: [left, top, width, height] }, i) => (
+            <Fragment key={img}>
+              <img className="abs" src={img} alt={name} loading="lazy" style={{ left, top, width, height }} />
+              <PieceShine src={img} delay={0.8 + i * 1.6} cold style={{ left, top, width, height }} />
+            </Fragment>
           ))}
         </div>
         <Txt x={200} y={349} f="p" w={500} s={75} lh={80} c="var(--cream)" as="h2" className="tw-title">

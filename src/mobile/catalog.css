@@ -210,11 +210,6 @@
   aspect-ratio: auto;
 }
 
-/* Reflejo frío para el cristal */
-.is-crystal .m-shine__band {
-  background: linear-gradient(105deg, rgb(255 255 255 / 0) 15%, rgb(235 244 255 / 0.6) 50%, rgb(255 255 255 / 0) 85%);
-}
-
 /* ── Galería de la ficha ─────────────────────────────────────────────── */
 .m-gallery {
   position: relative;

@@ -1,0 +1,56 @@
+.piece-shine {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: var(--mask);
+  mask-image: var(--mask);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  mix-blend-mode: screen;
+  opacity: 0;
+}
+
+.piece-shine__band {
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  left: 0;
+  width: 45%;
+  background: linear-gradient(105deg, rgb(255 236 196 / 0) 15%, rgb(255 242 214 / 0.55) 50%, rgb(255 236 196 / 0) 85%);
+  transform: translateX(-110%);
+}
+
+.is-crystal .piece-shine__band,
+.piece-shine--cold .piece-shine__band {
+  background: linear-gradient(105deg, rgb(255 255 255 / 0) 15%, rgb(235 244 255 / 0.6) 50%, rgb(255 255 255 / 0) 85%);
+}
+
+.is-live .piece-shine,
+.piece-shine.is-visible {
+  opacity: 1;
+}
+
+.is-live .piece-shine__band,
+.piece-shine.is-visible .piece-shine__band {
+  animation: piece-sweep 7.5s var(--shine-d, 0s) cubic-bezier(0.45, 0, 0.25, 1) infinite;
+}
+
+@keyframes piece-sweep {
+  0% { transform: translateX(-110%); }
+  24%, 100% { transform: translateX(240%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .piece-shine {
+    display: none;
+  }
+
+  .piece-shine__band {
+    animation: none;
+  }
+}

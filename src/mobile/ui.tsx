@@ -10,6 +10,7 @@ import { OTHERS } from '../data/colecciones'
 import { mailto } from '../data/contacto'
 import type { EditorialPrice } from '../data/biblioteca'
 import { flat } from './text'
+import { PieceShine } from '../components/PieceShine'
 
 /** Icono SVG en línea (hereda el color del texto). */
 export function Svg({ svg, className = '' }: { svg: string; className?: string }) {
@@ -96,11 +97,7 @@ export function Piece({ img, pedestal = true, delay = 0, className = '', style }
 
 /** Reflejo de luz que recorre la silueta de `src` (ver Piece). */
 export function Shine({ src, delay = 0 }: { src: string; delay?: number }) {
-  return (
-    <span className="m-shine" style={{ ['--mask' as string]: `url("${src}")`, ['--shine-d' as string]: `${delay}s` }}>
-      <span className="m-shine__band" />
-    </span>
-  )
+  return <PieceShine src={src} delay={delay} observe={false} className="m-shine" />
 }
 
 /** Portada de categoría: foto protagonista y título institucional. */
