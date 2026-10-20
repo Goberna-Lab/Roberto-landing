@@ -227,9 +227,9 @@ export function Home() {
 
         <article className="esencial">
           <img className="abs" src={asset('esenciales-ejecutivos.webp')} alt="" loading="lazy" style={{ left: 960, top: 858, width: 760, height: 350 }} />
-          <img className="abs" src={asset('sombra.webp')} alt="" loading="lazy" style={{ left: 1174, top: 1125, width: 233, height: 32 }} />
+          <img className="abs esencial__shadow" src={asset('sombra.webp')} alt="" loading="lazy" style={{ left: 1174, top: 1125, width: 233, height: 32 }} />
           <img className="abs" src={asset('esenciales-agenda.webp')} alt="Agenda Goberna" loading="lazy" style={{ left: 1185, top: 883, width: 219, height: 266 }} />
-          <img className="abs" src={asset('sombra.webp')} alt="" loading="lazy" style={{ left: 1075, top: 1118, width: 164, height: 39 }} />
+          <img className="abs esencial__shadow esencial__shadow--vaso" src={asset('sombra.webp')} alt="" loading="lazy" style={{ left: 1075, top: 1118, width: 164, height: 39 }} />
           <img className="abs" src={asset('esenciales-vaso.webp')} alt="Vaso térmico Goberna" loading="lazy" style={{ left: 1084, top: 977, width: 156, height: 179 }} />
           <Txt x={1431} y={979} f="p" s={29} lh={32} ls={20} c="var(--cream)" as="h3">{'Esenciales\nEjecutivos'}</Txt>
           <Txt x={1432} y={1041} s={10} lh={28} ls={32} up c="var(--gold)">Agenda</Txt>

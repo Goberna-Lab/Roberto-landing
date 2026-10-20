@@ -261,6 +261,7 @@
 .m-ess__scene {
   position: relative;
   height: 100%;
+  container-type: inline-size;
 }
 
 .m-ess__scene > img:first-child {
@@ -274,6 +275,13 @@
 .m-ess__obj {
   position: absolute;
   object-fit: contain;
+}
+
+/* El desenfoque se adapta al ancho de la composición de 760 px del XD. */
+.m-ess__shadow {
+  filter: blur(1.6cqw);
+  mix-blend-mode: multiply;
+  pointer-events: none;
 }
 
 .m-ess__caption {

@@ -194,7 +194,7 @@ export function Home() {
                   <img src={asset(e.bg.src)} alt="" loading="lazy" decoding="async" />
                   {e.items.map(({ src, alt, box: [x, y, w, h] }, i) => (
                     <img
-                      key={i} src={asset(src)} alt={alt} loading="lazy" decoding="async" className="m-ess__obj"
+                      key={i} src={asset(src)} alt={alt} loading="lazy" decoding="async" className={`m-ess__obj${src === 'sombra.webp' ? ' m-ess__shadow' : ''}`}
                       style={{ left: `${(x / e.bg.w) * 100}%`, top: `${(y / e.bg.h) * 100}%`, width: `${(w / e.bg.w) * 100}%`, height: `${(h / e.bg.h) * 100}%` }}
                     />
                   ))}

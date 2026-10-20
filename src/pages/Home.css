@@ -132,6 +132,17 @@
   background: var(--gold);
 }
 
+/* Desenfoque y mezcla de las sombras de contacto del XD. */
+.esencial__shadow {
+  filter: blur(11.47px);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.esencial__shadow--vaso {
+  filter: blur(13.3px);
+}
+
 /* Materia & oficio: fotos con zoom al pasar el mouse (578 → 654px, estado del XD) */
 .materia__tile {
   overflow: hidden;
