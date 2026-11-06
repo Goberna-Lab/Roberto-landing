@@ -4,7 +4,7 @@ Landing del catálogo institucional de Goberna, construida desde el Adobe XD
 "GOBERNA CATALOGO" (https://xd.adobe.com/view/6bc6ebf5-b2d7-4d0b-8357-00d3558434be-3e95/,
 7 artboards de 1920 px).
 
-> Desktop: diseño exacto a **1920 px** y adaptación a laptop (1280–1919 px; entre 1024 y 1279 px se escala igual).
+> Desktop: diseño exacto a **1920 px**, adaptación a laptop (1024–1919 px) y a pantallas ultrapanorámicas (>1920 px), donde el lienzo se amplía para ocupar todo el ancho.
 > Mobile y tablet (< 1024 px): composición propia en `src/mobile/`.
 
 ## Comandos
@@ -27,10 +27,12 @@ copia del sitio, p. ej. un `git worktree` de la versión anterior) y comparar.
 
 ## Laptop
 
-`src/viewport.ts` escala la página al ancho disponible (`zoom`) y, por debajo de
-1680 px, fija un tamaño mínimo de texto de 11 px reales. Los iconos de enlaces y
-botones van en línea con el texto, así no se enciman si el texto crece. En 1920
-todo queda en las coordenadas del XD (`npm run qa -- 1920 1080` lo comprueba).
+`src/viewport.ts` escala la página al ancho disponible (`zoom`): se reduce por
+debajo de 1920 px y se amplía por encima, de modo que en 21:9 o 4K no quedan
+franjas laterales. Por debajo de 1680 px fija un tamaño mínimo de texto de 11 px
+reales. Los iconos de enlaces y botones van en línea con el texto, así no se
+enciman si el texto crece. En 1920 todo queda en las coordenadas del XD
+(`npm run qa -- 1920 1080` lo comprueba).
 
 La colección de medallas conserva las líneas base y separadores con precisión de
 medio píxel. Al abrir una ficha de la primera fila, la segunda se desplaza 6 px

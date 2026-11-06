@@ -1,7 +1,9 @@
 import { useSyncExternalStore } from 'react'
 
-/* El diseño es de 1920 px. Por debajo (laptops) se escala proporcionalmente
-   y se aplica un tamaño mínimo de texto para que siga siendo legible. */
+/* El diseño es de 1920 px. Se escala proporcionalmente al ancho disponible:
+   en laptops se reduce y en pantallas ultrapanorámicas (>1920 px) se amplía
+   para ocupar todo el ancho, sin franjas laterales. En laptops se aplica
+   además un tamaño mínimo de texto para que siga siendo legible. */
 export const DESIGN_W = 1920
 /** Tamaño mínimo de texto visible en pantalla (px reales) en modo laptop. */
 const MIN_TEXT_PX = 11
@@ -15,7 +17,7 @@ function apply() {
   const root = document.documentElement
   // clientWidth descuenta la barra de scroll: el diseño nunca se corta
   const w = root.clientWidth
-  const z = Math.min(1, w / DESIGN_W)
+  const z = w / DESIGN_W
   const next = w < LAPTOP_MAX
   root.style.setProperty('--z', String(z))
   root.style.setProperty('--fsmin', next ? `${MIN_TEXT_PX / z}px` : '0px')

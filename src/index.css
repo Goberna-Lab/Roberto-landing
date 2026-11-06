@@ -58,7 +58,7 @@ button:focus {
   outline: none;
 }
 
-/* Página de ancho fijo 1920; en pantallas menores se escala (ver viewport.ts) */
+/* Página de ancho base 1920; se escala al ancho de la ventana (ver viewport.ts) */
 .page {
   width: 1920px;
   margin: 0 auto;
