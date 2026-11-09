@@ -23,7 +23,7 @@ export function ToTop({ x, y, filled }: { x: number; y: number; filled?: boolean
 
 /**
  * Cierre común: "Encuentra una pieza para reconocer lo construido."
- * BANNER-FOOTER 1920×750 y, debajo, la barra del pie (104px) con "volver arriba".
+ * BANNER-FOOTER 1920×750 con "volver arriba" en la esquina inferior derecha.
  */
 export function FinalCta() {
   return (
@@ -36,10 +36,10 @@ export function FinalCta() {
         </Txt>
         <Btn x={996} y={472} variant="solid" href={mailto()} />
         <Btn x={1370} y={472} variant="outline" href="#contacto" />
+        {/* Sin barra de pie: la página termina con el banner; "volver arriba"
+            queda a la misma distancia del borde inferior (104 − 20 = 84 px) */}
+        <ToTop x={1836} y={750 - 84} filled />
       </section>
-      <footer className="sec site-footer" style={{ height: 104, background: 'var(--navy)' }}>
-        <ToTop x={1836} y={20} filled />
-      </footer>
     </>
   )
 }
